@@ -14,12 +14,12 @@ extern Game* CreateGame();
 
 #ifdef PAPAYA_MAIN
 
-#include <iostream>
+#include "Log.h"
 
 int main() {
   // Lifecycle of game on macOS
-
-  std::cout << "Engine Initializing..." << std::endl;
+  Papaya::Log::OnInit();
+  PAPAYA_CORE_INFO("Engine Initializing...");
 
   auto game = Papaya::CreateGame();
   game->Run();

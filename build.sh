@@ -1,3 +1,3 @@
 #!/bin/zsh
 
-./thirdparty/premake/premake5 xcode4
+./thirdparty/premake/premake5 gmake

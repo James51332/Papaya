@@ -9,6 +9,7 @@ project "Papaya"
   location "Papaya"
   kind "StaticLib"
   language "C++"
+  cppdialect "C++17"
 
   targetdir (builddir)
   objdir (objectdir)
@@ -18,7 +19,12 @@ project "Papaya"
     "main/**.h",
     "platform/**.cpp",
     "platform/**.h",
-    "include/**.h"
+    "include/**.h",
+    "thirdparty/spdlog/**.h"
+  }
+
+  sysincludedirs {
+    "thirdparty/spdlog/include"
   }
 
   filter "configurations:Debug"
@@ -38,6 +44,7 @@ project "Sandbox"
   location "Sandbox"
   kind "ConsoleApp"
   language "C++"
+  cppdialect "C++17"
   links "Papaya"
 
   targetdir (builddir)
@@ -50,6 +57,7 @@ project "Sandbox"
 
   sysincludedirs {
     "include",
+    "thirdparty/spdlog/include",
     ".",
   }
 
