@@ -1,7 +1,9 @@
 # Build Folders
 bin
+bin-obj
 Papaya
 Sandbox
+Makefile
 
 # MacOS
 *.DS_STORE
