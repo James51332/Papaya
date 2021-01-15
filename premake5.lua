@@ -24,7 +24,8 @@ project "Papaya"
   }
 
   sysincludedirs {
-    "thirdparty/spdlog/include"
+    "thirdparty/spdlog/include",
+    ".",
   }
 
   filter "configurations:Debug"
