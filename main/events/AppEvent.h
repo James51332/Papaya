@@ -11,7 +11,7 @@ public:
   WindowCloseEvent() {}
 
   EVENT_CLASS_CATEGORY(EventCategoryWindow);
-  EVENT_CLASS_TYPE(EventType::WindowClose);
+  EVENT_CLASS_TYPE(WindowClose);
 
   virtual std::string ToString() const override {
     std::stringstream ss;
@@ -25,7 +25,7 @@ public:
   WindowFocusEvent() {}
 
   EVENT_CLASS_CATEGORY(EventCategoryWindow);
-  EVENT_CLASS_TYPE(EventType::WindowFocus);
+  EVENT_CLASS_TYPE(WindowFocus);
 
   virtual std::string ToString() const override {
     std::stringstream ss;
@@ -39,7 +39,7 @@ public:
   WindowLoseFocusEvent() {}
 
   EVENT_CLASS_CATEGORY(EventCategoryWindow);
-  EVENT_CLASS_TYPE(EventType::WindowLoseFocus);
+  EVENT_CLASS_TYPE(WindowLoseFocus);
 
   virtual std::string ToString() const override {
     std::stringstream ss;
@@ -57,7 +57,7 @@ public:
   inline float GetHeight() const { return m_Height; }
 
   EVENT_CLASS_CATEGORY(EventCategoryWindow);
-  EVENT_CLASS_TYPE(EventType::WindowResize);
+  EVENT_CLASS_TYPE(WindowResize);
 
   virtual std::string ToString() const override {
     std::stringstream ss;

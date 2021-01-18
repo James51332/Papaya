@@ -6,6 +6,8 @@
 #include <sstream>
 #include <functional>
 
+#include "main/core/Memory.h"
+
 // Based off of TheCherno/Hazel Event System
 // https://github.com/TheCherno/Hazel
 
@@ -13,6 +15,7 @@ namespace Papaya
 {
 
 enum class EventType {
+  None,
   MousePress, MouseRelease, MouseScroll, MouseMove,
   KeyPress, KeyRelease, KeyRepeat,
   WindowClose, WindowResize, WindowFocus, WindowLoseFocus,
@@ -27,9 +30,9 @@ enum EventCategory {
   EventCategoryInput = BIT(3),
 };
 
-#define EVENT_CLASS_TYPE(type) static EventType GetStaticType() { return type; } \
+#define EVENT_CLASS_TYPE(TYPE) static EventType GetStaticType() { return EventType::TYPE; } \
                               virtual EventType GetEventType() const override { return GetStaticType(); } \
-                              virtual const char* GetName() const override { return #type; }
+                              virtual const char* GetName() const override { return #TYPE; }
 
 #define EVENT_CLASS_CATEGORY(category) virtual int GetCategoryFlags() const override { return category; }
 
@@ -74,6 +77,11 @@ private:
 inline std::ostream& operator<<(std::ostream& os, const Event& e)
 {
   return os << e.ToString();
+}
+
+inline std::ostream& operator<<(std::ostream& os, const Scope<Event>& e)
+{
+  return os << e->ToString();
 }
 
 } // namespace Papaya

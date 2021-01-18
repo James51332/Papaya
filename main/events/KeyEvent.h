@@ -24,7 +24,7 @@ public:
   KeyPressEvent(int keyCode)
     : KeyEvent(keyCode) {}
 
-  EVENT_CLASS_TYPE(EventType::KeyPress);
+  EVENT_CLASS_TYPE(KeyPress);
 
   virtual std::string ToString() const override {
     std::stringstream ss;
@@ -38,7 +38,7 @@ public:
   KeyReleaseEvent(int keyCode)
     : KeyEvent(keyCode) {}
 
-  EVENT_CLASS_TYPE(EventType::KeyRelease);
+  EVENT_CLASS_TYPE(KeyRelease);
 
   virtual std::string ToString() const override {
     std::stringstream ss;
@@ -52,7 +52,7 @@ public:
   KeyRepeatEvent(int keyCode, int repeatCount)
     : KeyEvent(keyCode), m_RepeatCount(repeatCount) {}
 
-  EVENT_CLASS_TYPE(EventType::KeyRelease);
+  EVENT_CLASS_TYPE(KeyRepeat);
 
   virtual std::string ToString() const override {
     std::stringstream ss;

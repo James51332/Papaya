@@ -24,7 +24,7 @@ public:
   MousePressEvent(int mouseCode)
     : MouseButtonEvent(mouseCode) {}
 
-  EVENT_CLASS_TYPE(EventType::MousePress);
+  EVENT_CLASS_TYPE(MousePress);
 
   virtual std::string ToString() const override {
     std::stringstream ss;
@@ -38,7 +38,7 @@ public:
   MouseReleaseEvent(int mouseCode)
     : MouseButtonEvent(mouseCode) {}
 
-  EVENT_CLASS_TYPE(EventType::MouseRelease);
+  EVENT_CLASS_TYPE(MouseRelease);
 
   virtual std::string ToString() const override {
     std::stringstream ss;
@@ -55,7 +55,8 @@ public:
   inline int GetXScroll() const { return m_XScroll; }
   inline int GetYScroll() const { return m_YScroll; }
 
-  EVENT_CLASS_TYPE(EventType::MouseScroll);
+  EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput);
+  EVENT_CLASS_TYPE(MouseScroll);
 
   virtual std::string ToString() const override {
     std::stringstream ss;
@@ -74,7 +75,8 @@ public:
   inline float GetXPosition() const { return m_MouseX; }
   inline float GetYPosition() const { return m_MouseY; }
 
-  EVENT_CLASS_TYPE(EventType::MouseMove);
+  EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput);
+  EVENT_CLASS_TYPE(MouseMove);
 
   virtual std::string ToString() const override {
     std::stringstream ss;

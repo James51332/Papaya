@@ -9,6 +9,7 @@
 #include "main/events/KeyEvent.h"
 #include "main/events/MouseEvent.h"
 #include "main/events/AppEvent.h"
+#include "main/events/EventQueue.h"
 
 namespace Papaya
 {
@@ -23,9 +24,13 @@ Game::~Game() {
 
 void Game::Run() {
   // THE ENTRY TO ENGINE
+  EventQueue::PushEvent(CreateScope<WindowResizeEvent>(800, 600));
+  EventQueue::PushEvent(CreateScope<WindowCloseEvent>());
+  EventQueue::PushEvent(CreateScope<MousePressEvent>(0));
 
-  WindowResizeEvent e(800, 600);
-  PAPAYA_CORE_INFO(e);
+  PAPAYA_CORE_INFO(EventQueue::PopEvent()); // These should pop off in same order
+  PAPAYA_CORE_INFO(EventQueue::PopEvent()); // Resize, Close, Mouse
+  PAPAYA_CORE_INFO(EventQueue::PopEvent());
 
   while (true);
 }
