@@ -13,10 +13,10 @@ public:
   EVENT_CLASS_CATEGORY(EventCategoryWindow);
   EVENT_CLASS_TYPE(WindowClose);
 
-  virtual std::string ToString() const override {
+  virtual String ToString() const override {
     std::stringstream ss;
     ss << "WindowCloseEvent:";
-    return ss.str();
+    return ss.str().c_str();
   }
 };
 
@@ -27,10 +27,10 @@ public:
   EVENT_CLASS_CATEGORY(EventCategoryWindow);
   EVENT_CLASS_TYPE(WindowFocus);
 
-  virtual std::string ToString() const override {
+  virtual String ToString() const override {
     std::stringstream ss;
     ss << "WindowFocusEvent:";
-    return ss.str();
+    return ss.str().c_str();
   }
 };
 
@@ -41,10 +41,10 @@ public:
   EVENT_CLASS_CATEGORY(EventCategoryWindow);
   EVENT_CLASS_TYPE(WindowLoseFocus);
 
-  virtual std::string ToString() const override {
+  virtual String ToString() const override {
     std::stringstream ss;
     ss << "WindowLoseFocusEvent:";
-    return ss.str();
+    return ss.str().c_str();
   }
 };
 
@@ -59,10 +59,10 @@ public:
   EVENT_CLASS_CATEGORY(EventCategoryWindow);
   EVENT_CLASS_TYPE(WindowResize);
 
-  virtual std::string ToString() const override {
+  virtual String ToString() const override {
     std::stringstream ss;
     ss << "WindowResizeEvent: (width: " << m_Width << ", height: " << m_Height << ")";
-    return ss.str();
+    return ss.str().c_str();
   }
 
 private:

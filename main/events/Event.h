@@ -1,7 +1,9 @@
 #ifndef Event_h
 #define Event_h
 
-#include <string>
+
+#include "main/core/String.h"
+
 #include <ostream>
 #include <sstream>
 #include <functional>
@@ -45,7 +47,7 @@ public:
   virtual EventType GetEventType() const = 0;
   virtual const char* GetName() const = 0;
   virtual int GetCategoryFlags() const = 0;
-  virtual std::string ToString() const { return GetName(); }
+  virtual String ToString() const { return GetName(); }
 
   bool IsInCategory(EventCategory category) { return category & GetCategoryFlags(); }
 

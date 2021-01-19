@@ -11,6 +11,8 @@
 #include "main/events/AppEvent.h"
 #include "main/events/EventQueue.h"
 
+#include "main/core/String.h"
+
 namespace Papaya
 {
 
@@ -31,6 +33,9 @@ void Game::Run() {
   PAPAYA_CORE_INFO(EventQueue::PopEvent()); // These should pop off in same order
   PAPAYA_CORE_INFO(EventQueue::PopEvent()); // Resize, Close, Mouse
   PAPAYA_CORE_INFO(EventQueue::PopEvent());
+
+  String s = "This is a custom papaya class";
+  PAPAYA_CORE_INFO(s);
 
   while (true);
 }

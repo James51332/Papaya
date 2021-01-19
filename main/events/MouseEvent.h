@@ -26,10 +26,10 @@ public:
 
   EVENT_CLASS_TYPE(MousePress);
 
-  virtual std::string ToString() const override {
+  virtual String ToString() const override {
     std::stringstream ss;
     ss << "MousePressEvent: " << m_MouseCode;
-    return ss.str();
+    return ss.str().c_str();
   }
 };
 
@@ -40,10 +40,10 @@ public:
 
   EVENT_CLASS_TYPE(MouseRelease);
 
-  virtual std::string ToString() const override {
+  virtual String ToString() const override {
     std::stringstream ss;
     ss << "MouseReleaseEvent: " << m_MouseCode;
-    return ss.str();
+    return ss.str().c_str();
   }
 };
 
@@ -58,10 +58,10 @@ public:
   EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput);
   EVENT_CLASS_TYPE(MouseScroll);
 
-  virtual std::string ToString() const override {
+  virtual String ToString() const override {
     std::stringstream ss;
     ss << "MouseScrollEvent: " << m_YScroll << "vertical (" << m_XScroll << "horizantal)";
-    return ss.str();
+    return ss.str().c_str();
   }
 private:
   int m_XScroll, m_YScroll;
@@ -78,10 +78,10 @@ public:
   EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput);
   EVENT_CLASS_TYPE(MouseMove);
 
-  virtual std::string ToString() const override {
+  virtual String ToString() const override {
     std::stringstream ss;
     ss << "MouseMoveEvent: (x: " << m_MouseX << ", y: " << m_MouseY << ")";
-    return ss.str();
+    return ss.str().c_str();
   }
 private:
   float m_MouseX, m_MouseY;

@@ -26,10 +26,10 @@ public:
 
   EVENT_CLASS_TYPE(KeyPress);
 
-  virtual std::string ToString() const override {
+  virtual String ToString() const override {
     std::stringstream ss;
     ss << "KeyPressEvent: " << m_KeyCode;
-    return ss.str();
+    return ss.str().c_str();
   }
 };
 
@@ -40,10 +40,10 @@ public:
 
   EVENT_CLASS_TYPE(KeyRelease);
 
-  virtual std::string ToString() const override {
+  virtual String ToString() const override {
     std::stringstream ss;
     ss << "KeyReleaseEvent: " << m_KeyCode;
-    return ss.str();
+    return ss.str().c_str();
   }
 };
 
@@ -54,10 +54,10 @@ public:
 
   EVENT_CLASS_TYPE(KeyRepeat);
 
-  virtual std::string ToString() const override {
+  virtual String ToString() const override {
     std::stringstream ss;
     ss << "KeyRepeatEvent:" << m_KeyCode << "(" << m_KeyCode << " repeats)";
-    return ss.str();
+    return ss.str().c_str();
   }
 
 private:
