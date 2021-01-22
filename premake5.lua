@@ -23,7 +23,7 @@ project "Papaya"
     "thirdparty/spdlog/**.h"
   }
 
-  sysincludedirs {
+  includedirs {
     "thirdparty/spdlog/include",
     ".",
   }
@@ -35,8 +35,15 @@ project "Papaya"
     defines "PAPAYA_MACOS"
     xcodebuildsettings = { ["ALWAYS_SEARCH_USER_PATHS"] = "YES" }
 
+    sysincludedirs {
+      "thirdparty/spdlog/include",
+      ".",
+    }
+
   filter "system:windows"
     defines "PAPAYA_WINDOWS"
+    symbols "On"
+    buildoptions "-std=gnu++17"
 
   filter "system:linux"
     defines "PAPAYA_LINUX"
@@ -56,7 +63,7 @@ project "Sandbox"
     "tests/**.h",
   }
 
-  sysincludedirs {
+  includedirs {
     "include",
     "thirdparty/spdlog/include",
     ".",
@@ -67,10 +74,17 @@ project "Sandbox"
 
   filter "system:macosx"
     defines "PAPAYA_MACOS"
-    xcodebuildsettings = { ["ALWAYS_SEARCH_USER_PATHS"] = "YES" }
+    xcodebuildsettings = { ["ALWAYS_SEARCH_USER_PATHS"] = "YES" },
+
+    sysincludedirs {
+      "include",
+      "thirdparty/spdlog/include",
+      "."
+    }
 
   filter "system:windows"
     defines "PAPAYA_WINDOWS"
+    buildoptions "-std=gnu++17"
 
   filter "system:linux"
     defines "PAPAYA_LINUX"
