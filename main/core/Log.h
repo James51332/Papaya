@@ -6,6 +6,8 @@
 #include "spdlog/spdlog.h"
 #include "spdlog/fmt/ostr.h"
 
+#include "main/core/String.h"
+
 namespace Papaya
 {
 
@@ -34,6 +36,8 @@ private:
 #define PAPAYA_ERROR(...)        ::Papaya::Log::GetClientLogger()->error(__VA_ARGS__)
 #define PAPAYA_FATAL(...)        ::Papaya::Log::GetClientLogger()->fatal(__VA_ARGS__)
 
+#define PAPAYA_ASSERT(x, msg)     if (!x) { PAPAYA_CORE_ERROR(String("Failed Assert: ") + String(#msg)); }
+
 #else
 
 #define PAPAYA_CORE_INFO(...)
@@ -47,6 +51,8 @@ private:
 #define PAPAYA_WARN(...)
 #define PAPAYA_ERROR(...)
 #define PAPAYA_FATAL(...)
+
+#define PAPAYA_ASSERT(x, msg)
 
 #endif
 

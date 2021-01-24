@@ -6,6 +6,7 @@
 #ifdef PAPAYA_MACOS
 
 #include "Game.h"
+#include "Platform.h"
 
 namespace Papaya
 {
@@ -20,6 +21,8 @@ int main() {
   // Lifecycle of game on macOS
   Papaya::Log::OnInit();
   PAPAYA_CORE_INFO("Engine Initializing...");
+
+  Papaya::Platform::OnInit();
 
   auto game = Papaya::CreateGame();
   game->Run();

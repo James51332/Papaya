@@ -13,6 +13,8 @@
 
 #include "main/core/String.h"
 
+#include "main/core/Platform.h"
+
 namespace Papaya
 {
 
@@ -34,10 +36,11 @@ void Game::Run() {
   PAPAYA_CORE_INFO(EventQueue::PopEvent()); // Resize, Close, Mouse
   PAPAYA_CORE_INFO(EventQueue::PopEvent());
 
-  String s = "This is a custom papaya class";
+  String s = "This is printed from a Papaya String!";
   PAPAYA_CORE_INFO(s);
 
   while (true);
+  //Platform::OnUpdate();
 }
 
 } // namespace Papaya

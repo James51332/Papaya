@@ -17,8 +17,6 @@ project "Papaya"
   files {
     "main/**.cpp",
     "main/**.h",
-    "platform/**.cpp",
-    "platform/**.h",
     "include/**.h",
     "thirdparty/spdlog/**.h"
   }
@@ -38,6 +36,16 @@ project "Papaya"
     sysincludedirs {
       "thirdparty/spdlog/include",
       ".",
+    }
+
+    files {
+      "platform/macos/**.mm",
+      "platform/macos/**.cpp",
+      "platform/macos/**.h",
+    }
+
+    links {
+      "Cocoa.framework"
     }
 
   filter "system:windows"
@@ -81,6 +89,11 @@ project "Sandbox"
       "thirdparty/spdlog/include",
       "."
     }
+
+    links {
+      "Cocoa.framework"
+    }
+
 
   filter "system:windows"
     defines "PAPAYA_WINDOWS"
