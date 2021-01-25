@@ -51,7 +51,7 @@ String::String(String&& source)
   source.m_Chars = nullptr;
 }
 
-int String::Length() {
+int String::Length() const {
   return strlen(m_Chars);
 }
 
@@ -63,6 +63,10 @@ void String::Append(const String& str)
   m_Chars = new char[strlen(m_Chars) + strlen(str.m_Chars) + 1];
   strcpy(m_Chars + sizeof(m_Chars), str.m_Chars);
   m_Chars[strlen(m_Chars) - 1] = '\0';
+}
+
+const char* String::Raw() const {
+  return m_Chars;
 }
 
 std::ostream& operator<<(std::ostream& os, const String& s)

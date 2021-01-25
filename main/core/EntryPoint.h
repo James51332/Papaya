@@ -27,6 +27,8 @@ int main() {
   auto game = Papaya::CreateGame();
   game->Run();
   delete game;
+
+  Papaya::Platform::OnTerminate();
 }
 #endif // PAPAYA_MAIN
 #endif // PAPAYA_MACOS

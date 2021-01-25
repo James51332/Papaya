@@ -1,6 +1,5 @@
 #include "Game.h"
 
-#include "Log.h"
 
 #define PAPAYA_MAIN
 #include "EntryPoint.h"
@@ -11,15 +10,15 @@
 #include "main/events/AppEvent.h"
 #include "main/events/EventQueue.h"
 
+#include "main/core/Log.h"
 #include "main/core/String.h"
-
 #include "main/core/Platform.h"
 
 namespace Papaya
 {
 
 Game::Game() {
-
+  m_Window = Window::Create();
 }
 
 Game::~Game() {
@@ -27,20 +26,23 @@ Game::~Game() {
 }
 
 void Game::Run() {
-  // THE ENTRY TO ENGINE
-  EventQueue::PushEvent(CreateScope<WindowResizeEvent>(800, 600));
-  EventQueue::PushEvent(CreateScope<WindowCloseEvent>());
-  EventQueue::PushEvent(CreateScope<MousePressEvent>(0));
+  m_Window->Show();
 
-  PAPAYA_CORE_INFO(EventQueue::PopEvent()); // These should pop off in same order
-  PAPAYA_CORE_INFO(EventQueue::PopEvent()); // Resize, Close, Mouse
-  PAPAYA_CORE_INFO(EventQueue::PopEvent());
+  while (m_Running) {
+    Platform::OnUpdate(); // Poll Events
 
-  String s = "This is printed from a Papaya String!";
-  PAPAYA_CORE_INFO(s);
+    while (!EventQueue::Empty()) {
+      EventDispatcher e(EventQueue::PopEvent());
+      e.Dispatch<WindowCloseEvent>([&](Scope<WindowCloseEvent> e) -> bool {
+        m_Running = false;
+        return true;
+        });
+    }
 
-  while (true);
-  //Platform::OnUpdate();
+    // TODO: Consider creating a RunLoop class which will update the app for us. We could
+    // implement logic by having a new type of event immediately dispatched. This is not
+    // needed anytime soon but may be useful when this class becomes to cluttered.
+  }
 }
 
 } // namespace Papaya

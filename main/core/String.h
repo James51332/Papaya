@@ -14,10 +14,12 @@ public:
   String(const char* val);
   String(const String& source);
   String(String&& source);
+  String& operator=(const String&) = default;
   ~String() { delete m_Chars; }
 
-  int Length();
+  int Length() const;
   void Append(const String& s);
+  const char* Raw() const;
 
   friend std::ostream& operator<<(std::ostream& os, const String& s);
   friend String operator+(const String& lhs, const String& rhs);

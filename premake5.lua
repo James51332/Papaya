@@ -94,7 +94,6 @@ project "Sandbox"
       "Cocoa.framework"
     }
 
-
   filter "system:windows"
     defines "PAPAYA_WINDOWS"
     buildoptions "-std=gnu++17"
