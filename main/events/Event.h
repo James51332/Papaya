@@ -2,13 +2,13 @@
 #define Event_h
 
 
-#include "main/core/String.h"
+#include "main/utils/String.h"
+#include "main/utils/Memory.h"
 
 #include <ostream>
 #include <sstream>
 #include <functional>
 
-#include "main/core/Memory.h"
 
 // Based off of TheCherno/Hazel Event System
 // https://github.com/TheCherno/Hazel

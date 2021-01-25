@@ -6,7 +6,7 @@
 #include "spdlog/spdlog.h"
 #include "spdlog/fmt/ostr.h"
 
-#include "main/core/String.h"
+#include "main/utils/String.h"
 
 namespace Papaya
 {

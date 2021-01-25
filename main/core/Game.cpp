@@ -11,8 +11,9 @@
 #include "main/events/EventQueue.h"
 
 #include "main/core/Log.h"
-#include "main/core/String.h"
 #include "main/core/Platform.h"
+
+#include "main/utils/String.h"
 
 namespace Papaya
 {

@@ -1,7 +1,7 @@
 #ifndef Platform_h
 #define Platform_h
 
-#include "main/core/Memory.h"
+#include "main/utils/Memory.h"
 
 namespace Papaya
 {

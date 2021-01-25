@@ -1,8 +1,9 @@
 #ifndef Window_h
 #define Window_h
 
-#include "main/core/Memory.h"
-#include "main/core/String.h"
+#include "main/utils/Memory.h"
+#include "main/utils/String.h"
+
 #include "main/core/Log.h"
 
 #include <sstream>
@@ -21,7 +22,7 @@ struct WindowAttribs {
 
 class Window {
 public:
-  static Scope<Window> Create(const WindowAttribs& attribs = WindowAttribs()); // It's okay to copy because this won't happen frequently
+  static Scope<Window> Create(const WindowAttribs& attribs = WindowAttribs());
   virtual ~Window();
 
   virtual void Show() = 0;
