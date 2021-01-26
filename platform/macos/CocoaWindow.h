@@ -14,7 +14,7 @@ public:
   void Show();
   void Hide();
   void Close();
-
+  
 private:
   void* m_Window;
   void* m_Delegate;

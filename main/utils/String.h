@@ -9,23 +9,26 @@ namespace Papaya
 
 class String {
 public:
+  ~String() { delete[] m_Buffer; }
+
   String();
-  String(char* val);
-  String(const char* val);
-  String(const String& source);
-  String(String&& source);
-  String& operator=(const String&) = default;
-  ~String() { delete m_Chars; }
+  String(char* str);
+  String(const char* str);
 
-  int Length() const;
-  void Append(const String& s);
-  const char* Raw() const;
+  String(const String& str); // Copy Constructor
+  String(String&& str); // Move Constructor
 
-  friend std::ostream& operator<<(std::ostream& os, const String& s);
-  friend String operator+(const String& lhs, const String& rhs);
+  String& operator=(const String& str); // Copy Assignment Operator
+
+  int Length() const { return m_Size; }
+  const char* Raw() const { return m_Buffer; }
+
+  friend std::ostream& operator<<(std::ostream& stream, const String& string);
+  friend String operator+(const String& string, const String& other);
 
 private:
-  char* m_Chars;
+  char* m_Buffer;
+  size_t m_Size;
 };
 
 } // namespace Papaya

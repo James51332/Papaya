@@ -16,9 +16,19 @@ struct WindowAttribs {
   String Title;
   bool Resizable;
 
-  WindowAttribs(int width = 800, int height = 600, String title = "Papaya", bool resizable = false)
+  WindowAttribs(int width = 800, int height = 600, const String& title = "Papaya", bool resizable = false)
     : Width(width), Height(height), Title(title), Resizable(resizable) {}
+
+  String ToString() const {
+    std::stringstream ss;
+    ss << "(Width: " << Width << ", Height: " << Height << ", Title: " << Title << ", Resizable: " << (Resizable ? "Yes" : "No") << ")";
+    return ss.str().c_str();
+  }
 };
+
+inline std::ostream& operator<<(std::ostream& stream, const WindowAttribs& attribs) {
+  return stream << attribs.ToString();
+}
 
 class Window {
 public:
@@ -29,7 +39,7 @@ public:
   virtual void Hide() = 0;
   virtual void Close() = 0;
 
-  const WindowAttribs& GetAttribs() { return m_Attribs; }
+  const WindowAttribs& GetAttribs() { PAPAYA_CORE_TRACE(m_Attribs.Title + " GetAttribs()"); return m_Attribs; };
 
 protected:
   WindowAttribs m_Attribs;

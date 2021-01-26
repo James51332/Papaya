@@ -24,7 +24,7 @@
 namespace Papaya {
 
 CocoaWindow::CocoaWindow(const WindowAttribs& attribs) {
-    
+
   m_Attribs = attribs;
 
   // Create Window Frame
