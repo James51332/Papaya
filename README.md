@@ -9,7 +9,6 @@ There aren't many features right now but the goal will be to have a full framewo
 ## Building
 
 First clone the repository using:
+```git clone --recursive https://github.com/James51332/Papaya```
 
-'''git clone --recursive https://github.com/James51332/Papaya'''
-
-Make sure you have the required dependecies installed. Windows requires that you have cygwin, gnu-g++, and gmake installed to build. Run the build.bat and type '''make''' into the terminal in the root directory. MacOS requires the xcode build tools installed. Run the build.sh script and type '''make''' to build. 
+Make sure you have the required dependecies installed. Windows requires that you have cygwin, gnu-g++, and gmake installed to build. Run the build.bat and type ```make``` into the terminal in the root directory. MacOS requires the xcode build tools installed. Run the build.sh script and type ```make``` to build. 
