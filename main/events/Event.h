@@ -67,7 +67,7 @@ public:
     if (m_Event->GetEventType() == T::GetStaticType())
     {
       Scope<T> e(static_cast<T*>(m_Event.release()));
-      m_Event->Handled |= func(Move(e));
+      func(Move(e));
       return true;
     }
     return false;

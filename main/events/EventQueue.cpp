@@ -12,7 +12,7 @@ void EventQueue::PushEvent(Scope<Event> e) {
 [[nodiscard]] Scope<Event> EventQueue::PopEvent() {
   auto buffer = Move(s_Queue.back());
   s_Queue.pop_back();
-  return buffer;
+  return Move(buffer);
 }
 
 bool EventQueue::Empty() {

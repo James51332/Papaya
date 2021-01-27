@@ -39,7 +39,7 @@ public:
   virtual void Hide() = 0;
   virtual void Close() = 0;
 
-  const WindowAttribs& GetAttribs() { PAPAYA_CORE_TRACE(m_Attribs.Title + " GetAttribs()"); return m_Attribs; };
+  const WindowAttribs& GetAttribs() { return m_Attribs; };
 
 protected:
   WindowAttribs m_Attribs;

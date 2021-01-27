@@ -35,12 +35,15 @@ void Game::Run() {
   while (m_Running) {
     Platform::OnUpdate(); // Poll Events
 
-    while (!EventQueue::Empty()) {
-      EventDispatcher e(EventQueue::PopEvent());
-      e.Dispatch<WindowCloseEvent>([&](Scope<WindowCloseEvent> e) -> bool {
+    while (!EventQueue::Empty()) { // Process Events
+      Scope<Event> e(EventQueue::PopEvent());
+      PAPAYA_CORE_INFO(Move(e));
+      EventDispatcher ed(Move(e));
+
+      ed.Dispatch<WindowCloseEvent>([&](Scope<WindowCloseEvent> e) -> bool {
         m_Running = false;
         return true;
-        });
+      });
     }
 
     // TODO: Consider creating a RunLoop class which will update the app for us. We could
