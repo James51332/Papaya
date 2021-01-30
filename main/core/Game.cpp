@@ -14,8 +14,6 @@
 
 #include "main/utils/String.h"
 
-#include <iostream>
-
 namespace Papaya
 {
 
@@ -29,7 +27,6 @@ Game::~Game() {
 
 void Game::Run() {
   m_Window->Show();
-
   PAPAYA_CORE_TRACE("Created Window: {}", m_Window->GetAttribs());
 
   while (m_Running) {

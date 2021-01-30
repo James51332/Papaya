@@ -53,6 +53,11 @@ project "Papaya"
     symbols "On"
     buildoptions "-std=gnu++17"
 
+    files {
+      "platform/windows/**.cpp",
+      "platform/windows/**.h",
+    }
+
   filter "system:linux"
     defines "PAPAYA_LINUX"
 

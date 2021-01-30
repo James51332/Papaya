@@ -28,7 +28,7 @@ public:
 
 private:
   char* m_Buffer;
-  size_t m_Size;
+  unsigned long long m_Size;
 };
 
 } // namespace Papaya

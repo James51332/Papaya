@@ -7,6 +7,7 @@
 
 #include "Game.h"
 #include "Platform.h"
+#include "Log.h"
 
 namespace Papaya
 {
@@ -14,8 +15,6 @@ extern Game* CreateGame();
 } // namespace Papaya
 
 #ifdef PAPAYA_MAIN
-
-#include "Log.h"
 
 int main() {
   // Lifecycle of game on macOS
@@ -36,6 +35,8 @@ int main() {
 #ifdef PAPAYA_WINDOWS
 
 #include "Game.h"
+#include "Platform.h"
+#include "Log.h"
 
 namespace Papaya
 {
@@ -44,16 +45,18 @@ extern Game* CreateGame();
 
 #ifdef PAPAYA_MAIN
 
-#include "Log.h"
-
 int main() {
   // Lifecycle of game on windows
   Papaya::Log::OnInit();
   PAPAYA_CORE_INFO("Engine Initializing...");
 
+  Papaya::Platform::OnInit();
+
   auto game = Papaya::CreateGame();
   game->Run();
   delete game;
+
+  Papaya::Platform::OnTerminate();
 }
 #endif // PAPAYA_MAIN
 #endif // PAPAYA_WINDOWS

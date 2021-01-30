@@ -12,6 +12,8 @@ Makefile
 
 # VSCode
 .vs_code
+.vs
+.vscode
 
 # Prerequisites
 *.d

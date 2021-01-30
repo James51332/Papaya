@@ -1,6 +1,7 @@
 #include "Platform.h"
 
 #include "platform/macos/CocoaPlatform.h"
+#include "platform/windows/WindowsPlatform.h"
 
 #include "main/core/Log.h"
 
@@ -27,7 +28,7 @@ Scope<Platform> Platform::Create() {
 #endif
 
 #ifdef PAPAYA_WINDOWS
-
+  return CreateScope<WindowsPlatform>();
 #endif
 
   PAPAYA_ASSERT(false, "Unsupported Platform!");
