@@ -44,6 +44,5 @@ Makefile
 *.lib
 
 # Executables
-*.exe
 *.out
 *.app

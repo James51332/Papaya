@@ -49,11 +49,16 @@ namespace Papaya
         if (!::RegisterClassEx(&wc))
             PAPAYA_ASSERT(false, "Failed to Register Window Class!");
 
+        DWORD style = WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_MAXIMIZEBOX;
+
+        if (attribs.Resizable)
+            style |= WS_THICKFRAME;
+
         // TODO: Disable/Enable Resizability on Windows
         m_Hwnd = ::CreateWindowEx(WS_EX_OVERLAPPEDWINDOW, 
                                   "PapayaWindow", 
                                   attribs.Title.Raw(), 
-                                  WS_OVERLAPPEDWINDOW, 
+                                  style,
                                   CW_USEDEFAULT, 
                                   CW_USEDEFAULT, 
                                   attribs.Width, 

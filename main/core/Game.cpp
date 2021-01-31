@@ -18,7 +18,7 @@ namespace Papaya
 {
 
 Game::Game() {
-  m_Window = Window::Create();
+  m_Window = Window::Create(WindowAttribs(800, 600, "Papaya", true));
 }
 
 Game::~Game() {
