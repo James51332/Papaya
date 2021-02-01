@@ -14,6 +14,7 @@ public:
   void Run();
 private:
   Scope<Window> m_Window;
+  Ref<Context> m_Context;
 
   bool m_Running = true;
 };

@@ -6,6 +6,8 @@
 
 #include "main/core/Log.h"
 
+#include "main/renderer/Context.h"
+
 #include <sstream>
 
 namespace Papaya
@@ -39,11 +41,17 @@ public:
   virtual void Hide() = 0;
   virtual void Close() = 0;
 
-  const WindowAttribs& GetAttribs() { return m_Attribs; };
+  virtual void SetContext(const Ref<Context>& context) = 0;
+  const WindowAttribs& GetAttribs() const { return m_Attribs; }
 
 protected:
   WindowAttribs m_Attribs;
 };
+
+inline std::ostream& operator<<(std::ostream& os, const Scope<Window>& window)
+{
+  return os << window->GetAttribs();
+}
 
 } // namespace Papaya
 

@@ -9,7 +9,6 @@
 #include <sstream>
 #include <functional>
 
-
 // Based off of TheCherno/Hazel Event System
 // https://github.com/TheCherno/Hazel
 

@@ -19,6 +19,9 @@ namespace Papaya
 
 Game::Game() {
   m_Window = Window::Create(WindowAttribs(800, 600, "Papaya", true));
+
+  m_Context = Context::Create(RenderApi::OpenGL);
+  m_Window->SetContext(m_Context);
 }
 
 Game::~Game() {
@@ -27,7 +30,7 @@ Game::~Game() {
 
 void Game::Run() {
   m_Window->Show();
-  PAPAYA_CORE_TRACE("Created Window: {}", m_Window->GetAttribs());
+  PAPAYA_CORE_TRACE("Created Window: {}", m_Window);
 
   while (m_Running) {
     Platform::OnUpdate(); // Poll Events
@@ -40,7 +43,7 @@ void Game::Run() {
       ed.Dispatch<WindowCloseEvent>([&](Scope<WindowCloseEvent> e) -> bool {
         m_Running = false;
         return true;
-      });
+        });
     }
 
     // TODO: Consider creating a RunLoop class which will update the app for us. We could

@@ -30,8 +30,9 @@ project "Papaya"
     defines "PAPAYA_DEBUG"
 
   filter "system:macosx"
-    defines "PAPAYA_MACOS"
+    defines { "PAPAYA_MACOS", "GL_SILENCE_DEPRECATION", }
     xcodebuildsettings = { ["ALWAYS_SEARCH_USER_PATHS"] = "YES" }
+    buildoptions "-Wno-deprecated-declarations"
 
     sysincludedirs {
       "thirdparty/spdlog/include",
@@ -86,7 +87,8 @@ project "Sandbox"
     defines "PAPAYA_DEBUG"
 
   filter "system:macosx"
-    defines "PAPAYA_MACOS"
+    defines { "PAPAYA_MACOS", "GL_SILENCE_DEPRECATION", }
+    buildoptions "-Wno-deprecated-declarations"
     xcodebuildsettings = { ["ALWAYS_SEARCH_USER_PATHS"] = "YES" },
 
     sysincludedirs {

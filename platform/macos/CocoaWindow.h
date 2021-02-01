@@ -14,7 +14,9 @@ public:
   void Show();
   void Hide();
   void Close();
-  
+
+  void SetContext(const Ref<Context>& context);
+
 private:
   void* m_Window;
   void* m_Delegate;

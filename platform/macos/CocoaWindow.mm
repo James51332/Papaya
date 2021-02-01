@@ -3,6 +3,8 @@
 #include "main/events/EventQueue.h"
 #include "main/events/AppEvent.h"
 
+#include "platform/macos/CocoaContext.h"
+
 #include <Cocoa/Cocoa.h>
 
 @interface PWindow : NSWindow
@@ -72,11 +74,17 @@ void CocoaWindow::Show() {
 }
 
 void CocoaWindow::Hide() {
-
+  [(PWindow *)m_Window orderOut:nil];
 }
 
 void CocoaWindow::Close() {
   [(PWindow *)m_Window close];
+}
+
+void CocoaWindow::SetContext(const Ref<Context>& context)
+{
+  Ref<CocoaContext> ctx = std::static_pointer_cast<CocoaContext>(context);
+  [(PWindow *)m_Window setContentView: (NSView*) ctx->m_View];
 }
 
 } // namespace Papaya
