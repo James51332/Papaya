@@ -44,8 +44,8 @@ CocoaOpenGLContext::CocoaOpenGLContext()
     NSOpenGLPFADoubleBuffer,
     NSOpenGLPFADepthSize,
     32,
-    NSOpenGLPFAOpenGLProfile,
-    NSOpenGLProfileVersion4_1Core,
+    // NSOpenGLPFAOpenGLProfile,
+    // NSOpenGLProfileVersion4_1Core,
     0
   };
 
@@ -68,6 +68,11 @@ CocoaOpenGLContext::CocoaOpenGLContext()
 CocoaOpenGLContext::~CocoaOpenGLContext()
 {
 
+}
+
+void CocoaOpenGLContext::OnUpdate()
+{
+  [(NSOpenGLContext*) m_Context flushBuffer];
 }
 
 } // namespace Papaya

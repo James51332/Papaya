@@ -46,7 +46,8 @@ project "Papaya"
     }
 
     links {
-      "Cocoa.framework"
+      "Cocoa.framework",
+      "OpenGL.framework",
     }
 
   filter "system:windows"
@@ -98,7 +99,8 @@ project "Sandbox"
     }
 
     links {
-      "Cocoa.framework"
+      "Cocoa.framework",
+      "OpenGL.framework",
     }
 
   filter "system:windows"

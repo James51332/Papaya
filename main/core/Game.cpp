@@ -14,6 +14,9 @@
 
 #include "main/utils/String.h"
 
+#include <OpenGL/OpenGL.h>
+#include <OpenGL/gl.h>
+
 namespace Papaya
 {
 
@@ -34,6 +37,14 @@ void Game::Run() {
 
   while (m_Running) {
     Platform::OnUpdate(); // Poll Events
+
+    glBegin(GL_TRIANGLES);
+    glVertex2f(0.0f, 0.5f);
+    glVertex2f(0.5f, -0.5f);
+    glVertex2f(-0.5f, -0.5f);
+    glEnd();
+
+    m_Context->OnUpdate();
 
     while (!EventQueue::Empty()) { // Process Events
       Scope<Event> e(EventQueue::PopEvent());

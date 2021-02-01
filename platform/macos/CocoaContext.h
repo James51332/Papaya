@@ -19,6 +19,8 @@ public:
   static Ref<Context> Create(RenderApi api);
   virtual ~CocoaContext();
 
+  virtual void OnUpdate() = 0;
+
 protected:
   void* m_View;
 };
@@ -32,6 +34,8 @@ class CocoaOpenGLContext : public CocoaContext
 public:
   CocoaOpenGLContext();
   virtual ~CocoaOpenGLContext();
+
+  virtual void OnUpdate();
 
 private:
   void* m_Context;

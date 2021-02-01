@@ -17,6 +17,7 @@ public:
   virtual ~Context();
 
   RenderApi GetApi() const { return m_Api; }
+  virtual void OnUpdate() = 0;
 
 protected:
   RenderApi m_Api;
