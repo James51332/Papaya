@@ -11,9 +11,13 @@
 @end
 
 @implementation PWindow
+- (BOOL) acceptsMouseMovedEvents
+{
+  return YES;
+}
 @end
 
-@interface PWindowDelegate : NSObject<NSWindowDelegate>
+@interface PWindowDelegate : NSObject <NSWindowDelegate>
 @end
 
 @implementation PWindowDelegate
@@ -30,7 +34,6 @@ CocoaWindow::CocoaWindow(const WindowAttribs& attribs) {
   m_Attribs = attribs;
 
   // Create Window Frame
-
   int width = attribs.Width > 0 ? attribs.Width : 800;
   int height = attribs.Height > 0 ? attribs.Height : 800;
   NSRect frame = NSMakeRect(0.0, 0.0, width, height);
@@ -84,7 +87,9 @@ void CocoaWindow::Close() {
 void CocoaWindow::SetContext(const Ref<Context>& context)
 {
   Ref<CocoaContext> ctx = std::static_pointer_cast<CocoaContext>(context);
+  
   [(PWindow *)m_Window setContentView: (NSView*) ctx->m_View];
+  [(PWindow *)m_Window makeFirstResponder: (NSView*) ctx->m_View];
 }
 
 } // namespace Papaya

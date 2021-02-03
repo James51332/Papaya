@@ -23,6 +23,8 @@ public:
 
 protected:
   void* m_View;
+
+  static bool s_KeyCodesInitialized;
 };
 
 ////////////////////////////////////////////
@@ -35,7 +37,7 @@ public:
   CocoaOpenGLContext();
   virtual ~CocoaOpenGLContext();
 
-  virtual void OnUpdate();
+  void OnUpdate();
 
 private:
   void* m_Context;

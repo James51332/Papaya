@@ -2,26 +2,27 @@
 #define KeyEvent_h
 
 #include "Event.h"
+#include "main/core/KeyCode.h"
 
 namespace Papaya
 {
 
 class KeyEvent : public Event {
 public:
-  inline int GetKeyCode() const { return m_KeyCode; }
+  inline KeyCode GetKeyCode() const { return m_KeyCode; }
 
   EVENT_CLASS_CATEGORY(EventCategoryKeyboard | EventCategoryInput);
 
 protected:
-  KeyEvent(int keyCode)
+  KeyEvent(KeyCode keyCode)
     : m_KeyCode(keyCode) {}
 
-  int m_KeyCode;
+  KeyCode m_KeyCode;
 };
 
 class KeyPressEvent : public KeyEvent {
 public:
-  KeyPressEvent(int keyCode)
+  KeyPressEvent(KeyCode keyCode)
     : KeyEvent(keyCode) {}
 
   EVENT_CLASS_TYPE(KeyPress);
@@ -35,7 +36,7 @@ public:
 
 class KeyReleaseEvent : public KeyEvent {
 public:
-  KeyReleaseEvent(int keyCode)
+  KeyReleaseEvent(KeyCode keyCode)
     : KeyEvent(keyCode) {}
 
   EVENT_CLASS_TYPE(KeyRelease);
@@ -49,7 +50,7 @@ public:
 
 class KeyRepeatEvent : public KeyEvent {
 public:
-  KeyRepeatEvent(int keyCode, int repeatCount)
+  KeyRepeatEvent(KeyCode keyCode, int repeatCount)
     : KeyEvent(keyCode), m_RepeatCount(repeatCount) {}
 
   EVENT_CLASS_TYPE(KeyRepeat);

@@ -22,9 +22,9 @@ void CocoaPlatform::Init() {
 void CocoaPlatform::Update() {
   for (;;) {
     NSEvent* event = [NSApp nextEventMatchingMask: NSEventMaskAny
-                                                untilDate: [NSDate distantPast]
-                                                   inMode: NSDefaultRunLoopMode
-                                                  dequeue: YES];
+                                        untilDate: [NSDate distantPast]
+                                           inMode: NSDefaultRunLoopMode
+                                          dequeue: YES];
 
     if (!event)
       break;

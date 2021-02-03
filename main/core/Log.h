@@ -36,7 +36,7 @@ private:
 #define PAPAYA_ERROR(...)        ::Papaya::Log::GetClientLogger()->error(__VA_ARGS__)
 #define PAPAYA_FATAL(...)        ::Papaya::Log::GetClientLogger()->fatal(__VA_ARGS__)
 
-#define PAPAYA_ASSERT(x, msg)     if (!x) { PAPAYA_CORE_ERROR(String("Failed Assert: ") + String(#msg)); }
+#define PAPAYA_ASSERT(x, msg)     if (!x) { PAPAYA_CORE_ERROR(::Papaya::String("Failed Assert: ") + ::Papaya::String(#msg)); }
 
 #else
 

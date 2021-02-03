@@ -2,26 +2,27 @@
 #define MouseEvent_h
 
 #include "Event.h"
+#include "main/core/MouseCode.h"
 
 namespace Papaya
 {
 
 class MouseButtonEvent : public Event {
 public:
-  int GetMouseCode() const { return m_MouseCode; }
+  MouseCode GetMouseCode() const { return m_MouseCode; }
 
   EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput);
 
 protected:
-  MouseButtonEvent(int mouseCode)
+  MouseButtonEvent(MouseCode mouseCode)
     : m_MouseCode(mouseCode) {}
 
-  int m_MouseCode;
+  MouseCode m_MouseCode;
 };
 
 class MousePressEvent : public MouseButtonEvent {
 public:
-  MousePressEvent(int mouseCode)
+  MousePressEvent(MouseCode mouseCode)
     : MouseButtonEvent(mouseCode) {}
 
   EVENT_CLASS_TYPE(MousePress);
@@ -35,7 +36,7 @@ public:
 
 class MouseReleaseEvent : public MouseButtonEvent {
 public:
-  MouseReleaseEvent(int mouseCode)
+  MouseReleaseEvent(MouseCode mouseCode)
     : MouseButtonEvent(mouseCode) {}
 
   EVENT_CLASS_TYPE(MouseRelease);
