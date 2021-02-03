@@ -7,7 +7,7 @@ namespace Papaya
 enum KeyCode
 {
   KeyNone = 0,
-  KeyA,
+  KeyA = 1,
   KeyB,
   KeyC,
   KeyD,

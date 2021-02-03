@@ -67,15 +67,15 @@ void InitCocoaInputCodes()
   CocoaKeyCodes[111]  = Papaya::KeyF12;
   // CocoaKeyCodes[0] = Papaya::KeyFn; // 13 Fn Keys
 
-  CocoaKeyCodes[0]    = Papaya::KeyDash;
-  CocoaKeyCodes[0]    = Papaya::KeyGrave;
-  CocoaKeyCodes[0]    = Papaya::KeyEquals;
-  CocoaKeyCodes[0]    = Papaya::KeyLeftBracket;
-  CocoaKeyCodes[0]    = Papaya::KeyRightBracket;
-  CocoaKeyCodes[0]    = Papaya::KeyBackslash;
-  CocoaKeyCodes[0]    = Papaya::KeySlash;
-  CocoaKeyCodes[0]    = Papaya::KeyPeriod;
-  CocoaKeyCodes[0]    = Papaya::KeyComma; // 9 Misc Keys
+  CocoaKeyCodes[27]   = Papaya::KeyDash;
+  CocoaKeyCodes[50]   = Papaya::KeyGrave;
+  CocoaKeyCodes[24]   = Papaya::KeyEquals;
+  CocoaKeyCodes[33]   = Papaya::KeyLeftBracket;
+  CocoaKeyCodes[30]   = Papaya::KeyRightBracket;
+  CocoaKeyCodes[42]   = Papaya::KeyBackslash;
+  CocoaKeyCodes[44]   = Papaya::KeySlash;
+  CocoaKeyCodes[47]   = Papaya::KeyPeriod;
+  CocoaKeyCodes[43]   = Papaya::KeyComma; // 9 Misc Keys
 
   // CocoaKeyCodes[0] = Papaya::KeyControl;
   // CocoaKeyCodes[0] = Papaya::KeyAlt;

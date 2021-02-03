@@ -93,6 +93,7 @@
 - (void) keyDown:(NSEvent *)event
 {
   Papaya::EventQueue::PushEvent(Papaya::CreateScope<Papaya::KeyPressEvent>(Papaya::CocoaKeyCodeToPapayaKeyCode([event keyCode])));
+  PAPAYA_CORE_INFO("NSKeyCode: {}", [event keyCode]);
 }
 
 - (void) keyUp:(NSEvent *)event
@@ -153,15 +154,13 @@
   return YES;
 }
 
-- (BOOL)canBecomeKeyView
-{
+- (BOOL)canBecomeKeyView {
     return YES;
 }
 
 - (BOOL) acceptsFirstResponder {
   return YES;
 }
-
 @end
 
 namespace Papaya
