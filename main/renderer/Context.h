@@ -21,6 +21,8 @@ public:
 
 protected:
   RenderApi m_Api;
+
+  static bool s_OpenGLInitialized;
 };
 
 } // namespace Papaya

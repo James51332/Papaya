@@ -93,7 +93,6 @@
 - (void) keyDown:(NSEvent *)event
 {
   Papaya::EventQueue::PushEvent(Papaya::CreateScope<Papaya::KeyPressEvent>(Papaya::CocoaKeyCodeToPapayaKeyCode([event keyCode])));
-  PAPAYA_CORE_INFO("NSKeyCode: {}", [event keyCode]);
 }
 
 - (void) keyUp:(NSEvent *)event
@@ -211,8 +210,8 @@ CocoaOpenGLContext::CocoaOpenGLContext()
     NSOpenGLPFADoubleBuffer,
     NSOpenGLPFADepthSize,
     32,
-    // NSOpenGLPFAOpenGLProfile,
-    // NSOpenGLProfileVersion4_1Core,
+    NSOpenGLPFAOpenGLProfile,
+    NSOpenGLProfileVersion4_1Core,
     0
   };
 
