@@ -14,7 +14,7 @@ class EventQueue {
 public:
   static void PushEvent(Scope<Event> event);
 
-  // Pops the last element on the EventQueue. It is stored in a buffer and only valid until the next event is popped.
+  // Pops the last element on the EventQueue. Undefined Behavior if list is empty
   static Scope<Event> PopEvent();
   static bool Empty();
 private:

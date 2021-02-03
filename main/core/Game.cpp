@@ -38,7 +38,7 @@ void Game::Run() {
   while (m_Running) {
     Platform::OnUpdate(); // Poll Events
 
-    glBegin(GL_TRIANGLES);
+    glBegin(GL_TRIANGLES); // Render
     glVertex2f(0.0f, 0.5f);
     glVertex2f(0.5f, -0.5f);
     glVertex2f(-0.5f, -0.5f);

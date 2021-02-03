@@ -21,10 +21,28 @@
 @end
 
 @implementation PWindowDelegate
+
 - (BOOL)windowShouldClose:(NSWindow *)sender {
   Papaya::EventQueue::PushEvent(Papaya::CreateScope<Papaya::WindowCloseEvent>());
   return NO;
 }
+
+- (NSSize)windowWillResize:(NSWindow *)sender toSize:(NSSize)frameSize 
+{
+  Papaya::EventQueue::PushEvent(Papaya::CreateScope<Papaya::WindowResizeEvent>(frameSize.width, frameSize.height));
+  return frameSize;
+}
+
+- (void)windowDidBecomeKey:(NSNotification *)notification
+{
+  Papaya::EventQueue::PushEvent(Papaya::CreateScope<Papaya::WindowFocusEvent>());
+}
+
+- (void)windowDidResignKey:(NSNotification *)notification
+{
+  Papaya::EventQueue::PushEvent(Papaya::CreateScope<Papaya::WindowLoseFocusEvent>());
+}
+
 @end
 
 namespace Papaya {

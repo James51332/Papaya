@@ -29,6 +29,14 @@ project "Papaya"
   filter "configurations:Debug"
     defines "PAPAYA_DEBUG"
 
+  filter "configurations:Release"
+    defines "PAPAYA_RELEASE"
+    optimize "On"
+
+  filter "configurations:Dist"
+    defines "PAPAYA_DIST"
+    optimize "Full"
+
   filter "system:macosx"
     defines { "PAPAYA_MACOS", "GL_SILENCE_DEPRECATION", }
     xcodebuildsettings = { ["ALWAYS_SEARCH_USER_PATHS"] = "YES" }
@@ -86,6 +94,14 @@ project "Sandbox"
 
   filter "configurations:Debug"
     defines "PAPAYA_DEBUG"
+
+  filter "configurations:Release"
+    defines "PAPAYA_RELEASE"
+    optimize "On"
+
+  filter "configurations:Dist"
+    defines "PAPAYA_DIST"
+    optimize "Full"
 
   filter "system:macosx"
     defines { "PAPAYA_MACOS", "GL_SILENCE_DEPRECATION", }

@@ -61,7 +61,7 @@ public:
 
   virtual String ToString() const override {
     std::stringstream ss;
-    ss << "MouseScrollEvent: " << m_YScroll << "vertical (" << m_XScroll << "horizantal)";
+    ss << "MouseScrollEvent: " << m_YScroll << " vertical (" << m_XScroll << " horizantal)";
     return ss.str().c_str();
   }
 private:

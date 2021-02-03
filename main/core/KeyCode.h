@@ -71,11 +71,11 @@ enum KeyCode
 
   KeyControl,
   KeyAlt,
+  KeyCaps,
   KeyTab,
   KeyEscape,
   KeyBackspace,
-  KeyLeftShift,
-  KeyRightShift,
+  KeyShift,
   KeyEnter, // 8 Modifier Keys
 
   KeyUp,
@@ -85,7 +85,7 @@ enum KeyCode
 
 }; // 72 Total Keys
 
-#define PAPAYA_TOTAL_KEYCODES 72
+#define PAPAYA_TOTAL_KEYCODES 73
 
 } // namespace Papaya
 
