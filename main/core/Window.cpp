@@ -9,15 +9,21 @@ namespace Papaya
 {
 
 Scope<Window> Window::Create(const WindowAttribs& attribs) {
+  Scope<Window> window;
+
 #ifdef PAPAYA_MACOS
-  return CreateScope<CocoaWindow>(attribs);
+  window = CreateScope<CocoaWindow>(attribs);
+  PAPAYA_CORE_INFO("Created Window: {}", m_Window);
+  return Move(window);
 #endif
 
 #ifdef PAPAYA_WINDOWS
-  return CreateScope<WindowsWindow>(attribs);
+  window = CreateScope<WindowsWindow>(attribs);
+  PAPAYA_CORE_INFO("Created Window: {}", m_Window);
+  return Move(window);
 #endif
 
-  PAPAYA_ASSERT(false, "Unsupported Platform!");
+  PAPAYA_ASSERT(false, "Window Creation is not supported on this platform!");
   return nullptr;
 }
 
