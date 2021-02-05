@@ -8,16 +8,18 @@
 namespace Papaya
 {
 
+class Window;
+
 // The Context class creates a context according to platform which creates a context according
 // to the RenderApi. This allows for an extensible system with whichever api's we choose.
 class Context
 {
 public:
-  static Ref<Context> Create(RenderApi api);
+  static Ref<Context> Create(const Scope<Window>& window, RenderApi api);
   virtual ~Context();
 
   RenderApi GetApi() const { return m_Api; }
-  virtual void OnUpdate() = 0;
+  virtual void SwapBuffers() = 0;
 
 protected:
   RenderApi m_Api;

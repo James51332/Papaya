@@ -20,6 +20,10 @@ public:
     void Hide();
     void Close();
 
+    void OnUpdate();
+
+    void SetContext(const Ref<Context> &context);
+
 private:
 #ifdef PAPAYA_WINDOWS
     HWND m_Hwnd;

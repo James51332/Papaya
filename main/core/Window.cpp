@@ -1,5 +1,7 @@
 #include "Window.h"
 
+#include "main/renderer/Context.h"
+
 #include "platform/macos/CocoaWindow.h"
 #include "platform/windows/WindowsWindow.h"
 
@@ -10,16 +12,25 @@ namespace Papaya
 
 Scope<Window> Window::Create(const WindowAttribs& attribs) {
   Scope<Window> window;
+  Ref<Context> context;
 
 #ifdef PAPAYA_MACOS
   window = CreateScope<CocoaWindow>(attribs);
-  PAPAYA_CORE_INFO("Created Window: {}", m_Window);
+  context = Context::Create(window, attribs.Api);
+
+  window->SetContext(context);
+
+  PAPAYA_CORE_INFO("Created Window: {}", window);
   return Move(window);
 #endif
 
 #ifdef PAPAYA_WINDOWS
   window = CreateScope<WindowsWindow>(attribs);
-  PAPAYA_CORE_INFO("Created Window: {}", m_Window);
+  context = Context::Create(window, attribs.Api);
+
+  window->SetContext(context);
+
+  PAPAYA_CORE_INFO("Created Window: {}", window);
   return Move(window);
 #endif
 

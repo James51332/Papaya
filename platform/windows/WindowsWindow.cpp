@@ -1,5 +1,7 @@
 #include "WindowsWindow.h"
 
+#include "main/renderer/Context.h"
+
 #include "main/events/AppEvent.h"
 #include "main/events/EventQueue.h"
 
@@ -43,7 +45,7 @@ namespace Papaya
         wc.hInstance = NULL;
         wc.lpszClassName = "PapayaWindow";
         wc.lpszMenuName = "";
-        wc.style = 0;
+        wc.style = CS_OWNDC | CS_HREDRAW | CS_VREDRAW;
         wc.lpfnWndProc = &WndProc;
 
         if (!::RegisterClassEx(&wc))
@@ -86,6 +88,16 @@ namespace Papaya
     }
 
     void WindowsWindow::Close() {
+
+    }
+
+    void WindowsWindow::OnUpdate()
+    {
+       // m_Context->SwapBuffers();
+    }
+
+    void WindowsWindow::SetContext(const Ref<Context> &context)
+    {
 
     }
 

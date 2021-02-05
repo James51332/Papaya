@@ -6,20 +6,23 @@
 
 #include "main/core/Log.h"
 
-#include "main/renderer/Context.h"
+#include "main/renderer/RenderApi.h"
 
 #include <sstream>
 
 namespace Papaya
 {
 
+class Context;
+
 struct WindowAttribs {
   int Width, Height;
   String Title;
   bool Resizable;
+  RenderApi Api;
 
-  WindowAttribs(int width = 800, int height = 600, const String& title = "Papaya", bool resizable = false)
-    : Width(width), Height(height), Title(title), Resizable(resizable) {}
+  WindowAttribs(int width = 800, int height = 600, const String& title = "Papaya", bool resizable = false, RenderApi api = RenderApi::OpenGL)
+    : Width(width), Height(height), Title(title), Resizable(resizable), Api(api) {}
 
   String ToString() const {
     std::stringstream ss;
@@ -41,11 +44,14 @@ public:
   virtual void Hide() = 0;
   virtual void Close() = 0;
 
+  virtual void OnUpdate() = 0;
+
   virtual void SetContext(const Ref<Context>& context) = 0;
   const WindowAttribs& GetAttribs() const { return m_Attribs; }
 
 protected:
   WindowAttribs m_Attribs;
+  Ref<Context> m_Context;
 };
 
 inline std::ostream& operator<<(std::ostream& os, const Scope<Window>& window)
