@@ -14,7 +14,9 @@
 
 #include "main/utils/String.h"
 
-#include "platform/OpenGL/OpenGLLoader.h"
+//#include "platform/OpenGL/OpenGLLoader.h"
+
+#include <GL/GL.h>
 
 namespace Papaya
 {
@@ -121,6 +123,12 @@ void Game::Run() {
         return true;
       });
     }
+
+    // glClear(GL_TRIANGLES);
+    // glVertex2f(0.0f, 0.5f);
+    // glVertex2f(0.5f, 0.5f);
+    // glVertex2f(-0.5f, -0.5f);
+    // glEnd();
 
       // glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
       // glClear(GL_COLOR_BUFFER_BIT);

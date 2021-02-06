@@ -18,7 +18,8 @@ project "Papaya"
     "main/**.cpp",
     "main/**.h",
     "include/**.h",
-    "thirdparty/spdlog/**.h"
+    "thirdparty/spdlog/**.h",
+    "thirdparty/opengl/**.h"
   }
 
   includedirs {
@@ -66,6 +67,13 @@ project "Papaya"
     files {
       "platform/windows/**.cpp",
       "platform/windows/**.h",
+    }
+
+    links {
+      "kernel32",
+      "gdi32",
+      "OpenGL32",
+      "user32",
     }
 
   filter "system:linux"
@@ -122,6 +130,13 @@ project "Sandbox"
   filter "system:windows"
     defines "PAPAYA_WINDOWS"
     buildoptions "-std=gnu++17"
+
+    links {
+      "kernel32",
+      "gdi32",
+      "OpenGL32",
+      "user32",
+    }
 
   filter "system:linux"
     defines "PAPAYA_LINUX"

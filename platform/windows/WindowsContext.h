@@ -3,6 +3,10 @@
 
 #include "main/renderer/Context.h"
 
+#ifdef PAPAYA_WINDOWS
+#include <Windows.h>
+#endif
+
 namespace Papaya
 {
 
@@ -30,6 +34,12 @@ public:
     virtual ~WindowsOpenGLContext();
 
     void SwapBuffers();
+
+private:
+    #ifdef PAPAYA_WINDOWS
+    HDC m_Hdc;
+    HGLRC m_Hglrc;
+    #endif
 };
 
 } // namespace Papaya

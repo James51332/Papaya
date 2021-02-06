@@ -34,7 +34,7 @@ namespace Papaya
     WindowsWindow::WindowsWindow(const WindowAttribs &attribs) {
         m_Attribs = attribs;
 
-        WNDCLASSEX wc;
+        WNDCLASSEX wc; 
         wc.cbClsExtra = 0;
         wc.cbSize = sizeof(WNDCLASSEX);
         wc.cbWndExtra = 0;
@@ -59,7 +59,7 @@ namespace Papaya
         // TODO: Disable/Enable Resizability on Windows
         m_Hwnd = ::CreateWindowEx(WS_EX_OVERLAPPEDWINDOW, 
                                   "PapayaWindow", 
-                                  attribs.Title.Raw(), 
+                                  "Test",  //attribs.Title.Raw(), 
                                   style,
                                   CW_USEDEFAULT, 
                                   CW_USEDEFAULT, 
@@ -93,12 +93,12 @@ namespace Papaya
 
     void WindowsWindow::OnUpdate()
     {
-       // m_Context->SwapBuffers();
+        m_Context->SwapBuffers();
     }
 
     void WindowsWindow::SetContext(const Ref<Context> &context)
     {
-
+        m_Context = context;
     }
 
 } // namespace Papaya

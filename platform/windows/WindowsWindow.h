@@ -3,15 +3,18 @@
 
 #include "main/core/Window.h"
 
+#include "platform/windows/WindowsContext.h"
+
 #ifdef PAPAYA_WINDOWS
 #include <Windows.h>
 #endif
 
 namespace Papaya
 {
-    
+
 class WindowsWindow : public Window
 {
+    friend WindowsOpenGLContext;
 public:
     WindowsWindow(const WindowAttribs &attribs);
     virtual ~WindowsWindow();

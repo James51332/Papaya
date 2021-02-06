@@ -36,6 +36,7 @@ inline std::ostream& operator<<(std::ostream& stream, const WindowAttribs& attri
 }
 
 class Window {
+  friend class Context;
 public:
   static Scope<Window> Create(const WindowAttribs& attribs = WindowAttribs());
   virtual ~Window();
