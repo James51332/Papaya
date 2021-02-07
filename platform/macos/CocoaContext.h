@@ -16,10 +16,10 @@ class CocoaContext : public Context
 {
   friend class CocoaWindow;
 public:
-  static Ref<Context> Create(RenderApi api);
+  static Ref<Context> Create(const Scope<Window>& window, RenderApi api);
   virtual ~CocoaContext();
 
-  virtual void OnUpdate() = 0;
+  virtual void SwapBuffers() = 0;
 
 protected:
   void* m_View;
@@ -34,10 +34,10 @@ protected:
 class CocoaOpenGLContext : public CocoaContext
 {
 public:
-  CocoaOpenGLContext();
+  CocoaOpenGLContext(const Scope<Window>& window);
   virtual ~CocoaOpenGLContext();
 
-  void OnUpdate();
+  void SwapBuffers();
 
 private:
   void* m_Context;

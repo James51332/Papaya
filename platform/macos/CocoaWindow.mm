@@ -104,10 +104,16 @@ void CocoaWindow::Close() {
 
 void CocoaWindow::SetContext(const Ref<Context>& context)
 {
+  m_Context = context;
   Ref<CocoaContext> ctx = std::static_pointer_cast<CocoaContext>(context);
   
   [(PWindow *)m_Window setContentView: (NSView*) ctx->m_View];
   [(PWindow *)m_Window makeFirstResponder: (NSView*) ctx->m_View];
+}
+
+void CocoaWindow::OnUpdate()
+{
+  m_Context->SwapBuffers();
 }
 
 } // namespace Papaya

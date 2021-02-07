@@ -1,5 +1,6 @@
 #include "CocoaContext.h"
 
+#include "main/core/Window.h"
 #include "main/core/Log.h"
 
 #include "main/events/MouseEvent.h"
@@ -171,7 +172,7 @@ namespace Papaya
 
 bool CocoaContext::s_KeyCodesInitialized = false;
 
-Ref<Context> CocoaContext::Create(RenderApi api)
+Ref<Context> CocoaContext::Create(const Scope<Window>& window, RenderApi api)
 {
   if (!s_KeyCodesInitialized)
   {
@@ -182,7 +183,7 @@ Ref<Context> CocoaContext::Create(RenderApi api)
   switch (api)
   {
     case RenderApi::OpenGL: {
-      return CreateRef<CocoaOpenGLContext>();
+      return CreateRef<CocoaOpenGLContext>(window);
       break;
     }
 
@@ -202,7 +203,7 @@ CocoaContext::~CocoaContext()
 ///// CocoaOpenGLContext ///////////////////
 ////////////////////////////////////////////
 
-CocoaOpenGLContext::CocoaOpenGLContext()
+CocoaOpenGLContext::CocoaOpenGLContext(const Scope<Window>& window)
 {
   m_Api = RenderApi::OpenGL;
 
@@ -236,7 +237,7 @@ CocoaOpenGLContext::~CocoaOpenGLContext()
 
 }
 
-void CocoaOpenGLContext::OnUpdate()
+void CocoaOpenGLContext::SwapBuffers()
 {
   [(NSOpenGLContext*) m_Context flushBuffer];
 }

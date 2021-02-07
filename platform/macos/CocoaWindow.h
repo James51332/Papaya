@@ -16,6 +16,7 @@ public:
   void Close();
 
   void SetContext(const Ref<Context>& context);
+  void OnUpdate();
 
 private:
   void* m_Window;

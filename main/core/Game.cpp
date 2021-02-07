@@ -15,8 +15,7 @@
 #include "main/utils/String.h"
 
 //#include "platform/OpenGL/OpenGLLoader.h"
-
-#include <GL/GL.h>
+//#include <GL/GL.h>
 
 namespace Papaya
 {
@@ -121,7 +120,7 @@ void Game::Run() {
       ed.Dispatch<WindowCloseEvent>([&](Scope<WindowCloseEvent> e) -> bool {
         m_Running = false;
         return true;
-      });
+        });
     }
 
     // glClear(GL_TRIANGLES);
@@ -139,11 +138,11 @@ void Game::Run() {
       // glDrawArrays(GL_TRIANGLES, 0, 6); // set the count to 6 since we're drawing 6 vertices now (2 triangles); not 3!
       // // // glBindVertexArray(0); // no need to unbind it every time
 
-      m_Window->OnUpdate(); // Swap Buffers
+    m_Window->OnUpdate(); // Swap Buffers
 
-    // TODO: Consider creating a RunLoop class which will update the app for us. We could
-    // implement logic by having a new type of event immediately dispatched. This is not
-    // needed anytime soon but may be useful when this class becomes to cluttered.
+  // TODO: Consider creating a RunLoop class which will update the app for us. We could
+  // implement logic by having a new type of event immediately dispatched. This is not
+  // needed anytime soon but may be useful when this class becomes to cluttered.
   }
 }
 
