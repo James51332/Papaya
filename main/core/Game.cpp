@@ -14,12 +14,7 @@
 
 #include "main/utils/String.h"
 
-<<<<<<< HEAD
 #include "platform/OpenGL/OpenGLLoader.h"
-=======
-//#include "platform/OpenGL/OpenGLLoader.h"
-//#include <GL/GL.h>
->>>>>>> 8effb5cc96325cfc16d1b7b7627cb53f3f7e9f9d
 
 namespace Papaya
 {
