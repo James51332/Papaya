@@ -225,6 +225,7 @@ typedef bool GLboolean;
     GLE(void,      DeleteFramebuffers,      GLsizei n, const GLuint *framebuffers) \
     GLE(void,      DeleteShader,            GLuint target) \
     GLE(void,      DrawArrays,              GLenum, GLint, GLint) \
+    GLE(void,      DrawElements,            GLenum, GLsizei, GLenum, const GLvoid *) \
     GLE(void,      EnableVertexAttribArray, GLuint index) \
     GLE(void,      DrawBuffers,             GLsizei n, const GLenum *bufs) \
     GLE(void,      FramebufferTexture2D,    GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level) \

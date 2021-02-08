@@ -3,6 +3,10 @@
 
 #include "main/core/Window.h"
 
+#include "main/utils/Memory.h"
+
+#include "main/renderer/Buffer.h"
+
 namespace Papaya
 {
 

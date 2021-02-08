@@ -19,7 +19,6 @@ project "Papaya"
     "main/**.h",
     "include/**.h",
     "thirdparty/spdlog/**.h",
-    "thirdparty/opengl/**.h"
   }
 
   includedirs {
@@ -52,6 +51,8 @@ project "Papaya"
       "platform/macos/**.mm",
       "platform/macos/**.cpp",
       "platform/macos/**.h",
+      "platform/opengl/**.cpp",
+      "platform/opengl/**.h",
     }
 
     links {
