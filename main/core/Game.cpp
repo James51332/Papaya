@@ -86,7 +86,7 @@ void Game::Run() {
   glBindVertexArray(VAO);
   vertexBuffer->Bind();
   indexBuffer->Bind();
-  
+
   glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
   glEnableVertexAttribArray(0);
   glBindVertexArray(0);
@@ -97,7 +97,7 @@ void Game::Run() {
     while (!EventQueue::Empty()) // Process Events
     {
       Scope<Event> e(EventQueue::PopEvent());
-      PAPAYA_CORE_INFO(Move(e));
+      PAPAYA_CORE_INFO(e);
       EventDispatcher ed(Move(e));
 
       ed.Dispatch<WindowCloseEvent>([&](Scope<WindowCloseEvent> e) -> bool {
@@ -110,7 +110,7 @@ void Game::Run() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     glUseProgram(shaderProgram);
-    glBindVertexArray(VAO); 
+    glBindVertexArray(VAO);
     indexBuffer->Bind();
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
