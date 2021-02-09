@@ -16,6 +16,7 @@
 
 #include "main/renderer/Buffer.h"
 #include "main/renderer/Shader.h"
+#include "main/renderer/VertexArray.h"
 
 #include "platform/OpenGL/OpenGLLoader.h"
 
@@ -36,7 +37,7 @@ void Game::Run() {
   Ref<Buffer> vertexBuffer;
   Ref<Buffer> indexBuffer;
   Ref<Shader> shader;
-  GLuint VAO;
+  Ref<VertexArray> vertexArray;
 
   const char* vertexShaderSource = "#version 330 core\n"
     "layout (location = 0) in vec3 aPos;\n"
@@ -69,17 +70,16 @@ void Game::Run() {
     3, 4, 5
   };
 
-  glGenVertexArrays(1, &VAO);
+  vertexArray = VertexArray::Create();
   indexBuffer = Buffer::Create(indices, sizeof(indices), BufferType::Index);
   vertexBuffer = Buffer::Create(vertices, sizeof(vertices), BufferType::Vertex);
 
-  glBindVertexArray(VAO);
-  vertexBuffer->Bind();
-  indexBuffer->Bind();
+  vertexArray->SetVertexBuffer(vertexBuffer);
+  vertexArray->SetIndexBuffer(indexBuffer);
 
+  vertexArray->Bind();
   glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
   glEnableVertexAttribArray(0);
-  glBindVertexArray(0);
 
   while (m_Running) {
     Platform::OnUpdate(); // Poll Events
@@ -100,8 +100,8 @@ void Game::Run() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     shader->Bind();
-    glBindVertexArray(VAO);
-    indexBuffer->Bind();
+    vertexArray->Bind();
+    //indexBuffer->Bind();
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
     m_Window->OnUpdate(); // Swap Buffers
