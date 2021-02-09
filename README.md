@@ -1,11 +1,12 @@
 # Papaya
+
 ![Papaya Banner](/resources/branding/Banner.png)
 
 Papaya is my attempt at a modern, straight-forward game engine. It's built in C++17 and largely inspired by TheCherno/Hazel and Godot. I have worked on about a dozen different attemts at game engines however this one has the cleanest codebase, is the easiest to read, and has the most thought put into it!
 
 ## Roadmap
 
-There aren't many features right now but the goal will be to have a full framework for creating a game from start to finish using one codebase. The goal is to support Windows, macOS, x11 Linux Systems, iOS, and Android. I wouldn't even say there are any real features yet. You can just create a window and use OpenGL function calls on macOS.
+There aren't many features right now but the goal will be to have a full framework for creating a game from start to finish using one codebase. The goal is to support Windows, macOS, x11 Linux Systems, iOS, and Android. I wouldn't even say there are any real features yet. You can just create a window and use OpenGL function calls on macOS. Here is the trello board for the project: https://trello.com/b/225yK9yq/papaya
 
 ## Building
 
