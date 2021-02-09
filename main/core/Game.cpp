@@ -14,6 +14,9 @@
 
 #include "main/utils/String.h"
 
+#include "main/renderer/Buffer.h"
+#include "main/renderer/Shader.h"
+
 #include "platform/OpenGL/OpenGLLoader.h"
 
 namespace Papaya
@@ -30,6 +33,11 @@ Game::~Game() {
 void Game::Run() {
   m_Window->Show();
 
+  Ref<Buffer> vertexBuffer;
+  Ref<Buffer> indexBuffer;
+  Ref<Shader> shader;
+  GLuint VAO;
+
   const char* vertexShaderSource = "#version 330 core\n"
     "layout (location = 0) in vec3 aPos;\n"
     "void main()\n"
@@ -43,21 +51,7 @@ void Game::Run() {
     "   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
     "}\n\0";
 
-  unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
-  glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
-  glCompileShader(vertexShader);
-
-  unsigned int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-  glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
-  glCompileShader(fragmentShader);
-
-  unsigned int shaderProgram = glCreateProgram();
-  glAttachShader(shaderProgram, vertexShader);
-  glAttachShader(shaderProgram, fragmentShader);
-  glLinkProgram(shaderProgram);
-
-  glDeleteShader(vertexShader);
-  glDeleteShader(fragmentShader);
+  shader = Shader::Create(vertexShaderSource, fragmentShaderSource);
 
   float vertices[] = {
     // first triangle
@@ -74,10 +68,6 @@ void Game::Run() {
     0, 1, 2,
     3, 4, 5
   };
-
-  Ref<Buffer> vertexBuffer;
-  Ref<Buffer> indexBuffer;
-  GLuint VAO;
 
   glGenVertexArrays(1, &VAO);
   indexBuffer = Buffer::Create(indices, sizeof(indices), BufferType::Index);
@@ -109,7 +99,7 @@ void Game::Run() {
     glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    glUseProgram(shaderProgram);
+    shader->Bind();
     glBindVertexArray(VAO);
     indexBuffer->Bind();
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
