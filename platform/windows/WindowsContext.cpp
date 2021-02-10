@@ -5,7 +5,7 @@
 
 #include "platform/windows/WindowsWindow.h"
 
-#include <Windows.h>
+#include <windows.h>
 #include <GL/GL.h>
 #include <GL/wgl.h>
 

@@ -22,6 +22,8 @@ static GLenum BufferTypeToGLEnum(BufferType type)
 
   default: break;
   }
+
+  return GL_ARRAY_BUFFER;
 }
 
 OpenGLBuffer::OpenGLBuffer(const void* vertices, uint32_t size, BufferType type)

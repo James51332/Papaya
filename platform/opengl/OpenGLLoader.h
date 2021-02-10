@@ -253,8 +253,6 @@ PAPAYA_GL_LIST
 
 #undef GLE
 
-bool InitOpenGL();
-
 // =============================================================================
 
 #ifdef PAPAYA_GL_LITE_IMPLEMENTATION
@@ -270,12 +268,12 @@ PAPAYA_GL_LIST;
 #include "main/core/Log.h"
 
 static void* libgl;
-void CloseOpenGL()
+static void CloseOpenGL()
 {
   dlclose(libgl);
 }
 
-bool InitOpenGL()
+static bool InitOpenGL()
 {
   libgl = dlopen("/System/Library/Frameworks/OpenGL.framework/OpenGL", RTLD_LAZY | RTLD_LOCAL);
   if (!libgl)
@@ -289,7 +287,58 @@ bool InitOpenGL()
   return true;
 }
 
-#endif // PAPAYA_MACOS
+#elif PAPAYA_WINDOWS
+
+#define GLE(ret, name, ...) name##proc *gl##name;
+PAPAYA_GL_LIST;
+#undef GLE
+
+#include <windows.h>
+#include "main/core/Log.h"
+
+typedef PROC(__stdcall *glGetProcAddr)(LPCSTR);
+typedef void (*glProc)();
+
+static HMODULE libgl;
+static glGetProcAddr wgl_get_proc_address;
+
+static void CloseOpenGL()
+{
+  FreeLibrary(libgl);
+}
+
+static glProc GetProc(const char* proc)
+{
+  glProc res;
+  res = (glProc)wgl_get_proc_address(proc);
+  if (!res)
+  {
+    res = (glProc)GetProcAddress(libgl, proc);
+  }
+  return res;
+}
+
+static bool InitOpenGL()
+{
+  PAPAYA_CORE_INFO("Loading OpenGL...");
+
+  libgl = LoadLibraryA("opengl32.dll");
+  if (!libgl)
+  {
+    PAPAYA_ASSERT(false, "Couldn't load opengl32.dll!");
+    return false;
+  }
+  wgl_get_proc_address = (glGetProcAddr)GetProcAddress(libgl, "wglGetProcAddress");
+  
+#define GLE(ret, name, ...) gl##name = (name##proc *)((void *)GetProc("gl" #name));
+  PAPAYA_GL_LIST;
+#undef GLE
+
+  atexit(CloseOpenGL);
+  return true;
+  }
+
+#endif // PAPYAA_WINDOWS
 #endif // PAPAYA_GL_LITE_IMPLEMENTATION
 
 #endif /* end of include guard: OpenGLLoader_h */

@@ -68,6 +68,8 @@ project "Papaya"
     files {
       "platform/windows/**.cpp",
       "platform/windows/**.h",
+      "platform/opengl/**.cpp",
+      "platform/opengl/**.h",
     }
 
     links {

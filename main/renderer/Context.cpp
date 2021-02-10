@@ -17,20 +17,30 @@ bool Context::s_OpenGLInitialized = false;
 Ref<Context> Context::Create(const Scope<Window>& window, RenderApi api)
 {
 
+Ref<Context> context;
+
 #ifdef PAPAYA_MACOS
-  if (!s_OpenGLInitialized)
+  context = CocoaContext::Create(window, api);
+
+  if (!s_OpenGLInitialized && api == RenderApi::OpenGL)
   {
     InitOpenGL();
     s_OpenGLInitialized = true;
   }
-#endif
 
-#ifdef PAPAYA_MACOS
-  return CocoaContext::Create(window, api);
+  return context;
 #endif
 
 #ifdef PAPAYA_WINDOWS
-  return WindowsContext::Create(window, api);
+  context = WindowsContext::Create(window, api);
+
+  if (!s_OpenGLInitialized && api == RenderApi::OpenGL)
+  {
+    InitOpenGL();
+    s_OpenGLInitialized = true;
+  }
+
+  return context;
 #endif
 
   PAPAYA_ASSERT(false, "Rendering Contexts not supported on this platform yet!");
