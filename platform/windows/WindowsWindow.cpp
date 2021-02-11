@@ -59,7 +59,7 @@ namespace Papaya
         // TODO: Disable/Enable Resizability on Windows
         m_Hwnd = ::CreateWindowEx(WS_EX_OVERLAPPEDWINDOW, 
                                   "PapayaWindow", 
-                                  "Test",  //attribs.Title.Raw(), 
+                                  attribs.Title.Raw(), 
                                   style,
                                   CW_USEDEFAULT, 
                                   CW_USEDEFAULT, 

@@ -101,7 +101,6 @@ void Game::Run() {
 
     shader->Bind();
     vertexArray->Bind();
-    //indexBuffer->Bind();
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
     m_Window->OnUpdate(); // Swap Buffers

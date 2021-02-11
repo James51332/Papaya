@@ -320,8 +320,6 @@ static glProc GetProc(const char* proc)
 
 static bool InitOpenGL()
 {
-  PAPAYA_CORE_INFO("Loading OpenGL...");
-
   libgl = LoadLibraryA("opengl32.dll");
   if (!libgl)
   {
