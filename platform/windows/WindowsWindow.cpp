@@ -56,13 +56,18 @@ namespace Papaya
         if (attribs.Resizable)
             style |= WS_THICKFRAME;
 
+        RECT desktop;
+        GetClientRect(GetDesktopWindow(), &desktop);
+        LONG left = (desktop.right - attribs.Width) / 2;
+        LONG top = (desktop.bottom - attribs.Height) / 2;
+
         // TODO: Disable/Enable Resizability on Windows
         m_Hwnd = ::CreateWindowEx(WS_EX_OVERLAPPEDWINDOW, 
                                   "PapayaWindow", 
                                   attribs.Title.Raw(), 
                                   style,
-                                  CW_USEDEFAULT, 
-                                  CW_USEDEFAULT, 
+                                  left, 
+                                  top, 
                                   attribs.Width, 
                                   attribs.Height,
                                   NULL, 

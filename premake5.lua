@@ -84,35 +84,37 @@ project "Papaya"
 
 project "Sandbox"
   location "Sandbox"
-  kind "ConsoleApp"
   language "C++"
   cppdialect "C++17"
   links "Papaya"
-
+  
   targetdir (builddir)
   objdir (objectdir)
-
+  
   files {
     "tests/**.cpp",
     "tests/**.h",
   }
-
+  
   includedirs {
     "include",
     "thirdparty/spdlog/include",
     ".",
   }
-
+  
   filter "configurations:Debug"
-    defines "PAPAYA_DEBUG"
+  defines "PAPAYA_DEBUG"
+  kind "ConsoleApp"
 
   filter "configurations:Release"
-    defines "PAPAYA_RELEASE"
-    optimize "On"
+  defines "PAPAYA_RELEASE"
+  optimize "On"
+  kind "WindowedApp"
 
   filter "configurations:Dist"
-    defines "PAPAYA_DIST"
-    optimize "Full"
+  defines "PAPAYA_DIST"
+  optimize "Full"
+  kind "WindowedApp"
 
   filter "system:macosx"
     defines { "PAPAYA_MACOS", "GL_SILENCE_DEPRECATION", }

@@ -4,7 +4,7 @@
 #include "main/renderer/Context.h"
 
 #ifdef PAPAYA_WINDOWS
-#include <Windows.h>
+#include <windows.h>
 #endif
 
 namespace Papaya
