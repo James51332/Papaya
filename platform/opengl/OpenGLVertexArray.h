@@ -1,12 +1,12 @@
 #ifndef OpenGLVertexArray_h
 #define OpenGLVertexArray_h
 
-#include "main/renderer/VertexArray.h"
+#include "main/renderer/Buffer.h"
 
 namespace Papaya
 {
 
-class OpenGLVertexArray : public VertexArray
+class OpenGLVertexArray
 {
 public:
   OpenGLVertexArray();
