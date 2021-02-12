@@ -1,4 +1,7 @@
 #include "OpenGLVertexArrayCache.h"
+#include "OpenGLLoader.h"
+
+#include "main/core/Log.h"
 
 #include "main/utils/Hash.h"
 
@@ -8,9 +11,30 @@
 namespace Papaya
 {
 
-std::unordered_map<int, Ref<OpenGLVertexArray>> OpenGLVertexArrayCache::s_Cache;
+std::unordered_map<std::size_t, Ref<OpenGLVertexArray>> OpenGLVertexArrayCache::s_Cache;
 
-static int GenerateKey(const std::vector<Ref<Buffer>>& vertexBuffers,
+static GLenum ShaderDataTypeToGLType(ShaderDataType type)
+{
+    switch (type)
+    {
+    case ShaderDataType::Float:    return GL_FLOAT;
+    case ShaderDataType::Float2:   return GL_FLOAT;
+    case ShaderDataType::Float3:   return GL_FLOAT;
+    case ShaderDataType::Float4:   return GL_FLOAT;
+    case ShaderDataType::Mat3:     return GL_FLOAT;
+    case ShaderDataType::Mat4:     return GL_FLOAT;
+    case ShaderDataType::Int:      return GL_INT;
+    case ShaderDataType::Int2:     return GL_INT;
+    case ShaderDataType::Int3:     return GL_INT;
+    case ShaderDataType::Int4:     return GL_INT;
+    case ShaderDataType::Bool:     return GL_BOOL;
+    }
+
+    PAPAYA_ASSERT(false, "Unknown ShaderDataType!");
+    return 0;
+}
+
+static std::size_t GenerateKey(const std::vector<Ref<Buffer>>& vertexBuffers,
                        const BufferLayout& layout,
                        const Ref<Buffer>& indexBuffer)
 {
@@ -45,17 +69,38 @@ Ref<OpenGLVertexArray> OpenGLVertexArrayCache::GetVertexArray(const std::vector<
                                                               const BufferLayout& layout, 
                                                               const Ref<Buffer>& indexBuffer)
 {
-  int key = GenerateKey(vertexBuffers, layout, indexBuffer);
+  std::size_t key = GenerateKey(vertexBuffers, layout, indexBuffer);
 
   auto vao = s_Cache.find(key);
   if (vao != s_Cache.end())
   {
     return vao->second;
-
   } else
   {
     // Create new VAO
+    Ref<OpenGLVertexArray> vertexArray = CreateRef<OpenGLVertexArray>();
+
+    for (auto& buffer : vertexBuffers)
+    {
+        vertexArray->SetVertexBuffer(buffer);
+    }
+
+    int index = 0;
+    for (auto& element : layout)
+    {
+        glVertexAttribPointer(0, element.Size / 4, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
+        glEnableVertexAttribArray(0);
+        index++;
+    }
+
+    vertexArray->SetIndexBuffer(indexBuffer);
+
+    s_Cache.emplace(key, vertexArray);
+
+    return vertexArray;
+
   }
+
 }
 
 } // namespace Papaya

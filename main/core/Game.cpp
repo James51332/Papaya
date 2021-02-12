@@ -15,10 +15,11 @@
 #include "main/utils/String.h"
 
 #include "main/renderer/Buffer.h"
+#include "main/renderer/BufferLayout.h"
 #include "main/renderer/Shader.h"
-#include "main/renderer/VertexArray.h"
 
-#include "platform/OpenGL/OpenGLLoader.h"
+#include "platform/opengL/OpenGLLoader.h"
+#include "platform/opengl/OpenGLVertexArrayCache.h"
 
 namespace Papaya
 {
@@ -34,54 +35,50 @@ Game::~Game() {
 }
 
 void Game::Run() {
-  m_Window->Show();
+    m_Window->Show();
 
-  Ref<Buffer> vertexBuffer;
-  Ref<Buffer> indexBuffer;
-  Ref<Shader> shader;
-  Ref<VertexArray> vertexArray;
+    Ref<Buffer> vertexBuffer;
+    Ref<Buffer> indexBuffer;
+    Ref<Shader> shader;
 
-  const char* vertexShaderSource = "#version 330 core\n"
-    "layout (location = 0) in vec3 aPos;\n"
-    "void main()\n"
-    "{\n"
-    "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-    "}\0";
-  const char* fragmentShaderSource = "#version 330 core\n"
-    "out vec4 FragColor;\n"
-    "void main()\n"
-    "{\n"
-    "   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
-    "}\n\0";
+    const char* vertexShaderSource = "#version 330 core\n"
+        "layout (location = 0) in vec3 aPos;\n"
+        "void main()\n"
+        "{\n"
+        "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
+        "}\0";
+    const char* fragmentShaderSource = "#version 330 core\n"
+        "out vec4 FragColor;\n"
+        "void main()\n"
+        "{\n"
+        "   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
+        "}\n\0";
 
-  shader = Shader::Create(vertexShaderSource, fragmentShaderSource);
+    shader = Shader::Create(vertexShaderSource, fragmentShaderSource);
 
-  float vertices[] = {
-    // first triangle
-    -0.9f, -0.5f, 0.0f,  // left 
-    -0.0f, -0.5f, 0.0f,  // right
-    -0.45f, 0.5f, 0.0f,  // top 
-    // second triangle
-     0.0f, -0.5f, 0.0f,  // left
-     0.9f, -0.5f, 0.0f,  // right
-     0.45f, 0.5f, 0.0f   // top 
-  };
+    float vertices[] = {
+        // first triangle
+        -0.9f, -0.5f, 0.0f,  // left 
+        -0.0f, -0.5f, 0.0f,  // right
+        -0.45f, 0.5f, 0.0f,  // top 
+        // second triangle
+         0.0f, -0.5f, 0.0f,  // left
+         0.9f, -0.5f, 0.0f,  // right
+         0.45f, 0.5f, 0.0f   // top 
+    };
 
-  uint32_t indices[] = {
-    0, 1, 2,
-    3, 4, 5
-  };
+    uint32_t indices[] = {
+      0, 1, 2,
+      3, 4, 5
+    };
 
-  vertexArray = VertexArray::Create();
-  indexBuffer = Buffer::Create(indices, sizeof(indices), BufferType::Index);
-  vertexBuffer = Buffer::Create(vertices, sizeof(vertices), BufferType::Vertex);
 
-  vertexArray->SetVertexBuffer(vertexBuffer);
-  vertexArray->SetIndexBuffer(indexBuffer);
+    indexBuffer = Buffer::Create(indices, sizeof(indices), BufferType::Index);
+    vertexBuffer = Buffer::Create(vertices, sizeof(vertices), BufferType::Vertex);
 
-  vertexArray->Bind();
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-  glEnableVertexAttribArray(0);
+    BufferLayout layout = {
+        { ShaderDataType::Float3, "Vertex" }
+    };
 
   while (m_Running) {
     Platform::OnUpdate(); // Poll Events
@@ -102,7 +99,7 @@ void Game::Run() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     shader->Bind();
-    vertexArray->Bind();
+    OpenGLVertexArrayCache::GetVertexArray({ vertexBuffer }, layout, indexBuffer)->Bind();
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
     m_Window->OnUpdate(); // Swap Buffers

@@ -22,7 +22,7 @@ public:
                                                const Ref<Buffer>& indexBuffer);
 
 private:
-  static std::unordered_map<int, Ref<OpenGLVertexArray>> s_Cache;
+  static std::unordered_map<std::size_t, Ref<OpenGLVertexArray>> s_Cache;
 };
 
 } // namespace Papaya
