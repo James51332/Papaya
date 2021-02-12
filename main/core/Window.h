@@ -19,9 +19,9 @@ struct WindowAttribs {
   int Width, Height;
   String Title;
   bool Resizable;
-  RenderApi Api;
+  RenderApi::API Api;
 
-  WindowAttribs(int width = 800, int height = 600, const String& title = "Papaya", bool resizable = false, RenderApi api = RenderApi::OpenGL)
+  WindowAttribs(int width = 800, int height = 600, const String& title = "Papaya", bool resizable = false, RenderApi::API api = RenderApi::API::OpenGL)
     : Width(width), Height(height), Title(title), Resizable(resizable), Api(api) {}
 
   String ToString() const {

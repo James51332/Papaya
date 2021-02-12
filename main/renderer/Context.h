@@ -16,14 +16,14 @@ class Context
 {
   friend class Window;
 public:
-  static Ref<Context> Create(const Scope<Window>& window, RenderApi api);
+  static Ref<Context> Create(const Scope<Window>& window, RenderApi::API api);
   virtual ~Context();
 
-  RenderApi GetApi() const { return m_Api; }
+  RenderApi::API GetApi() const { return m_Api; }
   virtual void SwapBuffers() = 0;
 
 protected:
-  RenderApi m_Api;
+  RenderApi::API m_Api;
 
   static bool s_OpenGLInitialized;
 };

@@ -32,6 +32,7 @@ int OpenGLBuffer::m_CurID = 1000;
 OpenGLBuffer::OpenGLBuffer(const void* vertices, uint32_t size, BufferType type)
 {
   m_Type = BufferTypeToGLEnum(type);
+  m_Size = size;
   m_UniqueID = m_CurID;
   m_CurID++;
 

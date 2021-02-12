@@ -47,7 +47,7 @@ static std::size_t GenerateKey(const std::vector<Ref<Buffer>>& vertexBuffers,
   // The system that we'll use is highly inspired by DiligentEngine/DiligentCore's
   // VAOCacheKey system. They use code from the boost library to combine keys from
   // an unset number of values. This feels sufficiently unlikely that the same 
-  // key will be generated even though it's impossible. 
+  // key will be generated even though it's not impossible. (I think) 
 
   std::size_t seed = 0;
 
@@ -61,7 +61,7 @@ static std::size_t GenerateKey(const std::vector<Ref<Buffer>>& vertexBuffers,
     Papaya::HashCombine(seed, element.Size);
   }
 
-  Papaya::HashCombine(seed, indexBuffer ? std::static_pointer_cast<OpenGLBuffer>(indexBuffer)->GetUniqueID() : 0); // This should almost always be included
+  Papaya::HashCombine(seed, indexBuffer ? std::static_pointer_cast<OpenGLBuffer>(indexBuffer)->GetUniqueID() : 0); // This should almost always be included5
 
   return seed;
 }
@@ -89,8 +89,8 @@ Ref<OpenGLVertexArray> OpenGLVertexArrayCache::GetVertexArray(const std::vector<
     int index = 0;
     for (auto& element : layout)
     {
-        glVertexAttribPointer(0, element.Size / 4, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
-        glEnableVertexAttribArray(0);
+        glVertexAttribPointer(index, element.Size / 4, GL_FLOAT, GL_FALSE, layout.GetStride(), (GLvoid*) element.Offset);
+        glEnableVertexAttribArray(index);
         index++;
     }
 

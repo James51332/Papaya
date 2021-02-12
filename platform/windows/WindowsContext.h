@@ -17,7 +17,7 @@ namespace Papaya
 class WindowsContext : public Context
 {
 public:
-    static Ref<Context> Create(const Scope<Window>& window, RenderApi api);
+    static Ref<Context> Create(const Scope<Window>& window, RenderApi::API api);
     virtual ~WindowsContext();
     
     virtual void SwapBuffers() = 0;

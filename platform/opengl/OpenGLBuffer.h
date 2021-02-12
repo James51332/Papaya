@@ -15,10 +15,13 @@ public:
   void Bind();
   void Unbind();
 
+  uint32_t GetSize() const { return m_Size; }
+
   int GetUniqueID() const { return m_UniqueID; }
 
 private:
   unsigned int m_RendererID;
+  uint32_t m_Size;
   int m_Type;
   int m_UniqueID;
 

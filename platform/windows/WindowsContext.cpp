@@ -9,8 +9,6 @@
 #include <GL/GL.h>
 #include <GL/wgl.h>
 
-#include <iostream>
-
 namespace Papaya
 {
 
@@ -18,11 +16,11 @@ namespace Papaya
 ///// WindowsContext ///////////////////////
 ////////////////////////////////////////////
 
-Ref<Context> WindowsContext::Create(const Scope<Window>& window, RenderApi api)
+Ref<Context> WindowsContext::Create(const Scope<Window>& window, RenderApi::API api)
 {
     switch (api)
     {
-        case RenderApi::OpenGL: {
+        case RenderApi::API::OpenGL: {
             return CreateRef<WindowsOpenGLContext>(window);
         }
 

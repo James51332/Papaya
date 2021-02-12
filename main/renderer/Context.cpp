@@ -14,7 +14,7 @@ namespace Papaya
 
 bool Context::s_OpenGLInitialized = false;
 
-Ref<Context> Context::Create(const Scope<Window>& window, RenderApi api)
+Ref<Context> Context::Create(const Scope<Window>& window, RenderApi::API api)
 {
 
 Ref<Context> context;
@@ -22,7 +22,7 @@ Ref<Context> context;
 #ifdef PAPAYA_MACOS
   context = CocoaContext::Create(window, api);
 
-  if (!s_OpenGLInitialized && api == RenderApi::OpenGL)
+  if (!s_OpenGLInitialized && api == RenderApi::API::OpenGL)
   {
     InitOpenGL();
     s_OpenGLInitialized = true;
@@ -34,7 +34,7 @@ Ref<Context> context;
 #ifdef PAPAYA_WINDOWS
   context = WindowsContext::Create(window, api);
 
-  if (!s_OpenGLInitialized && api == RenderApi::OpenGL)
+  if (!s_OpenGLInitialized && api == RenderApi::API::OpenGL)
   {
     InitOpenGL();
     s_OpenGLInitialized = true;

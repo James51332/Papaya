@@ -16,7 +16,7 @@ class CocoaContext : public Context
 {
   friend class CocoaWindow;
 public:
-  static Ref<Context> Create(const Scope<Window>& window, RenderApi api);
+  static Ref<Context> Create(const Scope<Window>& window, RenderApi::API api);
   virtual ~CocoaContext();
 
   virtual void SwapBuffers() = 0;

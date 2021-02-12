@@ -12,6 +12,7 @@ public:
   OpenGLVertexArray();
   virtual ~OpenGLVertexArray();
 
+  // This function can be called multiple times to add another buffer.
   void SetVertexBuffer(const Ref<Buffer>& buffer);
   void SetIndexBuffer(const Ref<Buffer>& buffer);
 

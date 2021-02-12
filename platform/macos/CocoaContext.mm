@@ -172,7 +172,7 @@ namespace Papaya
 
 bool CocoaContext::s_KeyCodesInitialized = false;
 
-Ref<Context> CocoaContext::Create(const Scope<Window>& window, RenderApi api)
+Ref<Context> CocoaContext::Create(const Scope<Window>& window, RenderApi::API api)
 {
   if (!s_KeyCodesInitialized)
   {
@@ -182,7 +182,7 @@ Ref<Context> CocoaContext::Create(const Scope<Window>& window, RenderApi api)
 
   switch (api)
   {
-    case RenderApi::OpenGL: {
+    case RenderApi::API::OpenGL: {
       return CreateRef<CocoaOpenGLContext>(window);
       break;
     }
@@ -205,7 +205,7 @@ CocoaContext::~CocoaContext()
 
 CocoaOpenGLContext::CocoaOpenGLContext(const Scope<Window>& window)
 {
-  m_Api = RenderApi::OpenGL;
+  m_Api = RenderApi::API::OpenGL;
 
   NSOpenGLPixelFormatAttribute attribs[] = {
     NSOpenGLPFADoubleBuffer,
