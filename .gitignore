@@ -14,6 +14,7 @@ Makefile
 .vs_code
 .vs
 .vscode
+*.sln
 
 # Prerequisites
 *.d

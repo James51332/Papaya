@@ -16,11 +16,11 @@ public:
   String(const char* str);
 
   String(const String& str); // Copy Constructor
-  String(String&& str); // Move Constructor
+  String(String &&str) noexcept; // Move Constructor
 
   String& operator=(const String& str); // Copy Assignment Operator
 
-  int Length() const { return m_Size; }
+  std::size_t Length() const { return m_Size; }
   const char* Raw() const { return m_Buffer; }
 
   friend std::ostream& operator<<(std::ostream& stream, const String& string);

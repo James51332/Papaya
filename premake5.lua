@@ -1,6 +1,7 @@
 workspace "Papaya"
   configurations { "Debug", "Release", "Dist" }
   architecture "x86_64"
+  startproject "Sandbox"
 
 builddir = ("bin/Papaya-%{cfg.system}-%{cfg.longname}")
 objectdir = ("bin-obj/Papaya-%{cfg.system}-%{cfg.longname}")
@@ -18,11 +19,13 @@ project "Papaya"
     "main/**.cpp",
     "main/**.h",
     "include/**.h",
+    "thirdparty/opengl/**.h",
     "thirdparty/spdlog/**.h",
   }
 
   includedirs {
     "thirdparty/spdlog/include",
+    "thirdparty/opengl",
     ".",
   }
 
@@ -60,23 +63,21 @@ project "Papaya"
       "OpenGL.framework",
     }
 
+  filter "action:vs*"
+    characterset "ASCII"
+    defines "_CRT_SECURE_NO_WARNINGS"
+
+  filter { "system:windows", "action:gmake" }
+    buildoptions "-std=gnu++17"
+
   filter "system:windows"
     defines "PAPAYA_WINDOWS"
-    symbols "On"
-    buildoptions "-std=gnu++17"
 
     files {
       "platform/windows/**.cpp",
       "platform/windows/**.h",
       "platform/opengl/**.cpp",
       "platform/opengl/**.h",
-    }
-
-    links {
-      "kernel32",
-      "gdi32",
-      "OpenGL32",
-      "user32",
     }
 
   filter "system:linux"
@@ -87,6 +88,7 @@ project "Sandbox"
   language "C++"
   cppdialect "C++17"
   links "Papaya"
+  kind "ConsoleApp"
   
   targetdir (builddir)
   objdir (objectdir)
@@ -99,22 +101,20 @@ project "Sandbox"
   includedirs {
     "include",
     "thirdparty/spdlog/include",
+    "thirdparty/opengl",
     ".",
   }
   
   filter "configurations:Debug"
   defines "PAPAYA_DEBUG"
-  kind "ConsoleApp"
 
   filter "configurations:Release"
   defines "PAPAYA_RELEASE"
   optimize "On"
-  kind "WindowedApp"
 
   filter "configurations:Dist"
   defines "PAPAYA_DIST"
   optimize "Full"
-  kind "WindowedApp"
 
   filter "system:macosx"
     defines { "PAPAYA_MACOS", "GL_SILENCE_DEPRECATION", }
@@ -132,9 +132,15 @@ project "Sandbox"
       "OpenGL.framework",
     }
 
+  filter "action:vs*"
+    characterset "ASCII"
+    defines "_CRT_SECURE_NO_WARNINGS"
+
+  filter { "system:windows", "action:gmake" }
+    buildoptions "-std=gnu++17"
+  
   filter "system:windows"
     defines "PAPAYA_WINDOWS"
-    buildoptions "-std=gnu++17"
 
     links {
       "kernel32",

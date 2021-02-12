@@ -51,8 +51,8 @@ public:
   bool IsInCategory(EventCategory category) { return category & GetCategoryFlags(); }
 
 protected:
-  EventType m_Type;
-  EventCategory m_Category;
+  EventType m_Type = EventType::None;
+  EventCategory m_Category = EventCategory::None;
 };
 
 class EventDispatcher {

@@ -1,5 +1,5 @@
 rm -rf Papaya
-rm -rf Papaya.xcworkspace
+rm -rf Papaya.sln
 rm -rf Sandbox
 
 rm -rf bin

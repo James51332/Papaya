@@ -51,11 +51,11 @@ namespace Papaya
         if (!::RegisterClassEx(&wc))
             PAPAYA_ASSERT(false, "Failed to Register Window Class!");
 
-        DWORD style = WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_MAXIMIZEBOX;
+        DWORD style = WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU;
 
         if (attribs.Resizable)
-            style |= WS_THICKFRAME;
-
+            style |= WS_THICKFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX;
+ 
         RECT desktop;
         GetClientRect(GetDesktopWindow(), &desktop);
         LONG left = (desktop.right - attribs.Width) / 2;

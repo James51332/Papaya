@@ -42,7 +42,7 @@ namespace Papaya {
     strcpy(m_Buffer, str.m_Buffer);
   }
 
-  String::String(String&& str) {
+  String::String(String&& str) noexcept {
     m_Buffer = str.m_Buffer;
     m_Size = str.m_Size;
 
