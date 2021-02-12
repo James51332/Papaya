@@ -26,9 +26,14 @@ static GLenum BufferTypeToGLEnum(BufferType type)
   return GL_ARRAY_BUFFER;
 }
 
+// Start at 1000 to prevent same id's at BufferLayout
+int OpenGLBuffer::m_CurID = 1000;
+
 OpenGLBuffer::OpenGLBuffer(const void* vertices, uint32_t size, BufferType type)
 {
   m_Type = BufferTypeToGLEnum(type);
+  m_UniqueID = m_CurID;
+  m_CurID++;
 
   glGenBuffers(1, &m_RendererID);
 

@@ -15,9 +15,14 @@ public:
   void Bind();
   void Unbind();
 
+  int GetUniqueID() const { return m_UniqueID; }
+
 private:
   unsigned int m_RendererID;
   int m_Type;
+  int m_UniqueID;
+
+  static int m_CurID;
 };
 
 } // namespace Papaya
