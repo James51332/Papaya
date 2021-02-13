@@ -48,8 +48,8 @@ namespace Papaya
         wc.style = CS_OWNDC | CS_HREDRAW | CS_VREDRAW;
         wc.lpfnWndProc = &WndProc;
 
-        if (!::RegisterClassEx(&wc))
-            PAPAYA_ASSERT(false, "Failed to Register Window Class!");
+        bool registered = ::RegisterClassEx(&wc);
+        PAPAYA_ASSERT(registered, "Failed to Register Window Class!");
 
         DWORD style = WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU;
 
@@ -61,7 +61,6 @@ namespace Papaya
         LONG left = (desktop.right - attribs.Width) / 2;
         LONG top = (desktop.bottom - attribs.Height) / 2;
 
-        // TODO: Disable/Enable Resizability on Windows
         m_Hwnd = ::CreateWindowEx(WS_EX_OVERLAPPEDWINDOW, 
                                   "PapayaWindow", 
                                   attribs.Title.Raw(), 
@@ -75,8 +74,7 @@ namespace Papaya
                                   NULL, 
                                   this);
 
-        if (!m_Hwnd)
-            PAPAYA_ASSERT(false, "Failed to Create Window!");
+         PAPAYA_ASSERT(m_Hwnd, "Failed to Create Window!");
     }
 
     WindowsWindow::~WindowsWindow() {

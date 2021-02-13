@@ -88,7 +88,6 @@ project "Sandbox"
   language "C++"
   cppdialect "C++17"
   links "Papaya"
-  kind "ConsoleApp"
   
   targetdir (builddir)
   objdir (objectdir)
@@ -117,6 +116,7 @@ project "Sandbox"
   optimize "Full"
 
   filter "system:macosx"
+    kind "ConsoleApp"
     defines { "PAPAYA_MACOS", "GL_SILENCE_DEPRECATION", }
     buildoptions "-Wno-deprecated-declarations"
     xcodebuildsettings = { ["ALWAYS_SEARCH_USER_PATHS"] = "YES" },
@@ -139,6 +139,13 @@ project "Sandbox"
   filter { "system:windows", "action:gmake" }
     buildoptions "-std=gnu++17"
   
+  filter { "system:windows", "Debug" }
+    kind "ConsoleApp"
+
+  filter { "system:windows", "Release or Dist"}
+    kind "WindowedApp"
+    entrypoint "mainCRTStartup"
+
   filter "system:windows"
     defines "PAPAYA_WINDOWS"
 
