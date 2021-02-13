@@ -66,6 +66,10 @@ static std::size_t GenerateKey(const std::vector<Ref<Buffer>>& vertexBuffers,
   return seed;
 }
 
+OpenGLVertexArrayCache::~OpenGLVertexArrayCache()
+{
+}
+
 Ref<OpenGLVertexArray> OpenGLVertexArrayCache::GetVertexArray(const std::vector<Ref<Buffer>>& vertexBuffers, 
                                                               const BufferLayout& layout, 
                                                               const Ref<Buffer>& indexBuffer)
@@ -86,6 +90,7 @@ Ref<OpenGLVertexArray> OpenGLVertexArrayCache::GetVertexArray(const std::vector<
         vertexArray->SetVertexBuffer(buffer);
     }
 
+    // Setting the vertex buffers binds the vao
     int index = 0;
     for (auto& element : layout)
     {

@@ -35,62 +35,20 @@ Game::~Game() {
 
 }
 
+void Game::PushLayer(Layer* layer)
+{
+  m_LayerStack.PushLayer(layer);
+  layer->OnAttach();
+}
+
+void Game::PushOverlay(Layer* overlay)
+{
+  m_LayerStack.PushOverlay(overlay);
+  overlay->OnAttach();
+}
+
 void Game::Run() {
     m_Window->Show();
-
-    Ref<Buffer> vertexBuffer;
-    Ref<Buffer> indexBuffer;
-    Ref<Shader> shader;
-
-    String vertexShaderSource = R"(
-    #version 330 core
-    
-    layout (location = 0) in vec3 aPos;
-    layout (location = 1) in vec3 aColor;
-
-    out vec4 color;
-
-    void main()
-    {
-      color = vec4(aColor, 1.0);
-      gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);
-    })";
-
-    String fragmentShaderSource = R"(
-    #version 330 core
-
-    in vec4 color;
-    out vec4 FragColor;
-
-    void main()
-    {
-      FragColor = color;
-    })"; 
-
-    shader = Shader::Create(vertexShaderSource, fragmentShaderSource);
-
-    float vertices[] = {
-        // first triangle
-        -0.9f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f,  // left 
-        -0.0f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, // right
-        -0.45f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, // top 
-        // second triangle
-         0.0f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, // left
-         0.9f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, // right
-         0.45f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f // top 
-    };
-
-    uint32_t indices[] = {
-      0, 1, 2,
-      3, 4, 5
-    };
-
-    indexBuffer = Buffer::Create(indices, sizeof(indices), BufferType::Index);
-    vertexBuffer = Buffer::Create(vertices, sizeof(vertices), BufferType::Vertex);
-
-    BufferLayout layout = {
-      {ShaderDataType::Float3, "Vertex"}, {ShaderDataType::Float3, "Color"}
-    };
 
     while (m_Running)
     {
@@ -100,20 +58,21 @@ void Game::Run() {
       {
         Scope<Event> e(EventQueue::PopEvent());
         PAPAYA_CORE_INFO(e);
-        EventDispatcher ed(Move(e));
 
-        ed.Dispatch<WindowCloseEvent>([&](Scope<WindowCloseEvent> e) -> bool {
+        if (e->GetEventType() == EventType::WindowClose)
+        {
           m_Running = false;
-          return true;
-        });
+          continue; // Don't pass window close events to user (this isn't techinally needed)
+        }
+
+        for (auto it = m_LayerStack.rbegin(); it != m_LayerStack.rend(); ++it)
+        {
+          (*it)->OnEvent(e);
+        }
       }
 
-      RenderCommand::ClearColor(0.2f, 0.2f, 0.2f, 1.0f);
-      RenderCommand::Clear();
-
-      Renderer::Begin();
-      Renderer::Submit({vertexBuffer}, layout, indexBuffer, shader); // Render
-      Renderer::End();
+      for (Layer* layer : m_LayerStack)
+        layer->OnUpdate();
 
       m_Window->OnUpdate(); // Swap Buffers
 
@@ -123,6 +82,7 @@ void Game::Run() {
   }
 
   Renderer::OnTerminate();
+  m_Window->Close(); // Windows don't close until the app is closed or Close() is called
 }
 
 } // namespace Papaya
