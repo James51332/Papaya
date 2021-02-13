@@ -4,31 +4,32 @@
 
 namespace Papaya
 {
-    
-RenderApi::API Renderer::s_Api = RenderApi::API::OpenGL;
 
-void Renderer::OnInit() { 
-    RenderCommand::OnInit();
-}
+    RenderApi::API Renderer::s_Api = RenderApi::API::OpenGL;
 
-void Renderer::OnTerminate() { 
-    RenderCommand::OnTerminate();
-}
+    void Renderer::OnInit()
+    {
+        RenderCommand::OnInit();
+    }
 
-void Renderer::Begin() { 
+    void Renderer::OnTerminate()
+    {
+        RenderCommand::OnTerminate();
+    }
 
-}
+    void Renderer::Begin()
+    {
+    }
 
-void Renderer::Submit(const std::vector<Ref<Buffer>> &vertexBuffers,
-                                  const BufferLayout &layout,
-                                  const Ref<Buffer> &indexBuffer,
-                                  const Ref<Shader> &shader)
-{
-    RenderCommand::DrawIndexed(vertexBuffers, layout, indexBuffer, shader);
-}
+    void Renderer::Submit(const std::vector<Ref<Buffer>> &vertexBuffers,
+                          const Ref<PipelineState> pipelineState,
+                          const Ref<Buffer> &indexBuffer)
+    {
+        RenderCommand::DrawIndexed(vertexBuffers, pipelineState, indexBuffer);
+    }
 
-void Renderer::End() { 
-
-}
+    void Renderer::End()
+    {
+    }
 
 } // namespace Papaya

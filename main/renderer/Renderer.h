@@ -6,34 +6,34 @@
 #include "RenderApi.h"
 #include "Buffer.h"
 #include "BufferLayout.h"
+#include "Shader.h"
+#include "PipelineState.h"
 
 #include <vector>
 
 namespace Papaya
 {
-  
-class Renderer
-{
-public:
-  static void OnInit();
-  static void OnTerminate();
 
-  static void Begin();
-  
-  static void Submit(const std::vector<Ref<Buffer>> &vertexBuffers,
-                     const BufferLayout &layout,
-                     const Ref<Buffer> &indexBuffer,
-                     const Ref<Shader> &shader);
+  class Renderer
+  {
+  public:
+    static void OnInit();
+    static void OnTerminate();
 
-  static void End();
+    static void Begin();
 
-  static RenderApi::API GetApi() { return s_Api; }
+    static void Submit(const std::vector<Ref<Buffer>> &vertexBuffers,
+                       const Ref<PipelineState> pipelineState,
+                       const Ref<Buffer> &indexBuffer);
 
-private:
-  static RenderApi::API s_Api;
-};
+    static void End();
+
+    static RenderApi::API GetApi() { return s_Api; }
+
+  private:
+    static RenderApi::API s_Api;
+  };
 
 } // namespace Papaya
-
 
 #endif /* end of include guard: Renderer_h */

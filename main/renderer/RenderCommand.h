@@ -10,36 +10,35 @@
 
 namespace Papaya
 {
-    
-class RenderCommand {
-public:
-static void OnInit() {}
-static void OnTerminate() {}
 
-static void ClearColor(float r, float g, float b, float a = 1.0f)
-{
-  s_Api->ClearColor(r, g, b, a);
-}
+  class RenderCommand
+  {
+  public:
+    static void OnInit() {}
+    static void OnTerminate() {}
 
-static void Clear()
-{
-  s_Api->Clear();
-}
+    static void ClearColor(float r, float g, float b, float a = 1.0f)
+    {
+      s_Api->ClearColor(r, g, b, a);
+    }
 
-static void DrawIndexed(const std::vector<Ref<Buffer>> &vertexBuffers,
-                        const BufferLayout &layout,
-                        const Ref<Buffer> &indexBuffer,
-                        const Ref<Shader> &shader)
+    static void Clear()
+    {
+      s_Api->Clear();
+    }
 
-{
-  s_Api->DrawIndexed(vertexBuffers, layout, indexBuffer, shader);
-}
+    static void DrawIndexed(const std::vector<Ref<Buffer>> &vertexBuffers,
+                            const Ref<PipelineState> pipelineState,
+                            const Ref<Buffer> &indexBuffer)
 
-private:
-  static Scope<RenderApi> s_Api;
-};
+    {
+        s_Api->DrawIndexed(vertexBuffers, pipelineState , indexBuffer);
+    }
+
+  private:
+    static Scope<RenderApi> s_Api;
+  };
 
 } // namespace Papaya
-
 
 #endif /* end of include guard: RenderCommand_h */
