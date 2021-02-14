@@ -1,4 +1,5 @@
 #include "WindowsWindow.h"
+#include "WindowsInputCode.h"
 
 #include "main/renderer/Context.h"
 
@@ -99,6 +100,18 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
         break;
     }
 
+    case WM_KEYDOWN:
+    {
+        Papaya::EventQueue::PushEvent(Papaya::CreateScope<Papaya::KeyPressEvent>(Papaya::Win32KeyCodeToPapayaKeyCode(static_cast<int>(wParam))));
+        break;
+    }
+
+    case WM_KEYUP:
+    {
+        Papaya::EventQueue::PushEvent(Papaya::CreateScope<Papaya::KeyPressEvent>(Papaya::Win32KeyCodeToPapayaKeyCode(static_cast<int>(wParam))));
+        break;
+    }
+
     case WM_DESTROY:
     {
         // Event fired when the window is destroyed
@@ -108,7 +121,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
     case WM_SIZING:
     {
-        RECT frame = *(RECT*)lParam;
+        RECT frame = *(RECT *)lParam;
         float width = static_cast<float>(frame.right - frame.left);
         float height = static_cast<float>(frame.bottom - frame.top);
         Papaya::EventQueue::PushEvent(Papaya::CreateScope<Papaya::WindowResizeEvent>(width, height));
@@ -123,8 +136,16 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 namespace Papaya
 {
+    bool WindowsWindow::s_KeyCodesInitialized = false;
+
     WindowsWindow::WindowsWindow(const WindowAttribs &attribs)
     {
+        if (!s_KeyCodesInitialized)
+        {
+            InitWin32InputCodes();
+            s_KeyCodesInitialized = true;
+        }
+
         m_Attribs = attribs;
 
         WNDCLASSEX wc;
@@ -153,7 +174,7 @@ namespace Papaya
         GetClientRect(GetDesktopWindow(), &size);
         size.left = (size.right - attribs.Width) / 2;
         size.top = (size.bottom - attribs.Height) / 2;
-        size.right = size.left + attribs.Width; // HACK: Add 4 px because Windows is weird. (This might be my fault.)
+        size.right = size.left + attribs.Width;  // HACK: Add 4 px because Windows is weird. (This might be my fault.)
         size.bottom = size.top + attribs.Height; // TODO: Look here if window isn't sizing correctly
 
         AdjustWindowRectEx(&size, style, FALSE, 0);

@@ -12,10 +12,11 @@
 namespace Papaya
 {
 
-class WindowsWindow : public Window
-{
+  class WindowsWindow : public Window
+  {
     friend WindowsOpenGLContext;
-public:
+
+  public:
     WindowsWindow(const WindowAttribs &attribs);
     virtual ~WindowsWindow();
 
@@ -27,13 +28,13 @@ public:
 
     void SetContext(const Ref<Context> &context);
 
-private:
+  private:
 #ifdef PAPAYA_WINDOWS
     HWND m_Hwnd;
 #endif
-};
+    static bool s_KeyCodesInitialized;
+  };
 
 } // namespace Papaya
-
 
 #endif /* end of include guard: WindowsWindow_h */
