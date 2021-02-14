@@ -246,6 +246,7 @@ typedef bool GLboolean;
     GLE(void,      UniformMatrix4fv,        GLint location, GLsizei count, GLboolean transpose, const GLfloat *value) \
     GLE(void,      UseProgram,              GLuint program) \
     GLE(void,      VertexAttribPointer,     GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid * pointer) \
+    GLE(void,      Viewport,                GLint x, GLint y, GLsizei width, GLsizei height)
     /* end */
 
 #define GLE(ret, name, ...) typedef ret name##proc(__VA_ARGS__); extern name##proc * gl##name;

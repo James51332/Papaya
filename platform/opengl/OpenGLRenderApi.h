@@ -12,6 +12,8 @@ namespace Papaya
     OpenGLRenderApi();
     virtual ~OpenGLRenderApi();
 
+    void SetViewport(float x, float y, float w, float h);
+
     void ClearColor(float r, float b, float g, float a);
     void Clear();
 

@@ -17,6 +17,11 @@ namespace Papaya
     static void OnInit() {}
     static void OnTerminate() {}
 
+    static void SetViewport(float x, float y, float w, float h)
+    {
+        s_Api->SetViewport(x, y, w, h);
+    }
+
     static void ClearColor(float r, float g, float b, float a = 1.0f)
     {
       s_Api->ClearColor(r, g, b, a);

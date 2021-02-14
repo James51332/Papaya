@@ -15,6 +15,14 @@ namespace Papaya
   {
   }
 
+  void OpenGLRenderApi::SetViewport(float x, float y, float w, float h)
+  {
+      glViewport(static_cast<GLint>(x),
+          static_cast<GLint>(y),
+          static_cast<GLsizei>(w),
+          static_cast<GLsizei>(h));
+  }
+
   void OpenGLRenderApi::ClearColor(float r, float g, float b, float a)
   {
     glClearColor(r, g, b, a);

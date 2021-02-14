@@ -20,6 +20,8 @@
 
 #include "main/utils/String.h"
 
+#include "platform/opengl/OpenGLLoader.h"
+
 namespace Papaya
 {
 
@@ -63,6 +65,12 @@ void Game::Run() {
         {
           m_Running = false;
           continue; // Don't pass window close events to user (this isn't techinally needed)
+        }
+
+        if (e->GetEventType() == EventType::WindowResize)
+        {
+            WindowResizeEvent* event = static_cast<WindowResizeEvent*>(e.get());
+            RenderCommand::SetViewport(0, 0, event->GetWidth(), event->GetHeight());
         }
 
         for (auto it = m_LayerStack.rbegin(); it != m_LayerStack.rend(); ++it)

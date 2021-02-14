@@ -3,15 +3,99 @@
 #include "main/renderer/Context.h"
 
 #include "main/events/AppEvent.h"
+#include "main/events/KeyEvent.h"
+#include "main/events/MouseEvent.h"
 #include "main/events/EventQueue.h"
 
-LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
+#include <windowsx.h>
+
+LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
     switch (msg)
     {
     case WM_CREATE:
     {
         // Event fired when the window is created
+        break;
+    }
+
+    case WM_PAINT:
+    {
+        PAINTSTRUCT ps;
+        (void)BeginPaint(hwnd, &ps);
+        EndPaint(hwnd, &ps);
+        break;
+    }
+
+    case WM_LBUTTONDOWN:
+    {
+        Papaya::EventQueue::PushEvent(Papaya::CreateScope<Papaya::MousePressEvent>(Papaya::MouseLeft));
+        break;
+    }
+
+    case WM_LBUTTONUP:
+    {
+        Papaya::EventQueue::PushEvent(Papaya::CreateScope<Papaya::MouseReleaseEvent>(Papaya::MouseLeft));
+        break;
+    }
+
+    case WM_RBUTTONDOWN:
+    {
+        Papaya::EventQueue::PushEvent(Papaya::CreateScope<Papaya::MousePressEvent>(Papaya::MouseRight));
+        break;
+    }
+
+    case WM_RBUTTONUP:
+    {
+        Papaya::EventQueue::PushEvent(Papaya::CreateScope<Papaya::MouseReleaseEvent>(Papaya::MouseRight));
+        break;
+    }
+
+    case WM_MBUTTONDOWN:
+    {
+        Papaya::EventQueue::PushEvent(Papaya::CreateScope<Papaya::MousePressEvent>(Papaya::MouseMiddle));
+        break;
+    }
+
+    case WM_MBUTTONUP:
+    {
+        Papaya::EventQueue::PushEvent(Papaya::CreateScope<Papaya::MouseReleaseEvent>(Papaya::MouseMiddle));
+        break;
+    }
+
+    case WM_XBUTTONDOWN:
+    {
+        int fwButton = GET_XBUTTON_WPARAM(wParam);
+        Papaya::EventQueue::PushEvent(Papaya::CreateScope<Papaya::MousePressEvent>(fwButton == 1 ? Papaya::Mouse4 : Papaya::Mouse5));
+        break;
+    }
+
+    case WM_XBUTTONUP:
+    {
+        int fwButton = GET_XBUTTON_WPARAM(wParam);
+        Papaya::EventQueue::PushEvent(Papaya::CreateScope<Papaya::MouseReleaseEvent>(fwButton == 1 ? Papaya::Mouse4 : Papaya::Mouse5));
+        break;
+    }
+
+    case WM_MOUSEHWHEEL:
+    {
+        int scroll = GET_WHEEL_DELTA_WPARAM(wParam) / 120;
+        Papaya::EventQueue::PushEvent(Papaya::CreateScope<Papaya::MouseScrollEvent>(scroll, 0));
+        break;
+    }
+
+    case WM_MOUSEWHEEL:
+    {
+        int scroll = GET_WHEEL_DELTA_WPARAM(wParam) / 120;
+        Papaya::EventQueue::PushEvent(Papaya::CreateScope<Papaya::MouseScrollEvent>(0, scroll));
+        break;
+    }
+
+    case WM_MOUSEMOVE:
+    {
+        float xPos = static_cast<float>(GET_X_LPARAM(lParam));
+        float yPos = static_cast<float>(GET_Y_LPARAM(lParam));
+        Papaya::EventQueue::PushEvent(Papaya::CreateScope<Papaya::MouseMoveEvent>(xPos, yPos));
         break;
     }
 
@@ -22,8 +106,16 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
         break;
     }
 
+    case WM_SIZING:
+    {
+        RECT frame = *(RECT*)lParam;
+        float width = static_cast<float>(frame.right - frame.left);
+        float height = static_cast<float>(frame.bottom - frame.top);
+        Papaya::EventQueue::PushEvent(Papaya::CreateScope<Papaya::WindowResizeEvent>(width, height));
+    }
+
     default:
-        return ::DefWindowProc(hwnd, msg, wparam, lparam);
+        return ::DefWindowProc(hwnd, msg, wParam, lParam);
     }
 
     return 0;
@@ -31,14 +123,15 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 
 namespace Papaya
 {
-    WindowsWindow::WindowsWindow(const WindowAttribs &attribs) {
+    WindowsWindow::WindowsWindow(const WindowAttribs &attribs)
+    {
         m_Attribs = attribs;
 
-        WNDCLASSEX wc; 
+        WNDCLASSEX wc;
         wc.cbClsExtra = 0;
         wc.cbSize = sizeof(WNDCLASSEX);
         wc.cbWndExtra = 0;
-        wc.hbrBackground = (HBRUSH)COLOR_WINDOW;
+        wc.hbrBackground = NULL;
         wc.hCursor = LoadCursor(NULL, IDC_ARROW);
         wc.hIcon = LoadIcon(NULL, IDI_APPLICATION);
         wc.hIconSm = LoadIcon(NULL, IDI_APPLICATION);
@@ -55,43 +148,49 @@ namespace Papaya
 
         if (attribs.Resizable)
             style |= WS_THICKFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX;
- 
-        RECT desktop;
-        GetClientRect(GetDesktopWindow(), &desktop);
-        LONG left = (desktop.right - attribs.Width) / 2;
-        LONG top = (desktop.bottom - attribs.Height) / 2;
 
-        m_Hwnd = ::CreateWindowEx(WS_EX_OVERLAPPEDWINDOW, 
-                                  "PapayaWindow", 
-                                  attribs.Title.Raw(), 
+        RECT size;
+        GetClientRect(GetDesktopWindow(), &size);
+        size.left = (size.right - attribs.Width) / 2;
+        size.top = (size.bottom - attribs.Height) / 2;
+        size.right = size.left + attribs.Width; // HACK: Add 4 px because Windows is weird. (This might be my fault.)
+        size.bottom = size.top + attribs.Height; // TODO: Look here if window isn't sizing correctly
+
+        AdjustWindowRectEx(&size, style, FALSE, 0);
+
+        m_Hwnd = ::CreateWindowEx(NULL,
+                                  "PapayaWindow",
+                                  attribs.Title.Raw(),
                                   style,
-                                  left, 
-                                  top, 
-                                  attribs.Width, 
-                                  attribs.Height,
-                                  NULL, 
-                                  NULL, 
-                                  NULL, 
+                                  size.left,
+                                  size.top,
+                                  size.right - size.left,
+                                  size.bottom - size.top,
+                                  NULL,
+                                  NULL,
+                                  NULL,
                                   this);
 
-         PAPAYA_ASSERT(m_Hwnd, "Failed to Create Window!");
+        PAPAYA_ASSERT(m_Hwnd, "Failed to Create Window!");
     }
 
-    WindowsWindow::~WindowsWindow() {
-
+    WindowsWindow::~WindowsWindow()
+    {
     }
 
-    void WindowsWindow::Show() {
+    void WindowsWindow::Show()
+    {
         ::ShowWindow(m_Hwnd, SW_SHOW);
-        ::UpdateWindow(m_Hwnd);
     }
 
-    void WindowsWindow::Hide() {
-
+    void WindowsWindow::Hide()
+    {
+        ::ShowWindow(m_Hwnd, SW_HIDE);
     }
 
-    void WindowsWindow::Close() {
-
+    void WindowsWindow::Close()
+    {
+        ::CloseWindow(m_Hwnd);
     }
 
     void WindowsWindow::OnUpdate()
