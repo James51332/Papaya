@@ -78,8 +78,7 @@ namespace Papaya
     Win32KeyCodes[0xbe] = Papaya::KeyPeriod;
     Win32KeyCodes[0xbc] = Papaya::KeyComma; // 9 Misc Keys
 
-    // TODO: I forgot the space key
-    // Win32KeyCodes[0x20] = Papaya::KeySpace;
+    Win32KeyCodes[0x20] = Papaya::KeySpace;
 
     Win32KeyCodes[0x11] = Papaya::KeyControl;
     Win32KeyCodes[0xa2] = Papaya::KeyControl;

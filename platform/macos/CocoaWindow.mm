@@ -139,7 +139,7 @@ void CocoaWindow::SetContext(const Ref<Context>& context)
   if (m_Attribs.Api == RenderApi::API::OpenGL) // We need to update the view once the view is set
     std::static_pointer_cast<CocoaOpenGLContext>(ctx)->OnResize();
 
-  [(PWindowDelegate *)m_Delegate setContext: ctx];
+  [(PWindowDelegate *)m_Delegate setContext: ctx]; // This method sets the window to update the context on resize
 }
 
 void CocoaWindow::OnUpdate()

@@ -7,7 +7,8 @@ namespace Papaya
 enum KeyCode
 {
   KeyNone = 0,
-  KeyA = 1,
+
+  KeyA,
   KeyB,
   KeyC,
   KeyD,
@@ -81,11 +82,13 @@ enum KeyCode
   KeyUp,
   KeyDown,
   KeyLeft,
-  KeyRight // 4 Arrow Keys
+  KeyRight, // 4 Arrow Keys
 
-}; // 72 Total Keys
+  KeySpace // 1 Space Bar
 
-#define PAPAYA_TOTAL_KEYCODES 73
+}; // 71 Total Keys (Not Including KeyNone)
+
+#define PAPAYA_TOTAL_KEYCODES 71
 
 } // namespace Papaya
 

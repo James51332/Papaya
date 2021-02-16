@@ -91,6 +91,8 @@ void InitCocoaInputCodes()
   CocoaKeyCodes[123]  = Papaya::KeyLeft;
   CocoaKeyCodes[124]  = Papaya::KeyRight; // 4 Arrow Keys
 
+  CocoaKeyCodes[0x31] = Papaya::KeySpace;
+
   for (int i = 0; i < COCOA_MOUSECODE_SIZE; i++)
     CocoaMouseCodes[i] = Papaya::MouseNone;
 
