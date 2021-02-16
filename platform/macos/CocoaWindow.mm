@@ -18,9 +18,31 @@
 @end
 
 @interface PWindowDelegate : NSObject <NSWindowDelegate>
+{
+  Papaya::Ref<Papaya::CocoaContext> context;
+  Papaya::RenderApi::API api;
+}
+
+- (instancetype) init: (Papaya::RenderApi::API) type;
+- (void) setContext: (Papaya::Ref<Papaya::CocoaContext>) ctx;
 @end
 
 @implementation PWindowDelegate
+
+- (instancetype) init: (Papaya::RenderApi::API) type
+{
+  if (self = [super init])
+  {
+    api = type;
+  }
+  
+  return self;
+}
+
+- (void) setContext: (Papaya::Ref<Papaya::CocoaContext>) ctx
+{
+  context = ctx;
+}
 
 - (BOOL)windowShouldClose:(NSWindow *)sender {
   Papaya::EventQueue::PushEvent(Papaya::CreateScope<Papaya::WindowCloseEvent>());
@@ -29,7 +51,11 @@
 
 - (NSSize)windowWillResize:(NSWindow *)sender toSize:(NSSize)frameSize 
 {
-  Papaya::EventQueue::PushEvent(Papaya::CreateScope<Papaya::WindowResizeEvent>(frameSize.width, frameSize.height));
+  if (api == Papaya::RenderApi::API::OpenGL)
+    std::static_pointer_cast<Papaya::CocoaOpenGLContext>(context)->OnResize();
+
+  NSRect content = [sender contentRectForFrameRect:NSMakeRect(0.0, 0.0, frameSize.width, frameSize.height)];
+  Papaya::EventQueue::PushEvent(Papaya::CreateScope<Papaya::WindowResizeEvent>(content.size.width, content.size.height));
   return frameSize;
 }
 
@@ -67,7 +93,7 @@ CocoaWindow::CocoaWindow(const WindowAttribs& attribs) {
   NSString* title = @(attribs.Title.Raw());
 
   // Create Delegate
-  m_Delegate = [[PWindowDelegate alloc] init];
+  m_Delegate = [[PWindowDelegate alloc] init: attribs.Api];
 
   // Create Window
   m_Window = [[PWindow alloc] initWithContentRect: frame
@@ -109,6 +135,11 @@ void CocoaWindow::SetContext(const Ref<Context>& context)
   
   [(PWindow *)m_Window setContentView: (NSView*) ctx->m_View];
   [(PWindow *)m_Window makeFirstResponder: (NSView*) ctx->m_View];
+
+  if (m_Attribs.Api == RenderApi::API::OpenGL) // We need to update the view once the view is set
+    std::static_pointer_cast<CocoaOpenGLContext>(ctx)->OnResize();
+
+  [(PWindowDelegate *)m_Delegate setContext: ctx];
 }
 
 void CocoaWindow::OnUpdate()

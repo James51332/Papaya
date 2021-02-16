@@ -5,6 +5,8 @@
 #include "platform/macos/CocoaWindow.h"
 #include "platform/windows/WindowsWindow.h"
 
+#include "platform/macos/CocoaContext.h"
+
 #include "main/core/Log.h"
 
 namespace Papaya

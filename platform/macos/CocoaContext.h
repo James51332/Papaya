@@ -38,6 +38,7 @@ public:
   virtual ~CocoaOpenGLContext();
 
   void SwapBuffers();
+  void OnResize();
 
 private:
   void* m_Context;

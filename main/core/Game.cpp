@@ -21,6 +21,7 @@
 #include "main/utils/String.h"
 
 #include "platform/opengl/OpenGLLoader.h"
+#include "platform/macos/CocoaContext.h"
 
 namespace Papaya
 {

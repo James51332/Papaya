@@ -48,6 +48,8 @@ public:
   virtual void OnUpdate() = 0;
 
   virtual void SetContext(const Ref<Context>& context) = 0;
+
+  Ref<Context> GetContext() const { return m_Context; }
   const WindowAttribs& GetAttribs() const { return m_Attribs; }
 
 protected:

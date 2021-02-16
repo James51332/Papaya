@@ -26,7 +26,7 @@
 @implementation PView
 
 - (instancetype) init {
-  if (self = [super initWithFrame:NSMakeRect(0.0, 0.0, 800.0, 600.0)])
+  if (self = [super init])
   {
     flags = 0;
   }
@@ -240,6 +240,11 @@ CocoaOpenGLContext::~CocoaOpenGLContext()
 void CocoaOpenGLContext::SwapBuffers()
 {
   [(NSOpenGLContext*) m_Context flushBuffer];
+}
+
+void CocoaOpenGLContext::OnResize()
+{
+  [(NSOpenGLContext*) m_Context update];
 }
 
 } // namespace Papaya
