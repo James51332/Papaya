@@ -22,6 +22,10 @@ void Platform::OnTerminate() {
   s_Instance->Terminate();
 }
 
+double Platform::GetSysTime() {
+  return s_Instance->SysTime();
+}
+
 Scope<Platform> Platform::Create() {
 #ifdef PAPAYA_MACOS
   return CreateScope<CocoaPlatform>();

@@ -57,6 +57,8 @@ void Game::Run() {
     {
       Platform::OnUpdate(); // Poll Events
 
+      PAPAYA_CORE_INFO((int) Platform::GetSysTime());
+
       while (!EventQueue::Empty()) // Process Events
       {
         Scope<Event> e(EventQueue::PopEvent());

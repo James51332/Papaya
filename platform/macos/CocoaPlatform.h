@@ -14,9 +14,13 @@ public:
   void Init();
   void Update();
   void Terminate();
+  double SysTime();
 
 private:
   void* m_Application;
+
+  double m_TimerOffset;
+  double m_TimerFrequency;
 };
 
 } // namespace Papaya
