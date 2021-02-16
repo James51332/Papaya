@@ -1,6 +1,8 @@
 #ifndef Layer_h
 #define Layer_h
 
+#include "main/core/Timestep.h"
+
 #include "main/utils/String.h"
 
 #include "main/events/Event.h"
@@ -16,7 +18,7 @@ public:
 
   virtual void OnAttach() {}
   virtual void OnDetach() {}
-  virtual void OnUpdate() {}
+  virtual void OnUpdate(Timestep t) {}
   virtual void OnEvent(const Scope<Event>& event) {}
 
 private:

@@ -226,6 +226,11 @@ CocoaOpenGLContext::CocoaOpenGLContext(const Scope<Window>& window)
   m_View = [[PView alloc] init];
   [(NSOpenGLContext*) m_Context setView: (PView*) m_View];
 
+  // Disable VSync (We may make this a setting in the future)
+  int interval = 0;
+  [(NSOpenGLContext*) m_Context setValues: &interval
+                             forParameter: NSOpenGLContextParameterSwapInterval];
+
   [(NSOpenGLContext*) m_Context update];
   
   [(NSOpenGLContext*) m_Context makeCurrentContext];

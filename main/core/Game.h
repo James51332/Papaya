@@ -3,6 +3,7 @@
 
 #include "main/core/Window.h"
 #include "main/core/LayerStack.h"
+#include "main/core/Timestep.h"
 
 #include "main/utils/Memory.h"
 
@@ -22,6 +23,7 @@ private:
   Scope<Window> m_Window;
   Ref<Context> m_Context;
   LayerStack m_LayerStack;
+  Timestep m_TimeSinceLastFrame;
 
   bool m_Running = true;
 };

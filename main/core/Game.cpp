@@ -55,9 +55,11 @@ void Game::Run() {
 
     while (m_Running)
     {
-      Platform::OnUpdate(); // Poll Events
+      double time = Platform::GetSysTime();
+      Timestep timestep = time - m_TimeSinceLastFrame;
+      m_TimeSinceLastFrame = time;
 
-      PAPAYA_CORE_INFO((int) Platform::GetSysTime());
+      Platform::OnUpdate(); // Poll Events
 
       while (!EventQueue::Empty()) // Process Events
       {
@@ -83,7 +85,7 @@ void Game::Run() {
       }
 
       for (Layer* layer : m_LayerStack)
-        layer->OnUpdate();
+        layer->OnUpdate(timestep);
 
       m_Window->OnUpdate(); // Swap Buffers
 

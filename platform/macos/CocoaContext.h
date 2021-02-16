@@ -20,7 +20,6 @@ public:
   virtual ~CocoaContext();
 
   virtual void SwapBuffers() = 0;
-
 protected:
   void* m_View;
 

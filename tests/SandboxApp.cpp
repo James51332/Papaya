@@ -76,8 +76,11 @@ public:
   {
   }
 
-  virtual void OnUpdate() override
+  virtual void OnUpdate(Papaya::Timestep t) override
   {
+    double fps = 1 / t;
+    PAPAYA_INFO("FPS: {}", fps);
+
     Papaya::RenderCommand::ClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     Papaya::RenderCommand::Clear();
 
