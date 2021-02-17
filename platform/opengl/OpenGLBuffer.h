@@ -9,7 +9,7 @@ namespace Papaya
 class OpenGLBuffer : public Buffer
 {
 public:
-  OpenGLBuffer(const void* data, uint32_t size, BufferType type);
+  OpenGLBuffer(const void* data, uint32_t size, BufferType type, BufferUsage usage);
   virtual ~OpenGLBuffer();
 
   void Bind();
@@ -23,6 +23,7 @@ private:
   unsigned int m_RendererID;
   uint32_t m_Size;
   int m_Type;
+  int m_Usage;
   int m_UniqueID;
 
   static int m_CurID;

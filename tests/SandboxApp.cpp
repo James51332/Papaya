@@ -67,8 +67,8 @@ public:
         3, 4, 5  // right
     };
 
-    m_VertexBuffer = Papaya::Buffer::Create(vertices, sizeof(vertices), Papaya::BufferType::Vertex);
-    m_IndexBuffer = Papaya::Buffer::Create(indices, sizeof(indices), Papaya::BufferType::Index);
+    m_VertexBuffer = Papaya::Buffer::Create(vertices, sizeof(vertices), Papaya::BufferType::Vertex, Papaya::BufferUsage::Immutable);
+    m_IndexBuffer = Papaya::Buffer::Create(indices, sizeof(indices), Papaya::BufferType::Index, Papaya::BufferUsage::Immutable);
   }
 
   virtual void OnDetach() override

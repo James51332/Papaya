@@ -26,12 +26,35 @@ static GLenum BufferTypeToGLEnum(BufferType type)
   return GL_ARRAY_BUFFER;
 }
 
+static GLenum BufferUsageToGLEnum(BufferUsage usage)
+{
+  switch (usage)
+  {
+  case BufferUsage::Immutable:
+  {
+    return GL_STATIC_DRAW;
+    break;
+  }
+
+  case BufferUsage::Dynamic:
+  {
+    return GL_DYNAMIC_DRAW;
+    break;
+  }
+
+  default: break;
+  }
+
+  return GL_STATIC_DRAW;
+}
+
 // Start at 1000 to prevent same id's at BufferLayout
 int OpenGLBuffer::m_CurID = 1000;
 
-OpenGLBuffer::OpenGLBuffer(const void* vertices, uint32_t size, BufferType type)
+OpenGLBuffer::OpenGLBuffer(const void* vertices, uint32_t size, BufferType type, BufferUsage usage)
 {
   m_Type = BufferTypeToGLEnum(type);
+  m_Usage = BufferUsageToGLEnum(usage);
   m_Size = size;
   m_UniqueID = m_CurID;
   m_CurID++;
@@ -39,7 +62,7 @@ OpenGLBuffer::OpenGLBuffer(const void* vertices, uint32_t size, BufferType type)
   glGenBuffers(1, &m_RendererID);
 
   glBindBuffer(m_Type, m_RendererID);
-  glBufferData(m_Type, size, vertices, GL_STATIC_DRAW);
+  glBufferData(m_Type, size, vertices, m_Usage);
 
   glBindBuffer(m_Type, 0);
 }

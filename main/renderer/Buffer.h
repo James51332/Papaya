@@ -7,6 +7,12 @@
 namespace Papaya
 {
 
+enum class BufferUsage
+{
+  Immutable,
+  Dynamic
+};
+
 enum class BufferType
 {
   Vertex,
@@ -15,7 +21,7 @@ enum class BufferType
 
 class Buffer {
 public:
-  static Ref<Buffer> Create(const void* data, uint32_t size, BufferType type);
+  static Ref<Buffer> Create(const void* data, uint32_t size, BufferType type, BufferUsage usage);
   virtual ~Buffer();
 
   virtual void Bind() = 0;
