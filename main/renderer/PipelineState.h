@@ -14,7 +14,7 @@ namespace Papaya
   struct PipelineStateDesc
   {
     Ref<Shader> Shader;
-    BufferLayout Layout;
+    VertexDescriptor Layout;
 
     PipelineStateDesc() = default;
   };

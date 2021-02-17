@@ -91,11 +91,11 @@ void Game::Run() {
 
       // TODO: Consider creating a RunLoop class which will update the app for us. We could
       // implement logic by having a new type of event immediately dispatched. This is not
-      // needed anytime soon but may be useful when this class becomes to cluttered.
+      // needed anytime soon but may be useful when this class becomes too cluttered.
   }
 
   Renderer::OnTerminate();
-  m_Window->Close(); // Windows don't close until the app is closed or Close() is called
+  m_Window->Close(); // Windows don't close until the app is closed or Window::Close() is called
 }
 
 } // namespace Papaya

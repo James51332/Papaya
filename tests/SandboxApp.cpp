@@ -41,9 +41,8 @@ public:
 
     Papaya::Ref<Papaya::Shader> shader = Papaya::Shader::Create(vertexShaderSource, fragmentShaderSource);
 
-    Papaya::BufferLayout layout = {
-        {Papaya::ShaderDataType::Float3, "Vertex"}, // Vertices
-        {Papaya::ShaderDataType::Float3, "Color"}   // Colors
+    Papaya::VertexDescriptor layout = {
+        { {Papaya::ShaderDataType::Float3, "Vertex"}, {Papaya::ShaderDataType::Float3, "Color"} }  // Colors
     };
 
     Papaya::PipelineStateDesc desc;
@@ -54,13 +53,13 @@ public:
     float vertices[] = {
         // first triangle
         -0.9f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, // left
-        -0.0f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, // right
-        -0.45f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, // top
+        -0.0f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, // left
+        -0.45f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, // left
 
         // second triangle
-        0.0f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, // left
-        0.9f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, // right
-        0.45f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f  // top
+        0.0f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 
+        0.9f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 
+        0.45f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 
     };
 
     uint32_t indices[] = {
@@ -85,7 +84,7 @@ public:
     Papaya::RenderCommand::Clear();
 
     Papaya::Renderer::Begin();
-    Papaya::Renderer::Submit({m_VertexBuffer}, m_PipelineState, m_IndexBuffer);
+    Papaya::Renderer::Submit(m_VertexBuffer, m_PipelineState, m_IndexBuffer);
     Papaya::Renderer::End();
   }
 
@@ -95,8 +94,8 @@ public:
 
 private:
   Papaya::Ref<Papaya::Buffer> m_VertexBuffer;
-  Papaya::Ref<Papaya::PipelineState> m_PipelineState;
   Papaya::Ref<Papaya::Buffer> m_IndexBuffer;
+  Papaya::Ref<Papaya::PipelineState> m_PipelineState;
 };
 
 Papaya::Game *Papaya::CreateGame()

@@ -26,6 +26,10 @@ namespace Papaya
                        const Ref<PipelineState> pipelineState,
                        const Ref<Buffer> &indexBuffer);
 
+    static void Submit(const Ref<Buffer>& vertexBuffer,
+                       const Ref<PipelineState> pipelineState,
+                       const Ref<Buffer>& indexBuffer);
+
     static void End();
 
     static RenderApi::API GetApi() { return s_Api; }

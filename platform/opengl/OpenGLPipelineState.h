@@ -26,7 +26,7 @@ namespace Papaya
 
   private:
     Ref<Shader> m_Shader;
-    BufferLayout m_Layout;
+    VertexDescriptor m_Layout;
   };
 
 } // namespace Papaya

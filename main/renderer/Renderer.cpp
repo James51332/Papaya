@@ -28,6 +28,13 @@ namespace Papaya
         RenderCommand::DrawIndexed(vertexBuffers, pipelineState, indexBuffer);
     }
 
+    void Renderer::Submit(const Ref<Buffer>& vertexBuffer,
+                          const Ref<PipelineState> pipelineState,
+                          const Ref<Buffer>& indexBuffer)
+    {
+        RenderCommand::DrawIndexed({ vertexBuffer }, pipelineState, indexBuffer);
+    }
+
     void Renderer::End()
     {
     }

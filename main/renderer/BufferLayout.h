@@ -88,6 +88,29 @@ private:
   uint32_t m_Stride;
 };
 
+// Each Vertex Buffer gets one 
+class VertexDescriptor {
+public:
+  VertexDescriptor() = default;
+
+  VertexDescriptor(BufferLayout layout)
+    : m_Elements({ layout }) {}
+
+  VertexDescriptor(std::initializer_list<BufferLayout> elements)
+    : m_Elements(elements) {}
+
+  int GetCount() const { return m_Elements.size(); }
+  const std::vector<BufferLayout>& GetElements() const { return m_Elements; }
+
+  std::vector<BufferLayout>::iterator begin() { return m_Elements.begin(); }
+  std::vector<BufferLayout>::iterator end() { return m_Elements.end(); }
+  std::vector<BufferLayout>::const_iterator begin() const { return m_Elements.begin(); }
+  std::vector<BufferLayout>::const_iterator end() const { return m_Elements.end(); }
+
+private:
+  std::vector<BufferLayout> m_Elements;
+};
+
 } // namespace Papaya
 
 #endif /* end of include guard: BufferLayout_h */

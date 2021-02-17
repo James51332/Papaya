@@ -48,7 +48,7 @@ namespace Papaya
   }
 
   static std::size_t GenerateKey(const std::vector<Ref<Buffer>> &vertexBuffers,
-                                 const BufferLayout &layout,
+                                 const VertexDescriptor &vd,
                                  const Ref<Buffer> &indexBuffer)
   {
     // TODO: This is the core of the cache system. We need to minimize the risk
@@ -66,11 +66,13 @@ namespace Papaya
     for (auto &vb : vertexBuffers)
       Papaya::HashCombine(seed, std::static_pointer_cast<OpenGLBuffer>(vb)->GetUniqueID()); // BufferID's start at 1000 and go up
 
-    Papaya::HashCombine(seed, layout.GetStride());
-    for (auto &element : layout)
-    {
-      Papaya::HashCombine(seed, element.Offset);
-      Papaya::HashCombine(seed, element.Size);
+    for (auto& layout : vd) {
+      Papaya::HashCombine(seed, layout.GetStride());
+      for (auto &element : layout)
+      {
+        Papaya::HashCombine(seed, element.Offset);
+        Papaya::HashCombine(seed, element.Size);
+      }
     }
 
     Papaya::HashCombine(seed, indexBuffer ? std::static_pointer_cast<OpenGLBuffer>(indexBuffer)->GetUniqueID() : 0); // This should almost always be included5
@@ -86,7 +88,7 @@ namespace Papaya
                                                                 const Ref<PipelineState> &pipelineState,
                                                                 const Ref<Buffer> &indexBuffer)
   {
-    BufferLayout layout = std::static_pointer_cast<OpenGLPipelineState>(pipelineState)->m_Layout;
+    VertexDescriptor layout = std::static_pointer_cast<OpenGLPipelineState>(pipelineState)->m_Layout;
 
     std::size_t key = GenerateKey(vertexBuffers, layout, indexBuffer);
 
@@ -105,13 +107,24 @@ namespace Papaya
         vertexArray->SetVertexBuffer(buffer);
       }
 
+      
+      if (layout.GetCount() != vertexBuffers.size())
+        PAPAYA_WARN("Vertex Buffers and Pipeline State Layout don't have the same number of elements!");
+
       // Setting the vertex buffers binds the vao
+      int buffer = 0;
       int index = 0;
-      for (auto &element : layout)
+      for (auto& bl : layout)
       {
-        glVertexAttribPointer(index, element.Size / 4, GL_FLOAT, GL_FALSE, layout.GetStride(), (GLvoid *)element.Offset);
-        glEnableVertexAttribArray(index);
-        index++;
+        vertexBuffers[buffer]->Bind();
+        buffer++;
+        
+        for (auto &element : bl)
+        {
+          glVertexAttribPointer(index, element.Size / 4, GL_FLOAT, GL_FALSE, bl.GetStride(), (GLvoid *)element.Offset);
+          glEnableVertexAttribArray(index);
+          index++;
+        }
       }
 
       vertexArray->SetIndexBuffer(indexBuffer);
