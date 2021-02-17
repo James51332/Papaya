@@ -21,10 +21,12 @@ project "Papaya"
     "include/**.h",
     "thirdparty/opengl/**.h",
     "thirdparty/spdlog/**.h",
+    "thirdparty/glm/**.h",
   }
 
   includedirs {
     "thirdparty/spdlog/include",
+    "thirdparty/glm",
     "thirdparty/opengl",
     ".",
   }
@@ -47,6 +49,7 @@ project "Papaya"
 
     sysincludedirs {
       "thirdparty/spdlog/include",
+      "thirdparty/glm",
       ".",
     }
 
@@ -56,11 +59,6 @@ project "Papaya"
       "platform/macos/**.h",
       "platform/opengl/**.cpp",
       "platform/opengl/**.h",
-    }
-
-    links {
-      "Cocoa.framework",
-      "OpenGL.framework",
     }
 
   filter "action:vs*"
@@ -100,6 +98,7 @@ project "Sandbox"
   includedirs {
     "include",
     "thirdparty/spdlog/include",
+    "thirdparty/glm",
     "thirdparty/opengl",
     ".",
   }
@@ -124,6 +123,7 @@ project "Sandbox"
     sysincludedirs {
       "include",
       "thirdparty/spdlog/include",
+      "thirdparty/glm",
       "."
     }
 

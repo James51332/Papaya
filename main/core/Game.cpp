@@ -64,7 +64,7 @@ void Game::Run() {
       while (!EventQueue::Empty()) // Process Events
       {
         Scope<Event> e(EventQueue::PopEvent());
-        PAPAYA_CORE_INFO(e);
+        //PAPAYA_CORE_INFO(e);
 
         if (e->GetEventType() == EventType::WindowClose)
         {

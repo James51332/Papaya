@@ -59,6 +59,26 @@
   return frameSize;
 }
 
+- (NSSize)window:(NSWindow *)window
+willUseFullScreenContentSize:(NSSize)proposedSize
+{
+    if (api == Papaya::RenderApi::API::OpenGL)
+        std::static_pointer_cast<Papaya::CocoaOpenGLContext>(context)->OnResize();
+    
+    Papaya::EventQueue::PushEvent(Papaya::CreateScope<Papaya::WindowResizeEvent>(proposedSize.width, proposedSize.height));
+    return proposedSize;
+}
+
+- (void)windowDidExitFullScreen:(NSNotification *)notification
+{
+  if (api == Papaya::RenderApi::API::OpenGL)
+    std::static_pointer_cast<Papaya::CocoaOpenGLContext>(context)->OnResize();
+    
+  NSWindow* sender = [notification object];
+  NSRect content = [sender contentRectForFrameRect:[sender frame]];
+  Papaya::EventQueue::PushEvent(Papaya::CreateScope<Papaya::WindowResizeEvent>(content.size.width, content.size.height));
+}
+
 - (void)windowDidBecomeKey:(NSNotification *)notification
 {
   Papaya::EventQueue::PushEvent(Papaya::CreateScope<Papaya::WindowFocusEvent>());

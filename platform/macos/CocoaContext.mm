@@ -113,6 +113,9 @@
   NSUInteger flag;
   NSUInteger deltaFlags = [event modifierFlags] ^ flags;
 
+  // TODO: Caps Lock Keys State Changes on press only
+  // IOHIDManager seems to be the only
+    
   if (deltaFlags & NSEventModifierFlagCapsLock)
   {
     flag = NSEventModifierFlagCapsLock;
