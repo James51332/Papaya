@@ -49,14 +49,15 @@
   return NO;
 }
 
-- (NSSize)windowWillResize:(NSWindow *)sender toSize:(NSSize)frameSize 
+- (void)windowDidResize:(NSNotification *)sender
 {
+  NSWindow* object = [sender object];
+
   if (api == Papaya::RenderApi::API::OpenGL)
     std::static_pointer_cast<Papaya::CocoaOpenGLContext>(context)->OnResize();
 
-  NSRect content = [sender contentRectForFrameRect:NSMakeRect(0.0, 0.0, frameSize.width, frameSize.height)];
+  NSRect content = [object contentRectForFrameRect:[object frame]];
   Papaya::EventQueue::PushEvent(Papaya::CreateScope<Papaya::WindowResizeEvent>(content.size.width, content.size.height));
-  return frameSize;
 }
 
 - (NSSize)window:(NSWindow *)window

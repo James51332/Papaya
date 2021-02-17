@@ -90,6 +90,7 @@ public:
 
   virtual void OnEvent(const Papaya::Scope<Papaya::Event> &event) override
   {
+    PAPAYA_INFO(event);
   }
 
 private:
