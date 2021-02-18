@@ -125,6 +125,8 @@ CocoaWindow::CocoaWindow(const WindowAttribs& attribs) {
   [(PWindow *)m_Window setTitle: title];
   [(PWindow *)m_Window setDelegate: (PWindowDelegate *) m_Delegate];
   [(PWindow *)m_Window center];
+
+  ((PWindow *)m_Window).preservesContentDuringLiveResize = NO;
 }
 
 CocoaWindow::~CocoaWindow() {

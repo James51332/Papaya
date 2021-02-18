@@ -17,4 +17,9 @@
 #include "main/utils/Memory.h"
 #include "main/utils/String.h"
 
+#include "main/events/Event.h"
+#include "main/events/KeyEvent.h"
+#include "main/events/MouseEvent.h"
+#include "main/events/AppEvent.h"
+
 #endif /* end of include guard: Papaya_h */

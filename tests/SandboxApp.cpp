@@ -54,9 +54,9 @@ public:
 
     float vertices[] = {
         // first triangle
-        -0.9f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, // left
+        -0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, // left
         -0.0f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, // left
-        -0.45f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, // left
+        -0.5f,  0.5f, 0.0f, 0.0f, 1.0f, 0.0f, // left
 
         // second triangle
         0.0f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 
@@ -90,9 +90,17 @@ public:
     Papaya::Renderer::End();
   }
 
-  virtual void OnEvent(const Papaya::Scope<Papaya::Event> &event) override
+  virtual void OnEvent(const Papaya::Scope<Papaya::Event>& event) override
   {
     PAPAYA_INFO(event);
+
+    Papaya::EventDispatcher::Dispatch<Papaya::WindowResizeEvent>(event, [&](Papaya::WindowResizeEvent* event) {
+      float width = (1.6f / 1200.0f) * event->GetWidth();
+      float height = (1.6f / 1200.0f) * event->GetHeight();
+
+      m_Camera.SetProjection(-width, width, -height, height);
+    });
+    
   }
 
 private:

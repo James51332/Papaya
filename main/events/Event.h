@@ -57,23 +57,16 @@ protected:
 
 class EventDispatcher {
 public:
-  EventDispatcher(Scope<Event> event)
-    : m_Event(Move(event)) {}
-
   template<typename T, typename F>
-  bool Dispatch(const F& func)
+  static bool Dispatch(const Scope<Event>& event, const F& func)
   {
-    if (m_Event->GetEventType() == T::GetStaticType())
+    if (event->GetEventType() == T::GetStaticType())
     {
-      Scope<T> e(static_cast<T*>(m_Event.get()));
-      func(e);
+      func(static_cast<T*>(event.get()));
       return true;
     }
     return false;
   }
-
-private:
-  Scope<Event> m_Event;
 };
 
 inline std::ostream& operator<<(std::ostream& os, const Event& e)

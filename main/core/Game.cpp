@@ -69,7 +69,7 @@ void Game::Run() {
         if (e->GetEventType() == EventType::WindowClose)
         {
           m_Running = false;
-          continue; // Don't pass window close events to user (this isn't techinally needed)
+          // continue; // Don't pass window close events to user (this isn't techinally needed)
         }
 
         if (e->GetEventType() == EventType::WindowResize)
