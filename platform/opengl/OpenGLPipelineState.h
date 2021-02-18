@@ -7,6 +7,7 @@
 
 namespace Papaya
 {
+  class Renderer;
 
   // The implementation for OpenGL is very simple.
   // It's just a wrapper around a shader and buffer layout.
@@ -16,6 +17,7 @@ namespace Papaya
   class OpenGLPipelineState : public PipelineState
   {
     friend class OpenGLVertexArrayCache;
+    friend class Renderer;
 
   public:
     OpenGLPipelineState(const PipelineStateDesc &desc);

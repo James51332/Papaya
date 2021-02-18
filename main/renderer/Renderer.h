@@ -8,8 +8,10 @@
 #include "BufferLayout.h"
 #include "Shader.h"
 #include "PipelineState.h"
+#include "Camera.h"
 
 #include <vector>
+#include <glm/matrix.hpp>
 
 namespace Papaya
 {
@@ -20,7 +22,7 @@ namespace Papaya
     static void OnInit();
     static void OnTerminate();
 
-    static void Begin();
+    static void Begin(const OrthographicCamera& camera);
 
     static void Submit(const std::vector<Ref<Buffer>> &vertexBuffers,
                        const Ref<PipelineState> pipelineState,
@@ -36,6 +38,7 @@ namespace Papaya
 
   private:
     static RenderApi::API s_Api;
+    static glm::mat4 s_ViewProjection;
   };
 
 } // namespace Papaya

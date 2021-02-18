@@ -239,10 +239,12 @@ typedef bool GLboolean;
     GLE(GLint,     GetUniformLocation,      GLuint program, const GLchar *name) \
     GLE(void,      LinkProgram,             GLuint program) \
     GLE(void,      ShaderSource,            GLuint shader, GLsizei count, const GLchar* const *string, const GLint *length) \
-    GLE(void,      Uniform1i,               GLint location, GLint v0) \
     GLE(void,      Uniform1f,               GLint location, GLfloat v0) \
     GLE(void,      Uniform2f,               GLint location, GLfloat v0, GLfloat v1) \
+    GLE(void,      Uniform3f,               GLint location, GLfloat v0, GLfloat v1, GLfloat v2) \
     GLE(void,      Uniform4f,               GLint location, GLfloat v0, GLfloat v1, GLfloat v2, GLfloat v3) \
+    GLE(void,      UniformMatrix2fv,        GLint location, GLsizei count, GLboolean transpose, const GLfloat *value) \
+    GLE(void,      UniformMatrix3fv,        GLint location, GLsizei count, GLboolean transpose, const GLfloat *value) \
     GLE(void,      UniformMatrix4fv,        GLint location, GLsizei count, GLboolean transpose, const GLfloat *value) \
     GLE(void,      UseProgram,              GLuint program) \
     GLE(void,      VertexAttribPointer,     GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid * pointer) \

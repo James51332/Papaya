@@ -7,6 +7,8 @@
 
 #include "main/utils/Memory.h"
 
+#include "main/renderer/Camera.h"
+
 namespace Papaya
 {
 

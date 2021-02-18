@@ -27,7 +27,7 @@ namespace Papaya
 {
 
 Game::Game() {
-  WindowAttribs attribs = WindowAttribs();
+  WindowAttribs attribs = WindowAttribs(1200, 675);
   attribs.Resizable = true;
   m_Window = Window::Create(attribs);
 

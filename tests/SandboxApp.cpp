@@ -4,7 +4,7 @@ class SandboxLayer : public Papaya::Layer
 {
 public:
   SandboxLayer()
-      : Layer("SandboxLayer")
+      : m_Camera(-1.6f, 1.6f, -0.9f, 0.9f), Layer("SandboxLayer")
   {
   }
 
@@ -20,12 +20,14 @@ public:
     layout (location = 0) in vec3 aPos;
     layout (location = 1) in vec3 aColor;
 
+    uniform mat4 u_Camera;
+
     out vec4 color;
 
     void main()
     {
       color = vec4(aColor, 1.0);
-      gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);
+      gl_Position = u_Camera * vec4(aPos.x, aPos.y, aPos.z, 1.0);
     })";
 
     Papaya::String fragmentShaderSource = R"(
@@ -83,7 +85,7 @@ public:
     Papaya::RenderCommand::ClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     Papaya::RenderCommand::Clear();
 
-    Papaya::Renderer::Begin();
+    Papaya::Renderer::Begin(m_Camera);
     Papaya::Renderer::Submit(m_VertexBuffer, m_PipelineState, m_IndexBuffer);
     Papaya::Renderer::End();
   }
@@ -97,6 +99,8 @@ private:
   Papaya::Ref<Papaya::Buffer> m_VertexBuffer;
   Papaya::Ref<Papaya::Buffer> m_IndexBuffer;
   Papaya::Ref<Papaya::PipelineState> m_PipelineState;
+
+  Papaya::OrthographicCamera m_Camera;
 };
 
 Papaya::Game *Papaya::CreateGame()
