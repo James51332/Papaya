@@ -99,7 +99,7 @@ public:
   VertexDescriptor(std::initializer_list<BufferLayout> elements)
     : m_Elements(elements) {}
 
-  int GetCount() const { return m_Elements.size(); }
+  int GetCount() const { return static_cast<int>(m_Elements.size()); }
   const std::vector<BufferLayout>& GetElements() const { return m_Elements; }
 
   std::vector<BufferLayout>::iterator begin() { return m_Elements.begin(); }

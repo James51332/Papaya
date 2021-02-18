@@ -15,9 +15,13 @@ namespace Papaya
         void Init();
         void Update();
         void Terminate();
+        double SysTime();
+
+    private:
+        uint64_t m_TimerOffset;
+        uint64_t m_TimerFrequency;
     };
 
 } // namespace Papaya
-
 
 #endif /* end of include guard: WindowsPlatform_h */

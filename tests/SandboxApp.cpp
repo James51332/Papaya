@@ -44,7 +44,7 @@ public:
     Papaya::Ref<Papaya::Shader> shader = Papaya::Shader::Create(vertexShaderSource, fragmentShaderSource);
 
     Papaya::VertexDescriptor layout = {
-        { {Papaya::ShaderDataType::Float3, "Vertex"}, {Papaya::ShaderDataType::Float3, "Color"} }  // Colors
+        {{Papaya::ShaderDataType::Float3, "Vertex"}, {Papaya::ShaderDataType::Float3, "Color"}} // Colors
     };
 
     Papaya::PipelineStateDesc desc;
@@ -54,14 +54,44 @@ public:
 
     float vertices[] = {
         // first triangle
-        -0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, // left
-        -0.0f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, // left
-        -0.5f,  0.5f, 0.0f, 0.0f, 1.0f, 0.0f, // left
+        -0.5f,
+        -0.5f,
+        0.0f,
+        0.0f,
+        1.0f,
+        0.0f, // left
+        -0.0f,
+        -0.5f,
+        0.0f,
+        0.0f,
+        1.0f,
+        0.0f, // left
+        -0.5f,
+        0.5f,
+        0.0f,
+        0.0f,
+        1.0f,
+        0.0f, // left
 
         // second triangle
-        0.0f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 
-        0.9f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 
-        0.45f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 
+        0.0f,
+        -0.5f,
+        0.0f,
+        1.0f,
+        0.0f,
+        0.0f,
+        0.9f,
+        -0.5f,
+        0.0f,
+        1.0f,
+        0.0f,
+        0.0f,
+        0.45f,
+        0.5f,
+        0.0f,
+        1.0f,
+        0.0f,
+        0.0f,
     };
 
     uint32_t indices[] = {
@@ -79,8 +109,8 @@ public:
 
   virtual void OnUpdate(Papaya::Timestep t) override
   {
-    //double fps = 1 / t;
-    //PAPAYA_INFO("FPS: {}", fps);
+    double fps = 1 / t;
+    PAPAYA_INFO("FPS: {}", fps);
 
     Papaya::RenderCommand::ClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     Papaya::RenderCommand::Clear();
@@ -90,17 +120,16 @@ public:
     Papaya::Renderer::End();
   }
 
-  virtual void OnEvent(const Papaya::Scope<Papaya::Event>& event) override
+  virtual void OnEvent(const Papaya::Scope<Papaya::Event> &event) override
   {
     PAPAYA_INFO(event);
 
-    Papaya::EventDispatcher::Dispatch<Papaya::WindowResizeEvent>(event, [&](Papaya::WindowResizeEvent* event) {
+    Papaya::EventDispatcher::Dispatch<Papaya::WindowResizeEvent>(event, [&](Papaya::WindowResizeEvent *event) {
       float width = (1.6f / 1200.0f) * event->GetWidth();
       float height = (1.6f / 1200.0f) * event->GetHeight();
 
       m_Camera.SetProjection(-width, width, -height, height);
     });
-    
   }
 
 private:
