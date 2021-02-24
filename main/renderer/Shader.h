@@ -19,6 +19,8 @@ public:
 
   // TODO: Next-Gen API's support uploading buffers as uniforms
   // those may give better performance than uploading per frame
+  virtual void SetInt(const String& name, int32_t value) = 0;
+
   virtual void SetFloat(const String& name, float value) = 0;
   virtual void SetFloat2(const String& name, const glm::vec2& value) = 0;
   virtual void SetFloat3(const String& name, const glm::vec3& value) = 0;

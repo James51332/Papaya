@@ -10,6 +10,7 @@
 #include "main/renderer/Buffer.h"
 #include "main/renderer/BufferLayout.h"
 #include "main/renderer/Shader.h"
+#include "main/renderer/Texture.h"
 #include "main/renderer/PipelineState.h"
 #include "main/renderer/Renderer.h"
 #include "main/renderer/RenderCommand.h"

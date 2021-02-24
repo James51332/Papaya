@@ -15,6 +15,8 @@ public:
   void Bind();
   void Unbind();
 
+  void SetInt(const String& name, int32_t value);
+
   void SetFloat(const String& name, float value);
   void SetFloat2(const String& name, const glm::vec2& value);
   void SetFloat3(const String& name, const glm::vec3& value);

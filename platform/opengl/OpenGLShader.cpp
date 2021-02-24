@@ -43,6 +43,12 @@ void OpenGLShader::Unbind()
   glUseProgram(0);
 }
 
+void OpenGLShader::SetInt(const String& name, int32_t value)
+{
+  GLint location = glGetUniformLocation(m_RendererID, name.Raw());
+  glUniform1i(location, value);
+}
+
 void OpenGLShader::SetFloat(const String& name, float value)
 {
   GLint location = glGetUniformLocation(m_RendererID, name.Raw());

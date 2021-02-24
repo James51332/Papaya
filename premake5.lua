@@ -21,12 +21,16 @@ project "Papaya"
     "include/**.h",
     "thirdparty/opengl/**.h",
     "thirdparty/spdlog/**.h",
+    "thirdparty/stb_image/**.h",
+    "thirdparty/stb_image/**.cpp",
     "thirdparty/glm/**.h",
+    "thirdparty/glm/**.inl",
   }
 
   includedirs {
     "thirdparty/spdlog/include",
     "thirdparty/glm",
+    "thirdparty/stb_image",
     "thirdparty/opengl",
     ".",
   }
@@ -50,6 +54,7 @@ project "Papaya"
     sysincludedirs {
       "thirdparty/spdlog/include",
       "thirdparty/glm",
+      "thirdparty/stb_image",
       ".",
     }
 

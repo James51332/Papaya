@@ -1,5 +1,8 @@
 #include <Papaya/Papaya.h>
 
+#include "platform/opengl/OpenGLPipelineState.h"
+#include "platform/opengl/OpenGLShader.h"
+
 class SandboxLayer : public Papaya::Layer
 {
 public:
@@ -18,33 +21,39 @@ public:
     #version 330 core
     
     layout (location = 0) in vec3 aPos;
-    layout (location = 1) in vec3 aColor;
+    layout (location = 1) in vec2 aTexCoord;
 
     uniform mat4 u_Camera;
 
-    out vec4 color;
+    out vec2 texCoord;
 
     void main()
     {
-      color = vec4(aColor, 1.0);
+      texCoord = aTexCoord;
       gl_Position = u_Camera * vec4(aPos.x, aPos.y, aPos.z, 1.0);
     })";
 
     Papaya::String fragmentShaderSource = R"(
     #version 330 core
 
-    in vec4 color;
-    out vec4 FragColor;
+    layout (location = 0) out vec4 color;
+    
+    in vec2 texCoord;
+
+    uniform sampler2D u_Texture;
 
     void main()
     {
-      FragColor = color;
+      color = texture(u_Texture, texCoord);
     })";
 
     Papaya::Ref<Papaya::Shader> shader = Papaya::Shader::Create(vertexShaderSource, fragmentShaderSource);
 
+    shader->Bind();
+    shader->SetInt("u_Texture", 0);
+
     Papaya::VertexDescriptor layout = {
-        {{Papaya::ShaderDataType::Float3, "Vertex"}, {Papaya::ShaderDataType::Float3, "Color"}} // Colors
+      {{ Papaya::ShaderDataType::Float3, "aPos" }, { Papaya::ShaderDataType::Float2, "aTexCoord" }}
     };
 
     Papaya::PipelineStateDesc desc;
@@ -52,51 +61,18 @@ public:
     desc.Layout = layout;
     m_PipelineState = Papaya::PipelineState::Create(desc);
 
-    float vertices[] = {
-        // first triangle
-        -0.5f,
-        -0.5f,
-        0.0f,
-        0.0f,
-        1.0f,
-        0.0f, // left
-        -0.0f,
-        -0.5f,
-        0.0f,
-        0.0f,
-        1.0f,
-        0.0f, // left
-        -0.5f,
-        0.5f,
-        0.0f,
-        0.0f,
-        1.0f,
-        0.0f, // left
+    m_Texture = Papaya::Texture2D::Create("tests/assets/textures/checkboard.png");
 
-        // second triangle
-        0.0f,
-        -0.5f,
-        0.0f,
-        1.0f,
-        0.0f,
-        0.0f,
-        0.9f,
-        -0.5f,
-        0.0f,
-        1.0f,
-        0.0f,
-        0.0f,
-        0.45f,
-        0.5f,
-        0.0f,
-        1.0f,
-        0.0f,
-        0.0f,
+    float vertices[] = {
+       0.5f,  0.5f, 0.0f, 1.0f, 1.0f, // top right
+       0.5f, -0.5f, 0.0f, 1.0f, 0.0f, // bottom right
+      -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, // bottom left
+      -0.5f,  0.5f, 0.0f, 0.0f, 1.0f, // top left
     };
 
     uint32_t indices[] = {
         0, 1, 2, // left
-        3, 4, 5  // right
+        2, 3, 0  // right
     };
 
     m_VertexBuffer = Papaya::Buffer::Create(vertices, sizeof(vertices), Papaya::BufferType::Vertex, Papaya::BufferUsage::Immutable);
@@ -116,7 +92,10 @@ public:
     Papaya::RenderCommand::Clear();
 
     Papaya::Renderer::Begin(m_Camera);
+    
+    m_Texture->Bind();
     Papaya::Renderer::Submit(m_VertexBuffer, m_PipelineState, m_IndexBuffer);
+    
     Papaya::Renderer::End();
   }
 
@@ -136,6 +115,8 @@ private:
   Papaya::Ref<Papaya::Buffer> m_VertexBuffer;
   Papaya::Ref<Papaya::Buffer> m_IndexBuffer;
   Papaya::Ref<Papaya::PipelineState> m_PipelineState;
+
+  Papaya::Ref<Papaya::Texture2D> m_Texture;
 
   Papaya::OrthographicCamera m_Camera;
 };

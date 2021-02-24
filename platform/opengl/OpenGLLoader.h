@@ -211,10 +211,12 @@ typedef bool GLboolean;
     /* ret, name, params */ \
     GLE(void,      ClearColor,              float r, float g, float b, float a) \
     GLE(void,      Clear,                   GLenum) \
+    GLE(void,      ActiveTexture,           GLenum texture) \
     GLE(void,      AttachShader,            GLuint program, GLuint shader) \
     GLE(void,      BindBuffer,              GLenum target, GLuint buffer) \
     GLE(void,      BindVertexArray,         GLuint array) \
     GLE(void,      BindFramebuffer,         GLenum target, GLuint framebuffer) \
+    GLE(void,      BindTexture,             GLenum target, GLuint texture) \
     GLE(void,      BufferData,              GLenum target, GLsizeiptr size, const GLvoid *data, GLenum usage) \
     GLE(void,      BufferSubData,           GLenum target, GLintptr offset, GLsizeiptr size, const GLvoid * data) \
     GLE(GLenum,    CheckFramebufferStatus,  GLenum target) \
@@ -224,6 +226,7 @@ typedef bool GLboolean;
     GLE(GLuint,    CreateShader,            GLenum type) \
     GLE(void,      DeleteBuffers,           GLsizei n, const GLuint *buffers) \
     GLE(void,      DeleteFramebuffers,      GLsizei n, const GLuint *framebuffers) \
+    GLE(void,      DeleteTextures,          GLsizei n, const GLuint* textures) \
     GLE(void,      DeleteShader,            GLuint target) \
     GLE(void,      DrawArrays,              GLenum, GLint, GLint) \
     GLE(void,      DrawElements,            GLenum, GLsizei, GLenum, const GLvoid *) \
@@ -231,14 +234,19 @@ typedef bool GLboolean;
     GLE(void,      DrawBuffers,             GLsizei n, const GLenum *bufs) \
     GLE(void,      FramebufferTexture2D,    GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level) \
     GLE(void,      GenBuffers,              GLsizei n, GLuint *buffers) \
+    GLE(void,      GenerateMipmap,          GLenum target) \
     GLE(void,      GenVertexArrays,         GLsizei n, GLuint *array) \
-    GLE(void,      GenFramebuffers,         GLsizei n, GLuint * framebuffers) \
+    GLE(void,      GenFramebuffers,         GLsizei n, GLuint *framebuffers) \
+    GLE(void,      GenTextures,             GLsizei n, GLuint *textures) \
     GLE(GLint,     GetAttribLocation,       GLuint program, const GLchar *name) \
     GLE(void,      GetShaderInfoLog,        GLuint shader, GLsizei bufSize, GLsizei *length, GLchar *infoLog) \
     GLE(void,      GetShaderiv,             GLuint shader, GLenum pname, GLint *params) \
     GLE(GLint,     GetUniformLocation,      GLuint program, const GLchar *name) \
     GLE(void,      LinkProgram,             GLuint program) \
     GLE(void,      ShaderSource,            GLuint shader, GLsizei count, const GLchar* const *string, const GLint *length) \
+    GLE(void,      TexImage2D,              GLenum target, GLint level, GLint internalFormat, GLsizei width, GLsizei height, GLint border, GLenum format, GLenum type, const GLvoid* data) \
+    GLE(void,      TexParameteri,           GLenum target, GLenum pname, GLint param) \
+    GLE(void,      Uniform1i,               GLint location, GLint v0) \
     GLE(void,      Uniform1f,               GLint location, GLfloat v0) \
     GLE(void,      Uniform2f,               GLint location, GLfloat v0, GLfloat v1) \
     GLE(void,      Uniform3f,               GLint location, GLfloat v0, GLfloat v1, GLfloat v2) \

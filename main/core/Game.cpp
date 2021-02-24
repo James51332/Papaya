@@ -59,6 +59,8 @@ void Game::Run() {
       Timestep timestep = time - m_TimeSinceLastFrame;
       m_TimeSinceLastFrame = time;
 
+      PAPAYA_CORE_INFO(time);
+
       Platform::OnUpdate(); // Poll Events
 
       while (!EventQueue::Empty()) // Process Events
@@ -66,17 +68,14 @@ void Game::Run() {
         Scope<Event> e(EventQueue::PopEvent());
         //PAPAYA_CORE_INFO(e);
 
-        if (e->GetEventType() == EventType::WindowClose)
-        {
+        EventDispatcher::Dispatch<WindowCloseEvent>(e, [&](WindowCloseEvent* event) {
           m_Running = false;
           // continue; // Don't pass window close events to user (this isn't techinally needed)
-        }
+        });
 
-        if (e->GetEventType() == EventType::WindowResize)
-        {
-            WindowResizeEvent* event = static_cast<WindowResizeEvent*>(e.get());
-            RenderCommand::SetViewport(0, 0, event->GetWidth(), event->GetHeight());
-        }
+        EventDispatcher::Dispatch<WindowResizeEvent>(e, [](WindowResizeEvent* event) {
+          RenderCommand::SetViewport(0, 0, event->GetWidth(), event->GetHeight());
+        });
 
         for (auto it = m_LayerStack.rbegin(); it != m_LayerStack.rend(); ++it)
         {
