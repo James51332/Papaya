@@ -108,7 +108,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
     case WM_KEYUP:
     {
-        Papaya::EventQueue::PushEvent(Papaya::CreateScope<Papaya::KeyPressEvent>(Papaya::Win32KeyCodeToPapayaKeyCode(static_cast<int>(wParam))));
+        Papaya::EventQueue::PushEvent(Papaya::CreateScope<Papaya::KeyReleaseEvent>(Papaya::Win32KeyCodeToPapayaKeyCode(static_cast<int>(wParam))));
         break;
     }
 
@@ -124,6 +124,13 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
         RECT frame = *(RECT *)lParam;
         float width = static_cast<float>(frame.right - frame.left);
         float height = static_cast<float>(frame.bottom - frame.top);
+        Papaya::EventQueue::PushEvent(Papaya::CreateScope<Papaya::WindowResizeEvent>(width, height));
+    }
+
+    case WM_SIZE:
+    {
+        float width = static_cast<float>(LOWORD(lParam));
+        float height = static_cast<float>(HIWORD(lParam));
         Papaya::EventQueue::PushEvent(Papaya::CreateScope<Papaya::WindowResizeEvent>(width, height));
     }
 

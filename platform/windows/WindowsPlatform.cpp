@@ -42,7 +42,7 @@ namespace Papaya
         uint64_t value;
         QueryPerformanceCounter((LARGE_INTEGER*)&value);
 
-        return (value - m_TimerOffset) / m_TimerFrequency;
+        return static_cast<double>(value - m_TimerOffset) / static_cast<double>(m_TimerFrequency);
 
     }
 

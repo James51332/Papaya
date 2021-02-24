@@ -98,6 +98,7 @@ project "Sandbox"
   files {
     "tests/**.cpp",
     "tests/**.h",
+    "tests/**.png",
   }
   
   includedirs {
@@ -140,6 +141,7 @@ project "Sandbox"
   filter "action:vs*"
     characterset "ASCII"
     defines "_CRT_SECURE_NO_WARNINGS"
+    debugdir "$(SolutionDir)"
 
   filter { "system:windows", "action:gmake" }
     buildoptions "-std=gnu++17"

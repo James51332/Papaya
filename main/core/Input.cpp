@@ -1,5 +1,7 @@
 #include "Input.h"
 
+#include "main/core/Log.h"
+
 namespace Papaya
 {
   
