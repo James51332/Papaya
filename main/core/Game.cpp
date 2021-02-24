@@ -11,6 +11,7 @@
 
 #include "main/core/Log.h"
 #include "main/core/Platform.h"
+#include "main/core/Input.h"
 
 #include "main/renderer/Buffer.h"
 #include "main/renderer/BufferLayout.h"
@@ -20,9 +21,6 @@
 
 #include "main/utils/String.h"
 
-#include "platform/opengl/OpenGLLoader.h"
-#include "platform/macos/CocoaContext.h"
-
 namespace Papaya
 {
 
@@ -31,6 +29,7 @@ Game::Game() {
   attribs.Resizable = true;
   m_Window = Window::Create(attribs);
 
+  Input::OnInit();
   Renderer::OnInit();
 }
 
@@ -59,8 +58,6 @@ void Game::Run() {
       Timestep timestep = time - m_TimeSinceLastFrame;
       m_TimeSinceLastFrame = time;
 
-      PAPAYA_CORE_INFO(time);
-
       Platform::OnUpdate(); // Poll Events
 
       while (!EventQueue::Empty()) // Process Events
@@ -77,13 +74,17 @@ void Game::Run() {
           RenderCommand::SetViewport(0, 0, event->GetWidth(), event->GetHeight());
         });
 
+        Input::OnEvent(e);
+
         for (auto it = m_LayerStack.rbegin(); it != m_LayerStack.rend(); ++it)
         {
           (*it)->OnEvent(e);
         }
       }
 
-      for (Layer* layer : m_LayerStack)
+      Input::OnUpdate(); // Update Input Class
+
+      for (Layer* layer : m_LayerStack) // Update Layers
         layer->OnUpdate(timestep);
 
       m_Window->OnUpdate(); // Swap Buffers

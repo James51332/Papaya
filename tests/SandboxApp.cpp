@@ -83,10 +83,25 @@ public:
   {
   }
 
-  virtual void OnUpdate(Papaya::Timestep t) override
+  virtual void OnUpdate(Papaya::Timestep ts) override
   {
-    double fps = 1 / t;
-    PAPAYA_INFO("FPS: {}", fps);
+    // double fps = 1 / t;
+    // PAPAYA_INFO("FPS: {}", fps);
+
+    if (Papaya::Input::KeyDown(Papaya::KeyW))
+      m_Camera.SetPosition(m_Camera.GetPosition() + glm::vec3(0.0f,4.0f * ts, 0.0f));
+    if (Papaya::Input::KeyDown(Papaya::KeyS))
+      m_Camera.SetPosition(m_Camera.GetPosition() + glm::vec3(0.0f, -4.0f * ts, 0.0f));
+    if (Papaya::Input::KeyDown(Papaya::KeyD))
+      m_Camera.SetPosition(m_Camera.GetPosition() + glm::vec3(4.0f * ts, 0.0f, 0.0f));
+    if (Papaya::Input::KeyDown(Papaya::KeyA))
+      m_Camera.SetPosition(m_Camera.GetPosition() + glm::vec3(-4.0f * ts, 0.0f, 0.0f));
+
+    if (Papaya::Input::KeyDown(Papaya::KeyLeft))
+      m_Camera.SetRotation(m_Camera.GetRotation() - 200 * ts);
+    
+    if (Papaya::Input::KeyDown(Papaya::KeyRight))
+      m_Camera.SetRotation(m_Camera.GetRotation() + 200 * ts);
 
     Papaya::RenderCommand::ClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     Papaya::RenderCommand::Clear();
@@ -101,7 +116,7 @@ public:
 
   virtual void OnEvent(const Papaya::Scope<Papaya::Event> &event) override
   {
-    PAPAYA_INFO(event);
+    // PAPAYA_INFO(event);
 
     Papaya::EventDispatcher::Dispatch<Papaya::WindowResizeEvent>(event, [&](Papaya::WindowResizeEvent *event) {
       float width = (1.6f / 1200.0f) * event->GetWidth();
@@ -115,7 +130,6 @@ private:
   Papaya::Ref<Papaya::Buffer> m_VertexBuffer;
   Papaya::Ref<Papaya::Buffer> m_IndexBuffer;
   Papaya::Ref<Papaya::PipelineState> m_PipelineState;
-
   Papaya::Ref<Papaya::Texture2D> m_Texture;
 
   Papaya::OrthographicCamera m_Camera;

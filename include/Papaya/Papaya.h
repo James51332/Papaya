@@ -6,6 +6,7 @@
 #include "main/core/Layer.h"
 #include "main/core/Log.h"
 #include "main/core/Timestep.h"
+#include "main/core/Input.h"
 
 #include "main/renderer/Buffer.h"
 #include "main/renderer/BufferLayout.h"
@@ -22,5 +23,9 @@
 #include "main/events/KeyEvent.h"
 #include "main/events/MouseEvent.h"
 #include "main/events/AppEvent.h"
+
+#include <glm/matrix.hpp>
+#include <glm/vec4.hpp>
+#include <glm/vec3.hpp>
 
 #endif /* end of include guard: Papaya_h */
