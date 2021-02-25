@@ -12,32 +12,38 @@
 namespace Papaya
 {
 
-class Log {
-public:
-  static void OnInit();
+  class Log
+  {
+  public:
+    static void OnInit();
 
-  inline static Ref<spdlog::logger>& GetCoreLogger() { return s_CoreLogger; }
-  inline static Ref<spdlog::logger>& GetClientLogger() { return s_ClientLogger; }
-private:
-  static Ref<spdlog::logger> s_CoreLogger;
-  static Ref<spdlog::logger> s_ClientLogger;
-};
+    inline static Ref<spdlog::logger> &GetCoreLogger() { return s_CoreLogger; }
+    inline static Ref<spdlog::logger> &GetClientLogger() { return s_ClientLogger; }
+
+  private:
+    static Ref<spdlog::logger> s_CoreLogger;
+    static Ref<spdlog::logger> s_ClientLogger;
+  };
 
 #ifdef PAPAYA_DEBUG
 
-#define PAPAYA_CORE_INFO(...)    ::Papaya::Log::GetCoreLogger()->info(__VA_ARGS__)
-#define PAPAYA_CORE_TRACE(...)   ::Papaya::Log::GetCoreLogger()->trace(__VA_ARGS__)
-#define PAPAYA_CORE_WARN(...)    ::Papaya::Log::GetCoreLogger()->warn(__VA_ARGS__)
-#define PAPAYA_CORE_ERROR(...)   ::Papaya::Log::GetCoreLogger()->error(__VA_ARGS__)
-#define PAPAYA_CORE_FATAL(...)   ::Papaya::Log::GetCoreLogger()->fatal(__VA_ARGS__)
+#define PAPAYA_CORE_INFO(...) ::Papaya::Log::GetCoreLogger()->info(__VA_ARGS__)
+#define PAPAYA_CORE_TRACE(...) ::Papaya::Log::GetCoreLogger()->trace(__VA_ARGS__)
+#define PAPAYA_CORE_WARN(...) ::Papaya::Log::GetCoreLogger()->warn(__VA_ARGS__)
+#define PAPAYA_CORE_ERROR(...) ::Papaya::Log::GetCoreLogger()->error(__VA_ARGS__)
+#define PAPAYA_CORE_FATAL(...) ::Papaya::Log::GetCoreLogger()->fatal(__VA_ARGS__)
 
-#define PAPAYA_INFO(...)         ::Papaya::Log::GetClientLogger()->info(__VA_ARGS__)
-#define PAPAYA_TRACE(...)        ::Papaya::Log::GetClientLogger()->trace(__VA_ARGS__)
-#define PAPAYA_WARN(...)         ::Papaya::Log::GetClientLogger()->warn(__VA_ARGS__)
-#define PAPAYA_ERROR(...)        ::Papaya::Log::GetClientLogger()->error(__VA_ARGS__)
-#define PAPAYA_FATAL(...)        ::Papaya::Log::GetClientLogger()->fatal(__VA_ARGS__)
+#define PAPAYA_INFO(...) ::Papaya::Log::GetClientLogger()->info(__VA_ARGS__)
+#define PAPAYA_TRACE(...) ::Papaya::Log::GetClientLogger()->trace(__VA_ARGS__)
+#define PAPAYA_WARN(...) ::Papaya::Log::GetClientLogger()->warn(__VA_ARGS__)
+#define PAPAYA_ERROR(...) ::Papaya::Log::GetClientLogger()->error(__VA_ARGS__)
+#define PAPAYA_FATAL(...) ::Papaya::Log::GetClientLogger()->fatal(__VA_ARGS__)
 
-#define PAPAYA_ASSERT(x, msg)     if (!x) { PAPAYA_CORE_ERROR(::Papaya::String("Failed Assert: ") + ::Papaya::String(#msg)); }
+#define PAPAYA_ASSERT(x, msg)                                                        \
+  if (!x)                                                                            \
+  {                                                                                  \
+    PAPAYA_CORE_ERROR(::Papaya::String("Failed Assert: ") + ::Papaya::String(#msg)); \
+  }
 
 #else
 
@@ -58,6 +64,5 @@ private:
 #endif
 
 } // namespace Papaya
-
 
 #endif /* end of include guard: Log_h */

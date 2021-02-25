@@ -12,36 +12,37 @@
 namespace Papaya
 {
 
-Scope<Window> Window::Create(const WindowAttribs& attribs) {
-  Scope<Window> window;
-  Ref<Context> context;
+  Scope<Window> Window::Create(const WindowAttribs &attribs)
+  {
+    Scope<Window> window;
+    Ref<Context> context;
 
 #ifdef PAPAYA_MACOS
-  window = CreateScope<CocoaWindow>(attribs);
-  context = Context::Create(window, attribs.Api);
+    window = CreateScope<CocoaWindow>(attribs);
+    context = Context::Create(window, attribs.Api);
 
-  window->SetContext(context);
+    window->SetContext(context);
 
-  PAPAYA_CORE_INFO("Created Window: {}", window);
-  return Move(window);
+    PAPAYA_CORE_INFO("Created Window: {}", window);
+    return Move(window);
 #endif
 
 #ifdef PAPAYA_WINDOWS
-  window = CreateScope<WindowsWindow>(attribs);
-  context = Context::Create(window, attribs.Api);
+    window = CreateScope<WindowsWindow>(attribs);
+    context = Context::Create(window, attribs.Api);
 
-  window->SetContext(context);
+    window->SetContext(context);
 
-  PAPAYA_CORE_INFO("Created Window: {}", window);
-  return Move(window);
+    PAPAYA_CORE_INFO("Created Window: {}", window);
+    return Move(window);
 #endif
 
-  PAPAYA_ASSERT(false, "Window Creation is not supported on this platform!");
-  return nullptr;
-}
+    PAPAYA_ASSERT(false, "Window Creation is not supported on this platform!");
+    return nullptr;
+  }
 
-Window::~Window() {
-
-}
+  Window::~Window()
+  {
+  }
 
 } // namespace Papaya

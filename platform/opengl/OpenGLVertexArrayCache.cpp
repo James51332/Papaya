@@ -66,7 +66,8 @@ namespace Papaya
     for (auto &vb : vertexBuffers)
       Papaya::HashCombine(seed, std::static_pointer_cast<OpenGLBuffer>(vb)->GetUniqueID()); // BufferID's start at 1000 and go up
 
-    for (auto& layout : vd) {
+    for (auto &layout : vd)
+    {
       Papaya::HashCombine(seed, layout.GetStride());
       for (auto &element : layout)
       {
@@ -107,18 +108,19 @@ namespace Papaya
         vertexArray->SetVertexBuffer(buffer);
       }
 
-      
       if (layout.GetCount() != vertexBuffers.size())
+      {
         PAPAYA_WARN("Vertex Buffers and Pipeline State Layout don't have the same number of elements!");
+      }
 
       // Setting the vertex buffers binds the vao
       int buffer = 0;
       int index = 0;
-      for (auto& bl : layout)
+      for (auto &bl : layout)
       {
         vertexBuffers[buffer]->Bind();
         buffer++;
-        
+
         for (auto &element : bl)
         {
           glVertexAttribPointer(index, element.Size / 4, GL_FLOAT, GL_FALSE, bl.GetStride(), (GLvoid *)element.Offset);

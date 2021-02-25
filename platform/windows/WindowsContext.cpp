@@ -12,40 +12,41 @@
 namespace Papaya
 {
 
-////////////////////////////////////////////
-///// WindowsContext ///////////////////////
-////////////////////////////////////////////
+  ////////////////////////////////////////////
+  ///// WindowsContext ///////////////////////
+  ////////////////////////////////////////////
 
-Ref<Context> WindowsContext::Create(const Scope<Window>& window, RenderApi::API api)
-{
+  Ref<Context> WindowsContext::Create(const Scope<Window> &window, RenderApi::API api)
+  {
     switch (api)
     {
-        case RenderApi::API::OpenGL: {
-            return CreateRef<WindowsOpenGLContext>(window);
-        }
+    case RenderApi::API::OpenGL:
+    {
+      return CreateRef<WindowsOpenGLContext>(window);
+    }
 
-        default: break;
+    default:
+      break;
     }
 
     PAPAYA_ASSERT(false, "Please use OpenGL on Windows!");
     return nullptr;
-}
+  }
 
-WindowsContext::~WindowsContext()
-{
+  WindowsContext::~WindowsContext()
+  {
+  }
 
-}
+  ////////////////////////////////////////////
+  ///// WindowsOpenGLContext /////////////////
+  ////////////////////////////////////////////
 
-////////////////////////////////////////////
-///// WindowsOpenGLContext /////////////////
-////////////////////////////////////////////
+  WindowsOpenGLContext::WindowsOpenGLContext(const Scope<Window> &window)
+  {
+    WindowsWindow *wnd = static_cast<WindowsWindow *>(window.get());
 
-WindowsOpenGLContext::WindowsOpenGLContext(const Scope<Window>& window)
-{
-    WindowsWindow* wnd = static_cast<WindowsWindow*>(window.get());
-    
     HWND hwnd = wnd->m_Hwnd;
-    
+
     m_Hdc = GetDC(hwnd);
     PAPAYA_ASSERT(m_Hdc, "Failed to acquire device context!");
 
@@ -89,13 +90,13 @@ WindowsOpenGLContext::WindowsOpenGLContext(const Scope<Window>& window)
 
     PFNWGLCREATECONTEXTATTRIBSARBPROC wglCreateContextAttribsARB = NULL;
     {
-        HGLRC hglrc = wglCreateContext(m_Hdc);
-        wglMakeCurrent(m_Hdc, hglrc);
+      HGLRC hglrc = wglCreateContext(m_Hdc);
+      wglMakeCurrent(m_Hdc, hglrc);
 
-        wglCreateContextAttribsARB = (PFNWGLCREATECONTEXTATTRIBSARBPROC) wglGetProcAddress("wglCreateContextAttribsARB");
+      wglCreateContextAttribsARB = (PFNWGLCREATECONTEXTATTRIBSARBPROC)wglGetProcAddress("wglCreateContextAttribsARB");
 
-        wglMakeCurrent(NULL, NULL);
-        wglDeleteContext(hglrc);
+      wglMakeCurrent(NULL, NULL);
+      wglDeleteContext(hglrc);
     }
 
     int attribs[] = {WGL_CONTEXT_MAJOR_VERSION_ARB,
@@ -110,18 +111,17 @@ WindowsOpenGLContext::WindowsOpenGLContext(const Scope<Window>& window)
 
     m_Hglrc = wglCreateContextAttribsARB(m_Hdc, NULL, attribs);
     PAPAYA_ASSERT(m_Hglrc, "Failed to Create OpenGL Context");
-    
+
     wglMakeCurrent(m_Hdc, m_Hglrc);
-}
+  }
 
-WindowsOpenGLContext::~WindowsOpenGLContext()
-{
+  WindowsOpenGLContext::~WindowsOpenGLContext()
+  {
+  }
 
-}
-
-void WindowsOpenGLContext::SwapBuffers()
-{
+  void WindowsOpenGLContext::SwapBuffers()
+  {
     ::SwapBuffers(m_Hdc);
-}
+  }
 
 } // namespace Papaya

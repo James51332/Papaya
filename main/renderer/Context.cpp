@@ -12,44 +12,43 @@
 namespace Papaya
 {
 
-bool Context::s_OpenGLInitialized = false;
+  bool Context::s_OpenGLInitialized = false;
 
-Ref<Context> Context::Create(const Scope<Window>& window, RenderApi::API api)
-{
+  Ref<Context> Context::Create(const Scope<Window> &window, RenderApi::API api)
+  {
 
-Ref<Context> context;
+    Ref<Context> context;
 
 #ifdef PAPAYA_MACOS
-  context = CocoaContext::Create(window, api);
+    context = CocoaContext::Create(window, api);
 
-  if (!s_OpenGLInitialized && api == RenderApi::API::OpenGL)
-  {
-    InitOpenGL();
-    s_OpenGLInitialized = true;
-  }
+    if (!s_OpenGLInitialized && api == RenderApi::API::OpenGL)
+    {
+      InitOpenGL();
+      s_OpenGLInitialized = true;
+    }
 
-  return context;
+    return context;
 #endif
 
 #ifdef PAPAYA_WINDOWS
-  context = WindowsContext::Create(window, api);
+    context = WindowsContext::Create(window, api);
 
-  if (!s_OpenGLInitialized && api == RenderApi::API::OpenGL)
-  {
-    InitOpenGL();
-    s_OpenGLInitialized = true;
-  }
+    if (!s_OpenGLInitialized && api == RenderApi::API::OpenGL)
+    {
+      InitOpenGL();
+      s_OpenGLInitialized = true;
+    }
 
-  return context;
+    return context;
 #endif
 
-  PAPAYA_ASSERT(false, "Rendering Contexts not supported on this platform yet!");
-  return nullptr;
-}
+    PAPAYA_ASSERT(false, "Rendering Contexts not supported on this platform yet!");
+    return nullptr;
+  }
 
-Context::~Context()
-{
-
-}
+  Context::~Context()
+  {
+  }
 
 } // namespace Papaya

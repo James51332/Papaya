@@ -10,39 +10,38 @@
 namespace Papaya
 {
 
-////////////////////////////////////////////
-///// WindowsContext ///////////////////////
-////////////////////////////////////////////
+  ////////////////////////////////////////////
+  ///// WindowsContext ///////////////////////
+  ////////////////////////////////////////////
 
-class WindowsContext : public Context
-{
-public:
-    static Ref<Context> Create(const Scope<Window>& window, RenderApi::API api);
+  class WindowsContext : public Context
+  {
+  public:
+    static Ref<Context> Create(const Scope<Window> &window, RenderApi::API api);
     virtual ~WindowsContext();
-    
+
     virtual void SwapBuffers() = 0;
-};
+  };
 
-////////////////////////////////////////////
-///// WindowsOpenGLContext /////////////////
-////////////////////////////////////////////
+  ////////////////////////////////////////////
+  ///// WindowsOpenGLContext /////////////////
+  ////////////////////////////////////////////
 
-class WindowsOpenGLContext : public WindowsContext
-{
-public:
-    WindowsOpenGLContext(const Scope<Window>& window);
+  class WindowsOpenGLContext : public WindowsContext
+  {
+  public:
+    WindowsOpenGLContext(const Scope<Window> &window);
     virtual ~WindowsOpenGLContext();
 
     void SwapBuffers();
 
-private:
-    #ifdef PAPAYA_WINDOWS
+  private:
+#ifdef PAPAYA_WINDOWS
     HDC m_Hdc;
     HGLRC m_Hglrc;
-    #endif
-};
+#endif
+  };
 
 } // namespace Papaya
-
 
 #endif /* end of include guard: WindowsContext_h */

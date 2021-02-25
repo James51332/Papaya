@@ -6,24 +6,24 @@
 namespace Papaya
 {
 
-class CocoaPlatform : public Platform {
-public:
-  CocoaPlatform();
-  virtual ~CocoaPlatform();
+  class CocoaPlatform : public Platform
+  {
+  public:
+    CocoaPlatform();
+    virtual ~CocoaPlatform();
 
-  void Init();
-  void Update();
-  void Terminate();
-  double SysTime();
+    void Init();
+    void Update();
+    void Terminate();
+    double SysTime();
 
-private:
-  void* m_Application;
+  private:
+    void *m_Application;
 
-  double m_TimerOffset;
-  double m_TimerFrequency;
-};
+    double m_TimerOffset;
+    double m_TimerFrequency;
+  };
 
 } // namespace Papaya
-
 
 #endif /* end of include guard: CocoaPlatform_h */

@@ -12,23 +12,25 @@
 namespace Papaya
 {
 
-class Game {
-public:
-  Game();
-  virtual ~Game();
+  class Game
+  {
+  public:
+    Game();
+    virtual ~Game();
 
-  void PushLayer(Layer* layer);
-  void PushOverlay(Layer* overlay);
+    void PushLayer(Layer *layer);
+    void PushOverlay(Layer *overlay);
 
-  void Run();
-private:
-  Scope<Window> m_Window;
-  Ref<Context> m_Context;
-  LayerStack m_LayerStack;
-  Timestep m_TimeSinceLastFrame;
+    void Run();
 
-  bool m_Running = true;
-};
+  private:
+    Scope<Window> m_Window;
+    Ref<Context> m_Context;
+    LayerStack m_LayerStack;
+    Timestep m_TimeSinceLastFrame;
+
+    bool m_Running = true;
+  };
 
 } // namespace Papaya
 

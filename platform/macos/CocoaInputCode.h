@@ -7,10 +7,10 @@
 namespace Papaya
 {
 
-void InitCocoaInputCodes();
+  void InitCocoaInputCodes();
 
-Papaya::KeyCode CocoaKeyCodeToPapayaKeyCode(unsigned int keyCode);
-Papaya::MouseCode CocoaMouseCodeToPapayaMouseCode(unsigned int mouseCode);
+  Papaya::KeyCode CocoaKeyCodeToPapayaKeyCode(unsigned int keyCode);
+  Papaya::MouseCode CocoaMouseCodeToPapayaMouseCode(unsigned int mouseCode);
 
 } // namespace Papaya
 

@@ -5,13 +5,13 @@
 namespace Papaya
 {
 
-Ref<Buffer> Buffer::Create(const void* vertices, uint32_t size, BufferType type, BufferUsage usage)
-{
-  return CreateRef<OpenGLBuffer>(vertices, size, type, usage);
-}
+  Ref<Buffer> Buffer::Create(const void *vertices, uint32_t size, BufferType type, BufferUsage usage)
+  {
+    return CreateRef<OpenGLBuffer>(vertices, size, type, usage);
+  }
 
-Buffer::~Buffer() {
-
-}
+  Buffer::~Buffer()
+  {
+  }
 
 } // namespace Papaya

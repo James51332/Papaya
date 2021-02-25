@@ -24,32 +24,34 @@
 namespace Papaya
 {
 
-Game::Game() {
-  WindowAttribs attribs = WindowAttribs(1200, 675);
-  attribs.Resizable = true;
-  m_Window = Window::Create(attribs);
+  Game::Game()
+  {
+    WindowAttribs attribs = WindowAttribs(1200, 675);
+    attribs.Resizable = true;
+    m_Window = Window::Create(attribs);
 
-  Input::OnInit();
-  Renderer::OnInit();
-}
+    Input::OnInit();
+    Renderer::OnInit();
+  }
 
-Game::~Game() {
+  Game::~Game()
+  {
+  }
 
-}
+  void Game::PushLayer(Layer *layer)
+  {
+    m_LayerStack.PushLayer(layer);
+    layer->OnAttach();
+  }
 
-void Game::PushLayer(Layer* layer)
-{
-  m_LayerStack.PushLayer(layer);
-  layer->OnAttach();
-}
+  void Game::PushOverlay(Layer *overlay)
+  {
+    m_LayerStack.PushOverlay(overlay);
+    overlay->OnAttach();
+  }
 
-void Game::PushOverlay(Layer* overlay)
-{
-  m_LayerStack.PushOverlay(overlay);
-  overlay->OnAttach();
-}
-
-void Game::Run() {
+  void Game::Run()
+  {
     m_Window->Show();
 
     while (m_Running)
@@ -65,12 +67,12 @@ void Game::Run() {
         Scope<Event> e(EventQueue::PopEvent());
         //PAPAYA_CORE_INFO(e);
 
-        EventDispatcher::Dispatch<WindowCloseEvent>(e, [&](WindowCloseEvent* event) {
+        EventDispatcher::Dispatch<WindowCloseEvent>(e, [&](WindowCloseEvent *event) {
           m_Running = false;
           // continue; // Don't pass window close events to user (this isn't techinally needed)
         });
 
-        EventDispatcher::Dispatch<WindowResizeEvent>(e, [](WindowResizeEvent* event) {
+        EventDispatcher::Dispatch<WindowResizeEvent>(e, [](WindowResizeEvent *event) {
           RenderCommand::SetViewport(0, 0, event->GetWidth(), event->GetHeight());
         });
 
@@ -84,7 +86,7 @@ void Game::Run() {
 
       Input::OnUpdate(); // Update Input Class
 
-      for (Layer* layer : m_LayerStack) // Update Layers
+      for (Layer *layer : m_LayerStack) // Update Layers
         layer->OnUpdate(timestep);
 
       m_Window->OnUpdate(); // Swap Buffers
@@ -92,10 +94,10 @@ void Game::Run() {
       // TODO: Consider creating a RunLoop class which will update the app for us. We could
       // implement logic by having a new type of event immediately dispatched. This is not
       // needed anytime soon but may be useful when this class becomes too cluttered.
-  }
+    }
 
-  Renderer::OnTerminate();
-  m_Window->Close(); // Windows don't close until the app is closed or Window::Close() is called
-}
+    Renderer::OnTerminate();
+    m_Window->Close(); // Windows don't close until the app is closed or Window::Close() is called
+  }
 
 } // namespace Papaya

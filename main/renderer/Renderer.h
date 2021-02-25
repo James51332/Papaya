@@ -22,15 +22,15 @@ namespace Papaya
     static void OnInit();
     static void OnTerminate();
 
-    static void Begin(const OrthographicCamera& camera);
+    static void Begin(const OrthographicCamera &camera);
 
     static void Submit(const std::vector<Ref<Buffer>> &vertexBuffers,
                        const Ref<PipelineState> pipelineState,
                        const Ref<Buffer> &indexBuffer);
 
-    static void Submit(const Ref<Buffer>& vertexBuffer,
+    static void Submit(const Ref<Buffer> &vertexBuffer,
                        const Ref<PipelineState> pipelineState,
-                       const Ref<Buffer>& indexBuffer);
+                       const Ref<Buffer> &indexBuffer);
 
     static void End();
 

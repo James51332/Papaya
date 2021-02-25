@@ -6,31 +6,31 @@
 namespace Papaya
 {
 
-class Platform {
-public:
-  virtual ~Platform();
+  class Platform
+  {
+  public:
+    virtual ~Platform();
 
-  static void OnInit();
-  static void OnUpdate();
-  static void OnTerminate();
+    static void OnInit();
+    static void OnUpdate();
+    static void OnTerminate();
 
-  // returns time in seconds
-  static double GetSysTime();
+    // returns time in seconds
+    static double GetSysTime();
 
-protected:
-  static Scope<Platform> Create();
-  Platform();
+  protected:
+    static Scope<Platform> Create();
+    Platform();
 
-  virtual void Init() = 0;
-  virtual void Update() = 0;
-  virtual void Terminate() = 0;
-  virtual double SysTime() = 0;
+    virtual void Init() = 0;
+    virtual void Update() = 0;
+    virtual void Terminate() = 0;
+    virtual double SysTime() = 0;
 
-private:
-  static Scope<Platform> s_Instance;
-};
+  private:
+    static Scope<Platform> s_Instance;
+  };
 
 } // namespace Papaya
-
 
 #endif /* end of include guard: Platform_h */
