@@ -6,30 +6,31 @@
 namespace Papaya
 {
 
-class OpenGLBuffer : public Buffer
-{
-public:
-  OpenGLBuffer(const void* data, uint32_t size, BufferType type, BufferUsage usage);
-  virtual ~OpenGLBuffer();
+  class OpenGLBuffer : public Buffer
+  {
+  public:
+    OpenGLBuffer(const void *data, uint32_t size, BufferType type, BufferUsage usage);
+    virtual ~OpenGLBuffer();
 
-  void Bind();
-  void Unbind();
+    void Bind();
+    void Unbind();
 
-  uint32_t GetSize() const { return m_Size; }
+    void SetData(const void *data, uint32_t size);
 
-  int GetUniqueID() const { return m_UniqueID; }
+    uint32_t GetSize() const { return m_Size; }
 
-private:
-  unsigned int m_RendererID;
-  uint32_t m_Size;
-  int m_Type;
-  int m_Usage;
-  int m_UniqueID;
+    int GetUniqueID() const { return m_UniqueID; }
 
-  static int m_CurID;
-};
+  private:
+    unsigned int m_RendererID;
+    uint32_t m_Size;
+    int m_Type;
+    int m_Usage;
+    int m_UniqueID;
+
+    static int m_CurID;
+  };
 
 } // namespace Papaya
-
 
 #endif /* end of include guard: OpenGLBuffer_h */

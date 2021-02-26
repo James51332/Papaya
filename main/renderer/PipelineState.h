@@ -25,6 +25,12 @@ namespace Papaya
     static Ref<PipelineState> Create(const PipelineStateDesc &desc);
     virtual ~PipelineState();
 
+    // This API may change with time. A possible idea is to build out the RenderDevice
+    // type and store a reference to a bound pipeline state. This way uploading uniforms
+    // is a static call (maybe something like RenderDevice::SetUniform()) and simply uses
+    // the bound object to upload.
+    virtual Ref<Shader> &GetShader() = 0;
+
     virtual void Bind() = 0;
     virtual void Unbind() = 0;
   };

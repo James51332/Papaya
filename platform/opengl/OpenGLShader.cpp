@@ -48,6 +48,12 @@ namespace Papaya
     glUniform1i(location, value);
   }
 
+  void OpenGLShader::SetIntArray(const String &name, int *values, uint32_t count)
+  {
+    GLint location = glGetUniformLocation(m_RendererID, name.Raw());
+    glUniform1iv(location, count, values);
+  }
+
   void OpenGLShader::SetFloat(const String &name, float value)
   {
     GLint location = glGetUniformLocation(m_RendererID, name.Raw());

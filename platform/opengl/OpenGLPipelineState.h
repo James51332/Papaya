@@ -23,6 +23,8 @@ namespace Papaya
     OpenGLPipelineState(const PipelineStateDesc &desc);
     virtual ~OpenGLPipelineState();
 
+    Ref<Shader> &GetShader() { return m_Shader; }
+
     void Bind();
     void Unbind();
 

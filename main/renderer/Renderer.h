@@ -26,11 +26,13 @@ namespace Papaya
 
     static void Submit(const std::vector<Ref<Buffer>> &vertexBuffers,
                        const Ref<PipelineState> pipelineState,
-                       const Ref<Buffer> &indexBuffer);
+                       const Ref<Buffer> &indexBuffer,
+                       const glm::mat4 &transform = glm::mat4(1.0f));
 
     static void Submit(const Ref<Buffer> &vertexBuffer,
                        const Ref<PipelineState> pipelineState,
-                       const Ref<Buffer> &indexBuffer);
+                       const Ref<Buffer> &indexBuffer,
+                       const glm::mat4 &transform = glm::mat4(1.0f));
 
     static void End();
 

@@ -14,6 +14,7 @@
 #include "main/renderer/Texture.h"
 #include "main/renderer/PipelineState.h"
 #include "main/renderer/Renderer.h"
+#include "main/renderer/Renderer2D.h"
 #include "main/renderer/RenderCommand.h"
 
 #include "main/utils/Memory.h"
