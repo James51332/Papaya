@@ -1,7 +1,10 @@
 #include "OpenGLShader.h"
 #include "OpenGLLoader.h"
 
+#include "main/core/Log.h"
+
 #include <glm/gtc/type_ptr.hpp>
+#include <vector>
 
 namespace Papaya
 {
@@ -15,9 +18,42 @@ namespace Papaya
     glShaderSource(vertexShader, 1, &vertex, NULL);
     glCompileShader(vertexShader);
 
+    GLint isCompiled = 0;
+    glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &isCompiled);
+    if (isCompiled == GL_FALSE)
+    {
+      GLint maxLength = 0;
+      glGetShaderiv(vertexShader, GL_INFO_LOG_LENGTH, &maxLength);
+
+      // The maxLength includes the NULL character
+      std::vector<GLchar> errorLog(maxLength);
+      glGetShaderInfoLog(vertexShader, maxLength, nullptr, &errorLog[0]);
+
+      PAPAYA_CORE_ERROR("Failed to compile vertex shader! (OpenGL Error: {})", std::string(errorLog.begin(), errorLog.end()));
+
+      glDeleteShader(vertexShader); // Don't leak the shader.
+      return;
+    }
+
     unsigned int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
     glShaderSource(fragmentShader, 1, &fragment, NULL);
     glCompileShader(fragmentShader);
+
+    glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &isCompiled);
+    if (isCompiled == GL_FALSE)
+    {
+      GLint maxLength = 0;
+      glGetShaderiv(fragmentShader, GL_INFO_LOG_LENGTH, &maxLength);
+
+      // The maxLength includes the NULL character
+      std::vector<GLchar> errorLog(maxLength);
+      glGetShaderInfoLog(vertexShader, maxLength, nullptr, &errorLog[0]);
+
+      PAPAYA_CORE_ERROR("Failed to compile vertex shader! (OpenGL Error: {})", std::string(errorLog.begin(), errorLog.end()));
+
+      glDeleteShader(fragmentShader); // Don't leak the shader.
+      return;
+    }
 
     m_RendererID = glCreateProgram();
     glAttachShader(m_RendererID, vertexShader);
