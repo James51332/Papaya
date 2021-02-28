@@ -5,6 +5,10 @@
 
 #include "main/core/Log.h"
 
+#include <iostream>
+#include <sstream>
+#include <fstream>
+
 namespace Papaya
 {
 
@@ -24,6 +28,21 @@ void Platform::OnTerminate() {
 
 double Platform::GetSysTime() {
   return s_Instance->SysTime();
+}
+
+String Platform::LoadFile(const String& path)
+{
+	std::ifstream stream(path.Raw());
+
+	if (!stream.is_open())
+	{
+		PAPAYA_CORE_ERROR("Failed to load file: {}", path);
+	}
+
+	std::stringstream ss;
+	ss << stream.rdbuf();
+
+	return ss.str().c_str();
 }
 
 Scope<Platform> Platform::Create() {

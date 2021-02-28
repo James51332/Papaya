@@ -90,7 +90,7 @@ uniform mat4 u_ViewProjection;
 
 out vec4 v_Color;
 out vec2 v_TexCoord;
-out flat float v_TexIndex;
+out float v_TexIndex;
 out float v_TilingFactor;
 
 void main()
@@ -109,7 +109,7 @@ layout(location = 0) out vec4 color;
 
 in vec4 v_Color;
 in vec2 v_TexCoord;
-in flat float v_TexIndex;
+in float v_TexIndex;
 in float v_TilingFactor;
 
 uniform sampler2D u_Textures[32];

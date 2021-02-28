@@ -2,6 +2,7 @@
 #define Platform_h
 
 #include "main/utils/Memory.h"
+#include "main/utils/String.h"
 
 namespace Papaya
 {
@@ -17,6 +18,7 @@ namespace Papaya
 
     // returns time in seconds
     static double GetSysTime();
+    static String LoadFile(const String& path);
 
   protected:
     static Scope<Platform> Create();
