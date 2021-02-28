@@ -46,9 +46,8 @@ public:
     Papaya::RenderCommand::Clear();
 
     Papaya::Renderer2D::BeginScene(m_Camera);
-
-    Papaya::Renderer2D::DrawQuad(glm::mat4(1.0f), glm::vec4(1, 0, 0, 0));
-
+    Papaya::Renderer2D::DrawQuad(glm::translate(glm::mat4(1.0f), glm::vec3(1.0f, 0.75f, 0.0f)), glm::vec4(1, 1, 0, 0));
+    Papaya::Renderer2D::DrawQuad(glm::translate(glm::mat4(1.0f), glm::vec3(0.5f, 0.0f, 0.0f)), glm::vec4(0.0f, 0.5f, 0.0f, 0.0f));
     Papaya::Renderer2D::EndScene();
   }
 

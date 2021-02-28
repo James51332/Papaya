@@ -9,6 +9,7 @@ namespace Papaya
 
   class Renderer;
 
+  // Renderer2D is a batched renderer
   class Renderer2D
   {
     friend class Renderer;
