@@ -19,8 +19,9 @@
 
 namespace Papaya
 {
-  
-  struct QuadVertex { // defines the layout of one vertex. An array of these is uploaded to the gpu
+
+  struct QuadVertex
+  { // defines the layout of one vertex. An array of these is uploaded to the gpu
     glm::vec3 Position;
     glm::vec4 Color;
     glm::vec2 TexCoord;
@@ -30,9 +31,9 @@ namespace Papaya
 
   struct Renderer2DData // Stores the state of the renderer
   {
-    const uint32_t MaxQuads = 20000;
-    const uint32_t MaxVertices = MaxQuads * 4;
-    const uint32_t MaxIndices = MaxQuads * 6;
+    const int MaxQuads = 20000;
+    const int MaxVertices = MaxQuads * 4;
+    const int MaxIndices = MaxQuads * 6;
 
     Ref<Buffer> QuadVertexBuffer;
     Ref<Buffer> QuadIndexBuffer;
@@ -41,11 +42,11 @@ namespace Papaya
     uint32_t QuadIndexCount = 0;
 
     // This is the head of an array of vertices.
-    QuadVertex* QuadVertexBufferBase = nullptr;
-    
-    // This pointer moves as we add quads to the batch so 
+    QuadVertex *QuadVertexBufferBase = nullptr;
+
+    // This pointer moves as we add quads to the batch so
     // we can determine the size of the data to send to the gpu
-    QuadVertex* QuadVertexBufferPtr = nullptr; 
+    QuadVertex *QuadVertexBufferPtr = nullptr;
 
     glm::vec4 QuadVertexPositions[4];
   };
@@ -55,13 +56,13 @@ namespace Papaya
   void Renderer2D::OnInit()
   {
     // Create Vertex Buffer
-    s_Data.QuadVertexBuffer = Buffer::Create(nullptr, 
+    s_Data.QuadVertexBuffer = Buffer::Create(nullptr,
                                              sizeof(QuadVertex) * s_Data.MaxVertices,
                                              BufferType::Vertex,
                                              BufferUsage::Dynamic);
 
     // Create Index Buffer Data
-    uint32_t* quadIndices = new uint32_t[s_Data.MaxIndices];
+    uint32_t *quadIndices = new uint32_t[s_Data.MaxIndices];
     uint32_t offset = 0; // transforms are baked into data so we need to offset indices to vertices later in data
     for (int i = 0; i < s_Data.MaxIndices; i += 6)
     {
@@ -76,7 +77,7 @@ namespace Papaya
       offset += 4; // increase four vertices for every six indices
     }
 
-    // Create Index Buffer 
+    // Create Index Buffer
     s_Data.QuadIndexBuffer = Buffer::Create(quadIndices,
                                             sizeof(uint32_t) * s_Data.MaxIndices,
                                             BufferType::Index,
@@ -130,22 +131,20 @@ namespace Papaya
     Ref<Shader> shader = Shader::Create(vs, fs);
 
     // Set the layout of a vertex
-    VertexDescriptor layout = {{
-      { ShaderDataType::Float3, "a_Pos" },
-      { ShaderDataType::Float4, "a_Color" },
-      { ShaderDataType::Float2, "a_TexCoord" },
-      { ShaderDataType::Float, "a_TexIndex" },
-      { ShaderDataType::Float, "a_TilingFactor" }
-    }};
+    VertexDescriptor layout = {{{ShaderDataType::Float3, "a_Pos"},
+                                {ShaderDataType::Float4, "a_Color"},
+                                {ShaderDataType::Float2, "a_TexCoord"},
+                                {ShaderDataType::Float, "a_TexIndex"},
+                                {ShaderDataType::Float, "a_TilingFactor"}}};
 
     // Create the pipeline state using the shader and layout
-    s_Data.QuadPipelineState = PipelineState::Create({ shader, layout });
+    s_Data.QuadPipelineState = PipelineState::Create({shader, layout});
 
     // Create basic quad vertices that we can later sample from
-    s_Data.QuadVertexPositions[0] = { -0.5f, -0.5f, 0.0f, 1.0f };
-    s_Data.QuadVertexPositions[1] = { 0.5f, -0.5f, 0.0f, 1.0f };
-    s_Data.QuadVertexPositions[2] = { 0.5f,  0.5f, 0.0f, 1.0f };
-    s_Data.QuadVertexPositions[3] = { -0.5f,  0.5f, 0.0f, 1.0f };
+    s_Data.QuadVertexPositions[0] = {-0.5f, -0.5f, 0.0f, 1.0f};
+    s_Data.QuadVertexPositions[1] = {0.5f, -0.5f, 0.0f, 1.0f};
+    s_Data.QuadVertexPositions[2] = {0.5f, 0.5f, 0.0f, 1.0f};
+    s_Data.QuadVertexPositions[3] = {-0.5f, 0.5f, 0.0f, 1.0f};
   }
 
   void Renderer2D::OnTerminate()
@@ -154,34 +153,50 @@ namespace Papaya
     delete[] s_Data.QuadVertexBufferBase;
   }
 
-  void Renderer2D::BeginScene(const OrthographicCamera& camera)
+  void Renderer2D::BeginScene(const OrthographicCamera &camera)
   {
-    // Reset the vertex buffer pointer for the new batch
-    s_Data.QuadVertexBufferPtr = s_Data.QuadVertexBufferBase;
-    s_Data.QuadIndexCount = 0;
-
     s_Data.QuadPipelineState->GetShader()->Bind();
     s_Data.QuadPipelineState->GetShader()->SetMat4("u_ViewProjection", camera.GetViewProjectionMatrix());
+
+    StartBatch();
   }
 
   void Renderer2D::EndScene()
   {
-    if (s_Data.QuadIndexCount == 0)
-      return; // Nothing to draw 
-
-    // Determine how many much of the vertex array we need to set.
-    uint32_t dataSize = (uint32_t)((uint8_t*)s_Data.QuadVertexBufferPtr - (uint8_t*)s_Data.QuadVertexBufferBase);
-    s_Data.QuadVertexBuffer->SetData(s_Data.QuadVertexBufferBase, dataSize); // Send the determined amount of data to the gpu
-
-    RenderCommand::DrawIndexed({ s_Data.QuadVertexBuffer }, s_Data.QuadPipelineState, s_Data.QuadIndexBuffer);
+    Flush();
   }
 
-  void Renderer2D::DrawQuad(const glm::mat4& transform, const glm::vec4& color)
+  void Renderer2D::StartBatch()
+  {
+    // Reset the vertex buffer pointer for the new batch
+    s_Data.QuadVertexBufferPtr = s_Data.QuadVertexBufferBase;
+    s_Data.QuadIndexCount = 0;
+  }
+
+  void Renderer2D::Flush()
+  {
+    if (s_Data.QuadIndexCount == 0)
+      return; // Nothing to draw
+
+    // Determine how many much of the vertex array we need to set.
+    uint32_t dataSize = static_cast<uint32_t>(s_Data.QuadVertexBufferPtr - s_Data.QuadVertexBufferBase) * sizeof(QuadVertex);
+    s_Data.QuadVertexBuffer->SetData(s_Data.QuadVertexBufferBase, dataSize); // Send the determined amount of data to the gpu
+
+    RenderCommand::DrawIndexed({s_Data.QuadVertexBuffer}, s_Data.QuadPipelineState, s_Data.QuadIndexBuffer);
+  }
+
+  void Renderer2D::DrawQuad(const glm::mat4 &transform, const glm::vec4 &color)
   {
     constexpr size_t quadVertexCount = 4;
     const float textureIndex = 0.0f; // White Texture
-    constexpr glm::vec2 textureCoords[] = { { 0.0f, 0.0f }, { 1.0f, 0.0f }, { 1.0f, 1.0f }, { 0.0f, 1.0f } };
+    constexpr glm::vec2 textureCoords[] = {{0.0f, 0.0f}, {1.0f, 0.0f}, {1.0f, 1.0f}, {0.0f, 1.0f}};
     const float tilingFactor = 1.0f;
+
+    if (s_Data.QuadIndexCount >= s_Data.MaxIndices)
+    {
+      Flush();
+      StartBatch();
+    }
 
     for (size_t i = 0; i < quadVertexCount; i++)
     {
@@ -194,7 +209,6 @@ namespace Papaya
     }
 
     s_Data.QuadIndexCount += 6;
-
   }
 
 } // namespace Papaya

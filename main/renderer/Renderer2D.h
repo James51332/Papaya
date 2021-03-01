@@ -21,6 +21,9 @@ namespace Papaya
     static void DrawQuad(const glm::mat4 &transform = glm::mat4(1.0f), const glm::vec4 &color = glm::vec4(1.0f));
 
   private:
+    static void StartBatch();
+    static void Flush();
+
     static void OnInit();
     static void OnTerminate();
   };

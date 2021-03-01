@@ -27,6 +27,8 @@ public:
 
   virtual void OnUpdate(Papaya::Timestep ts) override
   {
+    // PAPAYA_TRACE("FPS: {}", 1 / ts);
+
     if (Papaya::Input::KeyDown(Papaya::KeyW))
       m_Camera.SetPosition(m_Camera.GetPosition() + glm::vec3(0.0f, 4.0f * ts, 0.0f));
     if (Papaya::Input::KeyDown(Papaya::KeyS))
@@ -46,15 +48,15 @@ public:
     Papaya::RenderCommand::Clear();
 
     Papaya::Renderer2D::BeginScene(m_Camera);
+
     Papaya::Renderer2D::DrawQuad(glm::translate(glm::mat4(1.0f), glm::vec3(1.0f, 0.75f, 0.0f)), glm::vec4(1, 1, 0, 0));
     Papaya::Renderer2D::DrawQuad(glm::translate(glm::mat4(1.0f), glm::vec3(0.5f, 0.0f, 0.0f)), glm::vec4(0.0f, 0.5f, 0.0f, 0.0f));
+
     Papaya::Renderer2D::EndScene();
   }
 
   virtual void OnEvent(const Papaya::Scope<Papaya::Event> &event) override
   {
-    PAPAYA_INFO(event);
-
     Papaya::EventDispatcher::Dispatch<Papaya::WindowResizeEvent>(event, [&](Papaya::WindowResizeEvent *event) {
       float width = (1.6f / 1200.0f) * event->GetWidth();
       float height = (1.6f / 1200.0f) * event->GetHeight();

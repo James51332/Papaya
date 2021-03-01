@@ -218,14 +218,14 @@
 
 typedef char GLchar;
 typedef void GLvoid;
-typedef unsigned int GLsizei;
+typedef int GLsizei;
 typedef unsigned int GLuint;
 typedef int GLint;
 typedef float GLfloat;
 typedef signed long int GLsizeiptr;
 typedef signed long int GLintptr;
-typedef int GLenum;
-typedef bool GLboolean;
+typedef unsigned int GLenum;
+typedef unsigned char GLboolean;
 
 #define PAPAYA_GL_LIST                                                                                                                                                 \
   /* ret, name, params */                                                                                                                                              \

@@ -33,6 +33,7 @@ namespace Papaya
     WindowsOpenGLContext(const Scope<Window> &window);
     virtual ~WindowsOpenGLContext();
 
+    void MakeCurrent();
     void SwapBuffers();
 
   private:

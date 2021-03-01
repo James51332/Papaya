@@ -21,6 +21,8 @@
 
 #include "main/utils/String.h"
 
+#include <thread>
+
 namespace Papaya
 {
 

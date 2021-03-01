@@ -34,6 +34,7 @@ namespace Papaya
 #ifdef PAPAYA_WINDOWS
     context = WindowsContext::Create(window, api);
 
+    // Moved to MakeCurrent()
     if (!s_OpenGLInitialized && api == RenderApi::API::OpenGL)
     {
       InitOpenGL();

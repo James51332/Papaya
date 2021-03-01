@@ -21,6 +21,7 @@ namespace Papaya
     virtual ~Context();
 
     RenderApi::API GetApi() const { return m_Api; }
+
     virtual void SwapBuffers() = 0;
 
   protected:
