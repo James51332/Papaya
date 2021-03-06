@@ -130,43 +130,29 @@ namespace Papaya
     flat in float v_TexIndex;
     in float v_TilingFactor;
 
-    uniform sampler2D u_Textures0;
-    uniform sampler2D u_Textures1;
-    uniform sampler2D u_Textures2;
-    uniform sampler2D u_Textures3;
-    uniform sampler2D u_Textures4;
-    uniform sampler2D u_Textures5;
-    uniform sampler2D u_Textures6;
-    uniform sampler2D u_Textures7;
-    uniform sampler2D u_Textures8;
-    uniform sampler2D u_Textures9;
-    uniform sampler2D u_Textures10;
-    uniform sampler2D u_Textures11;
-    uniform sampler2D u_Textures12;
-    uniform sampler2D u_Textures13;
-    uniform sampler2D u_Textures14;
-    uniform sampler2D u_Textures15;
+    uniform sampler2D u_Textures[16];
 
     void main() {
       vec4 texColor = v_Color;
       switch(int(v_TexIndex))
 	    {
-	    	case 0: texColor *= texture(u_Textures0, v_TexCoord * v_TilingFactor); break;
-	    	case 1: texColor *= texture(u_Textures1, v_TexCoord * v_TilingFactor); break;
-	    	case 2: texColor *= texture(u_Textures2, v_TexCoord * v_TilingFactor); break;
-	    	case 3: texColor *= texture(u_Textures3, v_TexCoord * v_TilingFactor); break;
-	    	case 4: texColor *= texture(u_Textures4, v_TexCoord * v_TilingFactor); break;
-	    	case 5: texColor *= texture(u_Textures5, v_TexCoord * v_TilingFactor); break;
-	    	case 6: texColor *= texture(u_Textures6, v_TexCoord * v_TilingFactor); break;
-	    	case 7: texColor *= texture(u_Textures7, v_TexCoord * v_TilingFactor); break;
-	    	case 8: texColor *= texture(u_Textures8, v_TexCoord * v_TilingFactor); break;
-	    	case 9: texColor *= texture(u_Textures9, v_TexCoord * v_TilingFactor); break;
-	    	case 10: texColor *= texture(u_Textures10, v_TexCoord * v_TilingFactor); break;
-	    	case 11: texColor *= texture(u_Textures11, v_TexCoord * v_TilingFactor); break;
-	    	case 12: texColor *= texture(u_Textures12, v_TexCoord * v_TilingFactor); break;
-	    	case 13: texColor *= texture(u_Textures13, v_TexCoord * v_TilingFactor); break;
-	    	case 14: texColor *= texture(u_Textures14, v_TexCoord * v_TilingFactor); break;
-	    	case 15: texColor *= texture(u_Textures15, v_TexCoord * v_TilingFactor); break;
+	    	case 0: texColor *= texture(u_Textures[0], v_TexCoord * v_TilingFactor); break;
+        case 1: texColor *= texture(u_Textures[1], v_TexCoord * v_TilingFactor); break;
+        case 2: texColor *= texture(u_Textures[2], v_TexCoord * v_TilingFactor); break;
+        case 3: texColor *= texture(u_Textures[3], v_TexCoord * v_TilingFactor); break;
+        case 4: texColor *= texture(u_Textures[4], v_TexCoord * v_TilingFactor); break;
+        case 5: texColor *= texture(u_Textures[5], v_TexCoord * v_TilingFactor); break;
+        case 6: texColor *= texture(u_Textures[6], v_TexCoord * v_TilingFactor); break;
+        case 7: texColor *= texture(u_Textures[7], v_TexCoord * v_TilingFactor); break;
+        case 8: texColor *= texture(u_Textures[8], v_TexCoord * v_TilingFactor); break;
+        case 9: texColor *= texture(u_Textures[9], v_TexCoord * v_TilingFactor); break;
+        case 10: texColor *= texture(u_Textures[10], v_TexCoord * v_TilingFactor); break;
+        case 11: texColor *= texture(u_Textures[11], v_TexCoord * v_TilingFactor); break;
+        case 12: texColor *= texture(u_Textures[12], v_TexCoord * v_TilingFactor); break;
+        case 13: texColor *= texture(u_Textures[13], v_TexCoord * v_TilingFactor); break;
+        case 14: texColor *= texture(u_Textures[14], v_TexCoord * v_TilingFactor); break;
+        case 15: texColor *= texture(u_Textures[15], v_TexCoord * v_TilingFactor); break;
+
 	    }
       color = texColor;
     })";
@@ -183,8 +169,11 @@ namespace Papaya
     // Create the pipeline state using the shader and layout
     s_Data.QuadPipelineState = PipelineState::Create({shader, layout});
 
+    int samplers[s_Data.MaxTextureSlots];
     for (int i = 0; i < s_Data.MaxTextureSlots; ++i)
-      s_Data.QuadPipelineState->GetShader()->SetInt("u_Textures" + Papaya::String(std::to_string(i).c_str()), i);
+      samplers[i] = i;
+
+    s_Data.QuadPipelineState->GetShader()->SetIntArray("u_Textures", samplers, s_Data.MaxTextureSlots);
 
     s_Data.WhiteTexture = Texture2D::Create("tests/assets/textures/checkboard.png");
     s_Data.TextureSlots[0] = s_Data.WhiteTexture;
