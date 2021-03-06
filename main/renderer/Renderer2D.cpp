@@ -31,9 +31,10 @@ namespace Papaya
 
   struct Renderer2DData // Stores the state of the renderer
   {
-    const int MaxQuads = 20000;
-    const int MaxVertices = MaxQuads * 4;
-    const int MaxIndices = MaxQuads * 6;
+    static const uint32_t MaxQuads = 20000;
+    static const uint32_t MaxVertices = MaxQuads * 4;
+    static const uint32_t MaxIndices = MaxQuads * 6;
+    static const uint32_t MaxTextureSlots = 32;
 
     Ref<Buffer> QuadVertexBuffer;
     Ref<Buffer> QuadIndexBuffer;
@@ -47,6 +48,11 @@ namespace Papaya
     // This pointer moves as we add quads to the batch so
     // we can determine the size of the data to send to the gpu
     QuadVertex *QuadVertexBufferPtr = nullptr;
+
+    Ref<Texture2D> WhiteTexture;
+
+    std::array<Ref<Texture2D>, MaxTextureSlots> TextureSlots;
+    uint32_t TextureIndex = 1; // 0 = WhiteTexture
 
     glm::vec4 QuadVertexPositions[4];
   };
@@ -103,7 +109,7 @@ namespace Papaya
 
     out vec4 v_Color;
     out vec2 v_TexCoord;
-    out float v_TexIndex;
+    flat out float v_TexIndex;
     out float v_TilingFactor;
 
     void main() {
@@ -121,11 +127,13 @@ namespace Papaya
 
     in vec4 v_Color;
     in vec2 v_TexCoord;
-    in float v_TexIndex;
+    flat in float v_TexIndex;
     in float v_TilingFactor;
 
+    uniform sampler2D u_Textures[32];
+
     void main() {
-      color = v_Color;
+      color = v_Color * texture(u_Textures[int(v_TexIndex)], v_TexCoord);
     })";
 
     Ref<Shader> shader = Shader::Create(vs, fs);
@@ -139,6 +147,15 @@ namespace Papaya
 
     // Create the pipeline state using the shader and layout
     s_Data.QuadPipelineState = PipelineState::Create({shader, layout});
+
+    int samplers[s_Data.MaxTextureSlots];
+    for (int i = 0; i < s_Data.MaxTextureSlots; ++i)
+      samplers[i] = i;
+
+    s_Data.QuadPipelineState->GetShader()->SetIntArray("u_Textures", samplers, s_Data.MaxTextureSlots);
+
+    s_Data.WhiteTexture = Texture2D::Create("tests/assets/textures/checkboard.png");
+    s_Data.TextureSlots[0] = s_Data.WhiteTexture;
 
     // Create basic quad vertices that we can later sample from
     s_Data.QuadVertexPositions[0] = {-0.5f, -0.5f, 0.0f, 1.0f};
