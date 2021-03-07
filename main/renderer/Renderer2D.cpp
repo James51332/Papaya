@@ -123,7 +123,7 @@ namespace Papaya
     String fs = R"(
     #version 410 core
 
-    layout (location = 0) out vec4 color;
+    layout (location = 0) out vec4 FragColor;
 
     in vec4 v_Color;
     in vec2 v_TexCoord;
@@ -133,28 +133,7 @@ namespace Papaya
     uniform sampler2D u_Textures[16];
 
     void main() {
-      vec4 texColor = v_Color;
-      switch(int(v_TexIndex))
-	    {
-	    	case 0: texColor *= texture(u_Textures[0], v_TexCoord * v_TilingFactor); break;
-        case 1: texColor *= texture(u_Textures[1], v_TexCoord * v_TilingFactor); break;
-        case 2: texColor *= texture(u_Textures[2], v_TexCoord * v_TilingFactor); break;
-        case 3: texColor *= texture(u_Textures[3], v_TexCoord * v_TilingFactor); break;
-        case 4: texColor *= texture(u_Textures[4], v_TexCoord * v_TilingFactor); break;
-        case 5: texColor *= texture(u_Textures[5], v_TexCoord * v_TilingFactor); break;
-        case 6: texColor *= texture(u_Textures[6], v_TexCoord * v_TilingFactor); break;
-        case 7: texColor *= texture(u_Textures[7], v_TexCoord * v_TilingFactor); break;
-        case 8: texColor *= texture(u_Textures[8], v_TexCoord * v_TilingFactor); break;
-        case 9: texColor *= texture(u_Textures[9], v_TexCoord * v_TilingFactor); break;
-        case 10: texColor *= texture(u_Textures[10], v_TexCoord * v_TilingFactor); break;
-        case 11: texColor *= texture(u_Textures[11], v_TexCoord * v_TilingFactor); break;
-        case 12: texColor *= texture(u_Textures[12], v_TexCoord * v_TilingFactor); break;
-        case 13: texColor *= texture(u_Textures[13], v_TexCoord * v_TilingFactor); break;
-        case 14: texColor *= texture(u_Textures[14], v_TexCoord * v_TilingFactor); break;
-        case 15: texColor *= texture(u_Textures[15], v_TexCoord * v_TilingFactor); break;
-
-	    }
-      color = texColor;
+      FragColor = v_Color * texture(u_Textures[int(v_TexIndex)], v_TexCoord * v_TilingFactor);
     })";
 
     Ref<Shader> shader = Shader::Create(vs, fs);
@@ -173,7 +152,8 @@ namespace Papaya
     for (int i = 0; i < s_Data.MaxTextureSlots; ++i)
       samplers[i] = i;
 
-    s_Data.QuadPipelineState->GetShader()->SetIntArray("u_Textures", samplers, s_Data.MaxTextureSlots);
+    s_Data.QuadPipelineState->GetShader()->Bind();
+    s_Data.QuadPipelineState->GetShader()->SetIntArray("u_Textures", samplers, s_Data.MaxTextureSlots);  
 
     s_Data.WhiteTexture = Texture2D::Create("tests/assets/textures/checkboard.png");
     s_Data.TextureSlots[0] = s_Data.WhiteTexture;
@@ -209,6 +189,9 @@ namespace Papaya
     // Reset the vertex buffer pointer for the new batch
     s_Data.QuadVertexBufferPtr = s_Data.QuadVertexBufferBase;
     s_Data.QuadIndexCount = 0;
+
+    // Reset the texture index
+    s_Data.TextureIndex = 1; // 0 = White Texture
   }
 
   void Renderer2D::Flush()
@@ -216,16 +199,16 @@ namespace Papaya
     if (s_Data.QuadIndexCount == 0)
       return; // Nothing to draw
 
-    s_Data.TextureIndex = 1; // 0 = WhiteTexture
-
     // Determine how many much of the vertex array we need to set.
     uint32_t dataSize = static_cast<uint32_t>(s_Data.QuadVertexBufferPtr - s_Data.QuadVertexBufferBase) * sizeof(QuadVertex);
     s_Data.QuadVertexBuffer->SetData(s_Data.QuadVertexBufferBase, dataSize); // Send the determined amount of data to the gpu
 
+    // Bind Pipeline State
+    s_Data.QuadPipelineState->Bind();
+
     // Bind Textures
-    for (int i = 0; i < s_Data.MaxTextureSlots; ++i)
-      if (s_Data.TextureSlots[i])
-        s_Data.TextureSlots[i]->Bind(i);
+    for (int i = 0; i < s_Data.TextureIndex; ++i)
+      s_Data.TextureSlots[i]->Bind(i);
 
     RenderCommand::DrawIndexed({s_Data.QuadVertexBuffer}, s_Data.QuadPipelineState, s_Data.QuadIndexBuffer);
   }
@@ -247,6 +230,53 @@ namespace Papaya
     {
       s_Data.QuadVertexBufferPtr->Position = transform * s_Data.QuadVertexPositions[i];
       s_Data.QuadVertexBufferPtr->Color = color;
+      s_Data.QuadVertexBufferPtr->TexCoord = textureCoords[i];
+      s_Data.QuadVertexBufferPtr->TexIndex = textureIndex;
+      s_Data.QuadVertexBufferPtr->TilingFactor = tilingFactor;
+      s_Data.QuadVertexBufferPtr++; // On the next iteration/draw we will use the next vertex
+    }
+
+    s_Data.QuadIndexCount += 6;
+  }
+
+  void Renderer2D::DrawQuad(const glm::mat4& transform, const Ref<Texture2D>& texture, float tilingFactor, const glm::vec4& tintColor)
+  {
+    constexpr size_t quadVertexCount = 4;
+    constexpr glm::vec2 textureCoords[] = { { 0.0f, 0.0f }, { 1.0f, 0.0f }, { 1.0f, 1.0f }, { 0.0f, 1.0f } };
+
+    if (s_Data.QuadIndexCount >= s_Data.MaxIndices)
+    {
+      Flush();
+      StartBatch();
+    }
+
+    float textureIndex = 0.0f;
+    for (int i = 0; i < s_Data.TextureIndex; i++)
+    { // check if texture is already used in batch
+      if (*s_Data.TextureSlots[i] == *texture)
+      {
+        textureIndex = static_cast<float>(i);
+        break;
+      }
+    }
+
+    if (textureIndex == 0.0f)
+    {
+      if (s_Data.TextureIndex >= s_Data.MaxTextureSlots)
+      {
+        Flush();
+        StartBatch();
+      }
+
+      textureIndex = s_Data.TextureIndex;
+      s_Data.TextureSlots[s_Data.TextureIndex] = texture;
+      s_Data.TextureIndex++;
+    }
+
+    for (int i = 0; i < quadVertexCount; i++)
+    {
+      s_Data.QuadVertexBufferPtr->Position = transform * s_Data.QuadVertexPositions[i];
+      s_Data.QuadVertexBufferPtr->Color = tintColor;
       s_Data.QuadVertexBufferPtr->TexCoord = textureCoords[i];
       s_Data.QuadVertexBufferPtr->TexIndex = textureIndex;
       s_Data.QuadVertexBufferPtr->TilingFactor = tilingFactor;

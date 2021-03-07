@@ -250,6 +250,7 @@ typedef unsigned char GLboolean;
   GLE(void, DeleteShader, GLuint target)                                                                                                                               \
   GLE(void, DrawArrays, GLenum, GLint, GLint)                                                                                                                          \
   GLE(void, DrawElements, GLenum, GLsizei, GLenum, const GLvoid *)                                                                                                     \
+  GLE(void, Enable, GLenum)                                                                                                                                            \
   GLE(void, EnableVertexAttribArray, GLuint index)                                                                                                                     \
   GLE(void, DrawBuffers, GLsizei n, const GLenum *bufs)                                                                                                                \
   GLE(void, FramebufferTexture2D, GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level)                                                     \
@@ -317,6 +318,8 @@ static bool InitOpenGL()
 #define GLE(ret, name, ...) gl##name = (name##proc *)((void *)dlsym(libgl, "gl" #name));
   PAPAYA_GL_LIST;
 #undef GLE
+
+  glEnable(GL_TEXTURE_2D);
 
   atexit(CloseOpenGL);
   return true;

@@ -1,8 +1,4 @@
 #include <Papaya/Papaya.h>
-
-#include "platform/opengl/OpenGLPipelineState.h"
-#include "platform/opengl/OpenGLShader.h"
-
 #include <glm/gtc/matrix_transform.hpp>
 
 class SandboxLayer : public Papaya::Layer
@@ -11,6 +7,7 @@ public:
   SandboxLayer()
       : m_Camera(-1.6f, 1.6f, -0.9f, 0.9f), Layer("SandboxLayer")
   {
+    m_Texture = Papaya::Texture2D::Create("tests/assets/textures/logo.png");
   }
 
   ~SandboxLayer()
@@ -50,7 +47,7 @@ public:
     Papaya::Renderer2D::BeginScene(m_Camera);
 
     Papaya::Renderer2D::DrawQuad(glm::translate(glm::mat4(1.0f), glm::vec3(1.0f, 0.75f, 0.0f)), glm::vec4(1, 1, 0, 0));
-    Papaya::Renderer2D::DrawQuad(glm::translate(glm::mat4(1.0f), glm::vec3(0.5f, 0.0f, 0.0f)), glm::vec4(0.0f, 0.5f, 0.0f, 0.0f));
+    Papaya::Renderer2D::DrawQuad(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f)), m_Texture);
 
     Papaya::Renderer2D::EndScene();
   }
@@ -67,6 +64,11 @@ public:
 
 private:
   Papaya::OrthographicCamera m_Camera;
+  Papaya::Ref<Papaya::Texture2D> m_Texture;
+  Papaya::Ref<Papaya::Texture2D> m_Checkerboard;
+  Papaya::Ref<Papaya::Buffer> m_VertexBuffer;
+  Papaya::Ref<Papaya::Buffer> m_IndexBuffer;
+  Papaya::Ref<Papaya::PipelineState> m_PipelineState;
 };
 
 Papaya::Game *Papaya::CreateGame()
