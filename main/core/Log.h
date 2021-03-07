@@ -1,5 +1,4 @@
-#ifndef Log_h
-#define Log_h
+#pragma once
 
 #pragma warning(push, 0)
 #include "spdlog/spdlog.h"
@@ -64,5 +63,3 @@ namespace Papaya
 #endif
 
 } // namespace Papaya
-
-#endif /* end of include guard: Log_h */

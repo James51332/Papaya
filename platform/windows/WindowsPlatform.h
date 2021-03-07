@@ -1,5 +1,4 @@
-#ifndef WindowsPlatform_h
-#define WindowsPlatform_h
+#pragma once
 
 #include "main/core/Platform.h"
 
@@ -23,5 +22,3 @@ namespace Papaya
   };
 
 } // namespace Papaya
-
-#endif /* end of include guard: WindowsPlatform_h */

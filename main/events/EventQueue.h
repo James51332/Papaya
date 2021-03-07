@@ -1,5 +1,4 @@
-#ifndef EventQueue_h
-#define EventQueue_h
+#pragma once
 
 #include <list>
 
@@ -24,5 +23,3 @@ namespace Papaya
   };
 
 } // namespace Papaya
-
-#endif /* end of include guard: EventQueue_h */

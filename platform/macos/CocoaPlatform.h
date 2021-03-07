@@ -1,6 +1,4 @@
-#ifndef CocoaPlatform_h
-#define CocoaPlatform_h
-
+#pragma once
 #include "main/core/Platform.h"
 
 namespace Papaya
@@ -25,5 +23,3 @@ namespace Papaya
   };
 
 } // namespace Papaya
-
-#endif /* end of include guard: CocoaPlatform_h */

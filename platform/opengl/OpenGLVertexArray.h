@@ -1,5 +1,4 @@
-#ifndef OpenGLVertexArray_h
-#define OpenGLVertexArray_h
+#pragma once
 
 #include "main/renderer/Buffer.h"
 
@@ -25,5 +24,3 @@ namespace Papaya
   };
 
 } // namespace Papaya
-
-#endif /* end of include guard: OpenGLVertexArray_h */

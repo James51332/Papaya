@@ -1,5 +1,4 @@
-#ifndef OpenGLVertexArrayCache_h
-#define OpenGLVertexArrayCache_h
+#pragma once
 
 #include "OpenGLVertexArray.h"
 #include "OpenGLPipelineState.h"
@@ -27,5 +26,3 @@ namespace Papaya
   };
 
 } // namespace Papaya
-
-#endif /* end of include guard: OpenGLVertexArrayCache_h */

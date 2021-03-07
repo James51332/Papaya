@@ -1,5 +1,4 @@
-#ifndef WindowsContext_h
-#define WindowsContext_h
+#pragma once
 
 #include "main/renderer/Context.h"
 
@@ -44,5 +43,3 @@ namespace Papaya
   };
 
 } // namespace Papaya
-
-#endif /* end of include guard: WindowsContext_h */

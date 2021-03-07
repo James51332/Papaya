@@ -1,5 +1,4 @@
-#ifndef RenderCommand_h
-#define RenderCommand_h
+#pragma once
 
 #include "Buffer.h"
 #include "BufferLayout.h"
@@ -45,5 +44,3 @@ namespace Papaya
   };
 
 } // namespace Papaya
-
-#endif /* end of include guard: RenderCommand_h */

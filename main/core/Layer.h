@@ -1,5 +1,4 @@
-#ifndef Layer_h
-#define Layer_h
+#pragma once
 
 #include "main/core/Timestep.h"
 
@@ -26,5 +25,3 @@ namespace Papaya
   };
 
 } // namespace Papaya
-
-#endif /* end of include guard: Layer_h */

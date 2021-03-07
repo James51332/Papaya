@@ -1,5 +1,4 @@
-#ifndef PipelineState_h
-#define PipelineState_h
+#pragma once
 
 #include "Shader.h"
 #include "BufferLayout.h"
@@ -36,5 +35,3 @@ namespace Papaya
   };
 
 } // namespace Papaya
-
-#endif /* end of include guard: PipelineState_h */

@@ -1,5 +1,4 @@
-#ifndef Timestep_h
-#define Timestep_h
+#pragma once
 
 namespace Papaya
 {
@@ -18,6 +17,3 @@ private:
 };
 
 } // namespace Papaya
-
-
-#endif /* end of include guard: Timestep_h */

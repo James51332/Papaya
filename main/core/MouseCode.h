@@ -1,5 +1,4 @@
-#ifndef MouseCode_h
-#define MouseCode_h
+#pragma once
 
 namespace Papaya
 {
@@ -25,6 +24,3 @@ enum MouseCode
 #define PAPAYA_TOTAL_MOUSECODES 13
 
 } // namespace Papaya
-
-
-#endif /* end of include guard: MouseCode_h */

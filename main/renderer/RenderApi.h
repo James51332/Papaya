@@ -1,5 +1,4 @@
-#ifndef RenderApi_h
-#define RenderApi_h
+#pragma once
 
 #include "Buffer.h"
 #include "BufferLayout.h"
@@ -36,5 +35,3 @@ namespace Papaya
   };
 
 } // namespace Papaya
-
-#endif /* end of include guard: RenderApi_h */

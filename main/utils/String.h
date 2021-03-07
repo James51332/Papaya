@@ -1,5 +1,4 @@
-#ifndef String_h
-#define String_h
+#pragma once
 
 #include <ostream>
 #include <cstring>
@@ -33,5 +32,3 @@ namespace Papaya
   };
 
 } // namespace Papaya
-
-#endif /* end of include guard: String_h */

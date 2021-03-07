@@ -1,5 +1,4 @@
-#ifndef AppEvent_h
-#define AppEvent_h
+#pragma once
 
 #include "Event.h"
 
@@ -70,5 +69,3 @@ private:
 };
 
 } // namespace Papaya
-
-#endif /* end of include guard: AppEvent_h */

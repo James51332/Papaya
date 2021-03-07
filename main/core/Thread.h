@@ -1,5 +1,4 @@
-#ifndef Thread_h
-#define Thread_h
+#pragma once
 
 #include "main/utils/Memory.h"
 
@@ -44,6 +43,3 @@ private:
 };
 
 } // namespace Papaya
-
-
-#endif /* end of include guard: Thread_h */

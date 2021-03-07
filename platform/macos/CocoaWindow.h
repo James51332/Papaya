@@ -1,6 +1,4 @@
-#ifndef CocoaWindow_h
-#define CocoaWindow_h
-
+#pragma once
 #include "main/core/Window.h"
 
 namespace Papaya
@@ -25,5 +23,3 @@ namespace Papaya
   };
 
 } // namespace Papaya
-
-#endif /* end of include guard: CocoaWindow_h */

@@ -1,5 +1,4 @@
-#ifndef Event_h
-#define Event_h
+#pragma once
 
 #include "main/utils/String.h"
 #include "main/utils/Memory.h"
@@ -93,5 +92,3 @@ namespace Papaya
   }
 
 } // namespace Papaya
-
-#endif /* end of include guard: Event_h */

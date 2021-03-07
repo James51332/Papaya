@@ -1,5 +1,4 @@
-#ifndef Game_h
-#define Game_h
+#pragma once
 
 #include "main/core/Window.h"
 #include "main/core/LayerStack.h"
@@ -33,5 +32,3 @@ namespace Papaya
   };
 
 } // namespace Papaya
-
-#endif /* end of include guard: Game_h */

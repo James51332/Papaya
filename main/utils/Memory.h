@@ -1,5 +1,4 @@
-#ifndef Memory_h
-#define Memory_h
+#pragma once
 
 #include <memory>
 
@@ -30,5 +29,3 @@ namespace Papaya
   }
 
 } // namespace Papaya
-
-#endif /* end of include guard: Memory_h */

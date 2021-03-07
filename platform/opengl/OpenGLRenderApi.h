@@ -1,5 +1,4 @@
-#ifndef OpenGLRenderApi_h
-#define OpenGLRenderApi_h
+#pragma once
 
 #include "main/renderer/RenderApi.h"
 
@@ -23,5 +22,3 @@ namespace Papaya
   };
 
 } // namespace Papaya
-
-#endif /* end of include guard: OpenGLRenderApi_h */

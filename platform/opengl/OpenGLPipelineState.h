@@ -1,5 +1,4 @@
-#ifndef OpenGLPipelineState_h
-#define OpenGLPipelineState_h
+#pragma once
 
 #include "main/renderer/PipelineState.h"
 
@@ -34,5 +33,3 @@ namespace Papaya
   };
 
 } // namespace Papaya
-
-#endif /* end of include guard: OpenGLPipelineState_h */

@@ -1,5 +1,4 @@
-#ifndef BufferLayout_h
-#define BufferLayout_h
+#pragma once
 
 #include "main/core/Log.h"
 
@@ -138,5 +137,3 @@ namespace Papaya
   };
 
 } // namespace Papaya
-
-#endif /* end of include guard: BufferLayout_h */

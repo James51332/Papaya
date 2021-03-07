@@ -1,5 +1,4 @@
-#ifndef KeyCode_h
-#define KeyCode_h
+#pragma once
 
 namespace Papaya
 {
@@ -91,6 +90,3 @@ enum KeyCode
 #define PAPAYA_TOTAL_KEYCODES 71
 
 } // namespace Papaya
-
-
-#endif /* end of include guard: KeyCode_h */

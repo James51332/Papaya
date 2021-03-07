@@ -1,5 +1,4 @@
-#ifndef EntryPoint_h
-#define EntryPoint_h
+#pragma once
 
 // Entrypoint to engine. This file is include with PAPAYA_MAIN defined in Game.cpp
 
@@ -60,5 +59,3 @@ int main() {
 }
 #endif // PAPAYA_MAIN
 #endif // PAPAYA_WINDOWS
-
-#endif /* end of include guard: EntryPoint_h */

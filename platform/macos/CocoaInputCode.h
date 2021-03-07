@@ -1,5 +1,4 @@
-#ifndef CocoaInputCode_h
-#define CocoaInputCode_h
+#pragma once
 
 #include "main/core/KeyCode.h"
 #include "main/core/MouseCode.h"
@@ -13,5 +12,3 @@ namespace Papaya
   Papaya::MouseCode CocoaMouseCodeToPapayaMouseCode(unsigned int mouseCode);
 
 } // namespace Papaya
-
-#endif /* end of include guard: CocoaInputCode_h */

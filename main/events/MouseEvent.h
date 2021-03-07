@@ -1,5 +1,4 @@
-#ifndef MouseEvent_h
-#define MouseEvent_h
+#pragma once
 
 #include "Event.h"
 #include "main/core/MouseCode.h"
@@ -100,5 +99,3 @@ namespace Papaya
   };
 
 } // namespace Papaya
-
-#endif /* end of include guard: MouseEvent_h */

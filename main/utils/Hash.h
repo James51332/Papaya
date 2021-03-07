@@ -1,5 +1,4 @@
-#ifndef Hash_h
-#define Hash_h
+#pragma once
 
 namespace Papaya
 {
@@ -12,5 +11,3 @@ namespace Papaya
   }
 
 } // namespace Papaya
-
-#endif /* end of include guard: Hash_h */

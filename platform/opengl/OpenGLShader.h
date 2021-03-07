@@ -1,5 +1,4 @@
-#ifndef OpenGLShader_h
-#define OpenGLShader_h
+#pragma once
 
 #include "main/renderer/Shader.h"
 
@@ -32,5 +31,3 @@ namespace Papaya
   };
 
 } // namespace Papaya
-
-#endif /* end of include guard: OpenGLShader_h */

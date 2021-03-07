@@ -1,5 +1,4 @@
-#ifndef Shader_h
-#define Shader_h
+#pragma once
 
 #include "main/utils/Memory.h"
 #include "main/utils/String.h"
@@ -34,5 +33,3 @@ namespace Papaya
   };
 
 } // namespace Papaya
-
-#endif /* end of include guard: Shader_h */

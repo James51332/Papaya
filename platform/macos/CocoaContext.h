@@ -1,5 +1,4 @@
-#ifndef CocoaContext_h
-#define CocoaContext_h
+#pragma once
 
 #include "main/renderer/Context.h"
 
@@ -44,5 +43,3 @@ private:
 };
 
 } // namespace Papaya
-
-#endif /* end of include guard: CocoaContext_h */

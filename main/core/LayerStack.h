@@ -1,5 +1,4 @@
-#ifndef LayerStack_h
-#define LayerStack_h
+#pragma once
 
 #include "Layer.h"
 
@@ -37,5 +36,3 @@ namespace Papaya
   };
 
 } // namespace Papaya
-
-#endif /* end of include guard: LayerStack_h */

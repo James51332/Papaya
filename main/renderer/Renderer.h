@@ -1,5 +1,4 @@
-#ifndef Renderer_h
-#define Renderer_h
+#pragma once
 
 #include "main/utils/Memory.h"
 
@@ -44,5 +43,3 @@ namespace Papaya
   };
 
 } // namespace Papaya
-
-#endif /* end of include guard: Renderer_h */

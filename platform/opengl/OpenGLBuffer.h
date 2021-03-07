@@ -1,5 +1,4 @@
-#ifndef OpenGLBuffer_h
-#define OpenGLBuffer_h
+#pragma once
 
 #include "main/renderer/Buffer.h"
 
@@ -32,5 +31,3 @@ namespace Papaya
   };
 
 } // namespace Papaya
-
-#endif /* end of include guard: OpenGLBuffer_h */

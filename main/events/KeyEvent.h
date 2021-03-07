@@ -1,5 +1,4 @@
-#ifndef KeyEvent_h
-#define KeyEvent_h
+#pragma once
 
 #include "Event.h"
 #include "main/core/KeyCode.h"
@@ -73,5 +72,3 @@ namespace Papaya
   };
 
 } // namespace Papaya
-
-#endif /* end of include guard: KeyEvent_h */

@@ -1,5 +1,4 @@
-#ifndef OpenGLLoader_h
-#define OpenGLLoader_h
+#pragma once
 
 #define GL_ARRAY_BUFFER 0x8892         // Acquired from:
 #define GL_ARRAY_BUFFER_BINDING 0x8894 // https://www.opengl.org/registry/api/GL/glext.h
@@ -376,5 +375,3 @@ static bool InitOpenGL()
 
 #endif // PAPYAA_WINDOWS
 #endif // PAPAYA_GL_LITE_IMPLEMENTATION
-
-#endif /* end of include guard: OpenGLLoader_h */

@@ -1,5 +1,4 @@
-#ifndef Camera_h
-#define Camera_h
+#pragma once
 
 #include <glm/matrix.hpp>
 
@@ -48,5 +47,3 @@ namespace Papaya
   };
 
 } // namespace Papaya
-
-#endif /* end of include guard: Camera_h */

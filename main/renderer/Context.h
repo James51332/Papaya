@@ -1,5 +1,4 @@
-#ifndef Context_h
-#define Context_h
+#pragma once
 
 #include "main/utils/Memory.h"
 
@@ -31,5 +30,3 @@ namespace Papaya
   };
 
 } // namespace Papaya
-
-#endif /* end of include guard: Context_h */

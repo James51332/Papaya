@@ -1,5 +1,4 @@
-#ifndef WindowsWindow_h
-#define WindowsWindow_h
+#pragma once
 
 #include "main/core/Window.h"
 
@@ -36,5 +35,3 @@ namespace Papaya
   };
 
 } // namespace Papaya
-
-#endif /* end of include guard: WindowsWindow_h */
