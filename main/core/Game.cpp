@@ -23,6 +23,8 @@
 
 #include "Thread.h"
 
+#include <imgui/imgui.h>
+
 namespace Papaya
 {
 

@@ -2,7 +2,7 @@
 
 ![Papaya Banner](/resources/branding/Banner.png)
 
-Papaya is my attempt at a modern, straight-forward game engine. It's built in C++17 and largely inspired by TheCherno/Hazel and Godot. I have worked on about a dozen different attemts at game engines however this one has the cleanest codebase, is the easiest to use, and has the most features!
+Papaya is my attempt at a modern, straight-forward game engine. It's built in C++17 and largely inspired by TheCherno/Hazel and Godot. I have worked on about a dozen different attemts at game engines however this one has the cleanest codebase, is the easiest to use, and has the most features! I have also recently started a small [blog](https://jdab.xyz) over at [jdab.xyz](https://jdab.xyz)
 
 ## Getting Started
 

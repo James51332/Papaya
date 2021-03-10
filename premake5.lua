@@ -6,6 +6,8 @@ workspace "Papaya"
 builddir = ("bin/Papaya-%{cfg.system}-%{cfg.longname}")
 objectdir = ("bin-obj/Papaya-%{cfg.system}-%{cfg.longname}")
 
+include "thirdparty/imgui"
+
 project "Papaya"
   location "Papaya"
   kind "StaticLib"
@@ -35,6 +37,10 @@ project "Papaya"
     ".",
   }
 
+  links {
+    "ImGui"
+  }
+
   filter "configurations:Debug"
     defines "PAPAYA_DEBUG"
 
@@ -55,6 +61,7 @@ project "Papaya"
       "thirdparty/spdlog/include",
       "thirdparty/glm",
       "thirdparty/stb_image",
+      "thirdparty/imgui",
       ".",
     }
 
@@ -106,6 +113,7 @@ project "Sandbox"
     "thirdparty/spdlog/include",
     "thirdparty/glm",
     "thirdparty/opengl",
+    "thirdparty/imgui",
     ".",
   }
   
