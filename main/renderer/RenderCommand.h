@@ -13,12 +13,19 @@ namespace Papaya
   class RenderCommand
   {
   public:
-    static void OnInit() {}
-    static void OnTerminate() {}
+    static void OnInit() 
+    {
+      s_Api->OnInit();  
+    }
+
+    static void OnTerminate() 
+    {
+      s_Api->OnTerminate();
+    }
 
     static void SetViewport(float x, float y, float w, float h)
     {
-        s_Api->SetViewport(x, y, w, h);
+      s_Api->SetViewport(x, y, w, h);
     }
 
     static void ClearColor(float r, float g, float b, float a = 1.0f)
@@ -36,11 +43,24 @@ namespace Papaya
                             const Ref<Buffer> &indexBuffer)
 
     {
-        s_Api->DrawIndexed(vertexBuffers, pipelineState , indexBuffer);
+      s_Api->DrawIndexed(vertexBuffers, pipelineState, indexBuffer, s_IndexSize, s_IndexOffset);
+    }
+
+    static void SetIndexSize(uint32_t size)
+    {
+      s_IndexSize = size;
+    }
+
+    static void SetIndexOffset(uint32_t offset)
+    {
+      s_IndexOffset = offset;
     }
 
   private:
     static Scope<RenderApi> s_Api;
+    
+    static uint32_t s_IndexSize;
+    static uint32_t s_IndexOffset;
   };
 
 } // namespace Papaya

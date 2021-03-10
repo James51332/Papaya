@@ -10,6 +10,11 @@ namespace Papaya
     return CreateRef<OpenGLBuffer>(vertices, size, type, usage);
   }
 
+  Ref<Buffer> Buffer::Create()
+  {
+    return CreateRef<OpenGLBuffer>();
+  }
+
   Buffer::~Buffer()
   {
   }

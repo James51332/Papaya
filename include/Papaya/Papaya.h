@@ -17,6 +17,8 @@
 #include "main/renderer/Renderer2D.h"
 #include "main/renderer/RenderCommand.h"
 
+#include "main/renderer/imgui_impl_opengl3.h"
+
 #include "main/utils/Memory.h"
 #include "main/utils/String.h"
 

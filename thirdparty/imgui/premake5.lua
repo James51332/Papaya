@@ -3,8 +3,8 @@ project "ImGui"
 	language "C++"
   cppdialect "C++17"
 
-  targetdir ("bin/Papaya-%{cfg.system}-%{cfg.longname}")
-  objdir ("bin-obj/Papaya-%{cfg.system}-%{cfg.longname}")
+  targetdir ("../../bin/Papaya-%{cfg.system}-%{cfg.longname}")
+  objdir ("../../bin-obj/Papaya-%{cfg.system}-%{cfg.longname}")
 
 	files
 	{
@@ -14,6 +14,7 @@ project "ImGui"
 		"imgui/imgui_draw.cpp",
 		"imgui/imgui_internal.h",
 		"imgui/imgui_widgets.cpp",
+		"imgui/imgui_tables.cpp",
 		"imgui/imstb_rectpack.h",
 		"imgui/imstb_textedit.h",
 		"imgui/imstb_truetype.h",

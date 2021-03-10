@@ -6,6 +6,12 @@
 namespace Papaya
 {
 
+  enum class ChannelType
+  {
+    RGB,
+    RGBA
+  };
+
   class Texture
   {
   public:
@@ -25,6 +31,7 @@ namespace Papaya
     virtual ~Texture2D() = default;
 
     static Ref<Texture2D> Create(const String &path);
+    static Ref<Texture2D> Create(const unsigned char* data, uint32_t width, uint32_t height, ChannelType channels);
   };
 
 } // namespace Papaya

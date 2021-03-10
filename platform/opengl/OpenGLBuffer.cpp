@@ -1,6 +1,8 @@
 #include "OpenGLBuffer.h"
 #include "OpenGLLoader.h"
 
+#include "main/core/Log.h"
+
 namespace Papaya
 {
 
@@ -43,6 +45,12 @@ namespace Papaya
       break;
     }
 
+    case BufferUsage::Stream:
+    {
+      return GL_STREAM_DRAW;
+      break;
+    }
+
     default:
       break;
     }
@@ -53,20 +61,22 @@ namespace Papaya
   // Start at 1000 to prevent same id's at BufferLayout
   int OpenGLBuffer::m_CurID = 1000;
 
-  OpenGLBuffer::OpenGLBuffer(const void *vertices, uint32_t size, BufferType type, BufferUsage usage)
+  OpenGLBuffer::OpenGLBuffer(const void *data, uint32_t size, BufferType type, BufferUsage usage)
   {
-    m_Type = BufferTypeToGLEnum(type);
-    m_Usage = BufferUsageToGLEnum(usage);
-    m_Size = size;
     m_UniqueID = m_CurID;
     m_CurID++;
 
     glGenBuffers(1, &m_RendererID);
+    Reset(data, size, type, usage);
+  }
 
-    glBindBuffer(m_Type, m_RendererID);
-    glBufferData(m_Type, size, vertices, m_Usage);
+  OpenGLBuffer::OpenGLBuffer()
+  {
+    m_Size = 0;
+    m_UniqueID = m_CurID;
+    m_CurID++;
 
-    glBindBuffer(m_Type, 0);
+    glGenBuffers(1, &m_RendererID);
   }
 
   OpenGLBuffer::~OpenGLBuffer()
@@ -85,8 +95,22 @@ namespace Papaya
 
   void OpenGLBuffer::SetData(const void *data, uint32_t size)
   {
+    PAPAYA_ASSERT((m_Size != 0), "SetData() called before buffer initialization! Try calling Buffer::Reset()");
+
     glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
     glBufferSubData(GL_ARRAY_BUFFER, 0, size, data);
+  }
+
+  void OpenGLBuffer::Reset(const void *data, uint32_t size, BufferType type, BufferUsage usage)
+  {
+    m_Type = BufferTypeToGLEnum(type);
+    m_Usage = BufferUsageToGLEnum(usage);
+    m_Size = size;
+
+    glBindBuffer(m_Type, m_RendererID);
+    glBufferData(m_Type, size, data, m_Usage);
+
+    glBindBuffer(m_Type, 0);
   }
 
 } // namespace Papaya

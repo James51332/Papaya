@@ -24,7 +24,8 @@ namespace Papaya
     Int2,
     Int3,
     Int4,
-    Bool
+    Bool,
+    Byte
   };
 
   static uint32_t ShaderDataTypeSize(ShaderDataType type)
@@ -53,6 +54,8 @@ namespace Papaya
       return 4 * 4;
     case ShaderDataType::Bool:
       return 1;
+    case ShaderDataType::Byte:
+      return 4;
     default:
       break;
     }

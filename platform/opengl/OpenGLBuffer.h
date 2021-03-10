@@ -9,12 +9,14 @@ namespace Papaya
   {
   public:
     OpenGLBuffer(const void *data, uint32_t size, BufferType type, BufferUsage usage);
+    OpenGLBuffer();
     virtual ~OpenGLBuffer();
 
     void Bind();
     void Unbind();
 
     void SetData(const void *data, uint32_t size);
+    void Reset(const void* data, uint32_t size, BufferType type, BufferUsage usage);
 
     uint32_t GetSize() const { return m_Size; }
 

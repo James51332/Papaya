@@ -9,6 +9,7 @@ namespace Papaya
   {
   public:
     OpenGLTexture2D(const String &path);
+    OpenGLTexture2D(const unsigned char* data, uint32_t width, uint32_t height, ChannelType channels);
     virtual ~OpenGLTexture2D();
 
     virtual uint32_t GetWidth() const override { return m_Width; }

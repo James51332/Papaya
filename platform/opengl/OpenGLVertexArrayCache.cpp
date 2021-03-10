@@ -39,6 +39,8 @@ namespace Papaya
       return GL_INT;
     case ShaderDataType::Bool:
       return GL_BOOL;
+    case ShaderDataType::Byte:
+      return GL_UNSIGNED_BYTE;
     default:
       break;
     }
@@ -123,7 +125,13 @@ namespace Papaya
 
         for (auto &element : bl)
         {
-          glVertexAttribPointer(index, element.Size / 4, GL_FLOAT, GL_FALSE, bl.GetStride(), (GLvoid *)element.Offset);
+          bool normalizedByte = element.Normalized && element.Type == ShaderDataType::Byte;
+          glVertexAttribPointer(index,
+                                normalizedByte ? 4 : element.Size / 4,
+                                ShaderDataTypeToGLType(element.Type),
+                                element.Normalized ? GL_TRUE : GL_FALSE,
+                                bl.GetStride(),
+                                (GLvoid *)element.Offset);
           glEnableVertexAttribArray(index);
           index++;
         }

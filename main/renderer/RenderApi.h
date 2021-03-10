@@ -24,6 +24,9 @@ namespace Papaya
     static Scope<RenderApi> Create();
     virtual ~RenderApi();
 
+    virtual void OnInit() = 0;
+    virtual void OnTerminate() = 0;
+
     virtual void SetViewport(float x, float y, float w, float h) = 0;
 
     virtual void ClearColor(float r, float g, float b, float a) = 0;
@@ -31,7 +34,9 @@ namespace Papaya
 
     virtual void DrawIndexed(const std::vector<Ref<Buffer>> &vertexBuffers,
                              const Ref<PipelineState>& pipelineState,
-                             const Ref<Buffer> &indexBuffer) = 0;
+                             const Ref<Buffer> &indexBuffer,
+                             uint32_t indexSize,
+                             uint32_t indexOffset) = 0;
   };
 
 } // namespace Papaya

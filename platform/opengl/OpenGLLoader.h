@@ -214,6 +214,19 @@
 #define GL_STENCIL_BACK_REF 0x8CA3
 #define GL_STENCIL_BACK_VALUE_MASK 0x8CA4
 #define GL_STENCIL_BACK_WRITEMASK 0x8CA5
+#define GL_RGB4                           0x804F
+#define GL_RGB5                           0x8050
+#define GL_RGB8                           0x8051
+#define GL_RGB10                          0x8052
+#define GL_RGB12                          0x8053
+#define GL_RGB16                          0x8054
+#define GL_RGBA2                          0x8055
+#define GL_RGBA4                          0x8056
+#define GL_RGB5_A1                        0x8057
+#define GL_RGBA8                          0x8058
+#define GL_RGB10_A2                       0x8059
+#define GL_RGBA12                         0x805A
+#define GL_RGBA16                         0x805B
 
 typedef char GLchar;
 typedef void GLvoid;
@@ -244,12 +257,15 @@ typedef unsigned char GLboolean;
   GLE(GLuint, CreateProgram, void)                                                                                                                                     \
   GLE(GLuint, CreateShader, GLenum type)                                                                                                                               \
   GLE(void, DeleteBuffers, GLsizei n, const GLuint *buffers)                                                                                                           \
+  GLE(void, Disable, GLenum) \
   GLE(void, DeleteFramebuffers, GLsizei n, const GLuint *framebuffers)                                                                                                 \
   GLE(void, DeleteTextures, GLsizei n, const GLuint *textures)                                                                                                         \
   GLE(void, DeleteShader, GLuint target)                                                                                                                               \
   GLE(void, DrawArrays, GLenum, GLint, GLint)                                                                                                                          \
   GLE(void, DrawElements, GLenum, GLsizei, GLenum, const GLvoid *)                                                                                                     \
   GLE(void, Enable, GLenum)                                                                                                                                            \
+  GLE(void, BlendEquation, GLenum) \
+  GLE(void, BlendFuncSeparate, GLenum srcRGB, GLenum dstRGB, GLenum srcAlpha, GLenum dstAlpha) \
   GLE(void, EnableVertexAttribArray, GLuint index)                                                                                                                     \
   GLE(void, DrawBuffers, GLsizei n, const GLenum *bufs)                                                                                                                \
   GLE(void, FramebufferTexture2D, GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level)                                                     \

@@ -15,6 +15,20 @@ namespace Papaya
   {
   }
 
+  void OpenGLRenderApi::OnInit()
+  {
+    glEnable(GL_BLEND);
+    glBlendEquation(GL_FUNC_ADD);
+    glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+    glDisable(GL_CULL_FACE);
+    glDisable(GL_DEPTH_TEST);
+    glDisable(GL_STENCIL_TEST);
+  }
+
+  void OpenGLRenderApi::OnTerminate()
+  {
+  }
+
   void OpenGLRenderApi::SetViewport(float x, float y, float w, float h)
   {
     glViewport(static_cast<GLint>(x),
@@ -35,7 +49,9 @@ namespace Papaya
 
   void OpenGLRenderApi::DrawIndexed(const std::vector<Ref<Buffer>> &vertexBuffers,
                                     const Ref<PipelineState> &pipelineState,
-                                    const Ref<Buffer> &indexBuffer)
+                                    const Ref<Buffer> &indexBuffer,
+                                    uint32_t indexSize,
+                                    uint32_t indexOffset)
   {
     Ref<OpenGLVertexArray> vertexArray = OpenGLVertexArrayCache::GetVertexArray(vertexBuffers,
                                                                                 pipelineState,
@@ -43,8 +59,8 @@ namespace Papaya
 
     vertexArray->Bind();
     pipelineState->Bind();
-    int count = indexBuffer->GetSize() / sizeof(uint32_t);
-    glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, 0);
+    int count = indexBuffer->GetSize() / indexSize;
+    glDrawElements(GL_TRIANGLES, count, indexSize == 2 ? GL_UNSIGNED_SHORT : GL_UNSIGNED_INT, (GLvoid *)(long)indexOffset);
   }
 
 } // namespace Papaya

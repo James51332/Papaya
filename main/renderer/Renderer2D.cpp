@@ -210,6 +210,8 @@ namespace Papaya
     for (int i = 0; i < s_Data.TextureIndex; ++i)
       s_Data.TextureSlots[i]->Bind(i);
 
+    RenderCommand::SetIndexSize(sizeof(uint32_t));
+    RenderCommand::SetIndexOffset(0);
     RenderCommand::DrawIndexed({s_Data.QuadVertexBuffer}, s_Data.QuadPipelineState, s_Data.QuadIndexBuffer);
   }
 

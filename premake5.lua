@@ -34,6 +34,7 @@ project "Papaya"
     "thirdparty/glm",
     "thirdparty/stb_image",
     "thirdparty/opengl",
+    "thirdparty/imgui",
     ".",
   }
 
@@ -97,7 +98,6 @@ project "Sandbox"
   location "Sandbox"
   language "C++"
   cppdialect "C++17"
-  links "Papaya"
   
   targetdir (builddir)
   objdir (objectdir)
@@ -117,6 +117,10 @@ project "Sandbox"
     ".",
   }
   
+  links {
+    "Papaya"
+  }
+
   filter "configurations:Debug"
   defines "PAPAYA_DEBUG"
 
@@ -132,18 +136,18 @@ project "Sandbox"
     kind "ConsoleApp"
     defines { "PAPAYA_MACOS", "GL_SILENCE_DEPRECATION", }
     buildoptions "-Wno-deprecated-declarations"
-    xcodebuildsettings = { ["ALWAYS_SEARCH_USER_PATHS"] = "YES" },
+    xcodebuildsettings = { ["ALWAYS_SEARCH_USER_PATHS"] = "YES" }
 
     sysincludedirs {
       "include",
       "thirdparty/spdlog/include",
       "thirdparty/glm",
+      "thirdparty/imgui",
       "."
     }
 
     links {
-      "Cocoa.framework",
-      "OpenGL.framework",
+      "Cocoa.framework"
     }
 
   filter "action:vs*"

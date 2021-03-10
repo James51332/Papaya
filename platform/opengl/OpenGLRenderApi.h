@@ -11,6 +11,9 @@ namespace Papaya
     OpenGLRenderApi();
     virtual ~OpenGLRenderApi();
 
+    void OnInit();
+    void OnTerminate();
+
     void SetViewport(float x, float y, float w, float h);
 
     void ClearColor(float r, float b, float g, float a);
@@ -18,7 +21,9 @@ namespace Papaya
 
     void DrawIndexed(const std::vector<Ref<Buffer>> &vertexBuffers,
                      const Ref<PipelineState> &pipelineState,
-                     const Ref<Buffer> &indexBuffer);
+                     const Ref<Buffer> &indexBuffer,
+                     uint32_t indexSize,
+                     uint32_t indexOffset);
   };
 
 } // namespace Papaya
