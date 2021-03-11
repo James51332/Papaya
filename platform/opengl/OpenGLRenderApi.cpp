@@ -60,7 +60,7 @@ namespace Papaya
     vertexArray->Bind();
     pipelineState->Bind();
     int count = indexBuffer->GetSize() / indexSize;
-    glDrawElements(GL_TRIANGLES, count, indexSize == 2 ? GL_UNSIGNED_SHORT : GL_UNSIGNED_INT, (GLvoid *)(long)indexOffset);
+    glDrawElements(GL_TRIANGLES, count, indexSize == 2 ? GL_UNSIGNED_SHORT : GL_UNSIGNED_INT, (GLvoid *)(long long)indexOffset);
   }
 
 } // namespace Papaya

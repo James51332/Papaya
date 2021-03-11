@@ -44,6 +44,7 @@ project "Papaya"
 
   filter "configurations:Debug"
     defines "PAPAYA_DEBUG"
+    symbols "On"
 
   filter "configurations:Release"
     defines "PAPAYA_RELEASE"
@@ -83,6 +84,7 @@ project "Papaya"
 
   filter "system:windows"
     defines "PAPAYA_WINDOWS"
+    systemversion "latest"
 
     files {
       "platform/windows/**.cpp",
@@ -122,15 +124,16 @@ project "Sandbox"
   }
 
   filter "configurations:Debug"
-  defines "PAPAYA_DEBUG"
+    defines "PAPAYA_DEBUG"
+    symbols "On"
 
   filter "configurations:Release"
-  defines "PAPAYA_RELEASE"
-  optimize "On"
+    defines "PAPAYA_RELEASE"
+    optimize "On"
 
   filter "configurations:Dist"
-  defines "PAPAYA_DIST"
-  optimize "Full"
+    defines "PAPAYA_DIST"
+    optimize "Full"
 
   filter "system:macosx"
     kind "ConsoleApp"
@@ -167,6 +170,7 @@ project "Sandbox"
 
   filter "system:windows"
     defines "PAPAYA_WINDOWS"
+    systemversion "latest"
 
     links {
       "kernel32",

@@ -15,6 +15,7 @@ Makefile
 .vs
 .vscode
 *.sln
+*.vcxproj
 
 # Prerequisites
 *.d

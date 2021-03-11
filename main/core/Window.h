@@ -21,7 +21,7 @@ namespace Papaya
     bool Resizable;
     RenderApi::API Api;
 
-    WindowAttribs(int width = 800, int height = 600, const String &title = "Papaya", bool resizable = false, RenderApi::API api = RenderApi::API::OpenGL)
+    WindowAttribs(int width = 800, int height = 600, const String& title = "Papaya", bool resizable = false, RenderApi::API api = RenderApi::API::OpenGL)
         : Width(width), Height(height), Title(title), Resizable(resizable), Api(api) {}
 
     String ToString() const
