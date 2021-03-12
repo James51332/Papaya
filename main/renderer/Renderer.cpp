@@ -1,9 +1,8 @@
 #include "Renderer.h"
 
 #include "RenderCommand.h"
+#include "ImGuiRenderer.h"
 #include "Renderer2D.h"
-
-#include "platform/opengl/OpenGLPipelineState.h"
 
 namespace Papaya
 {
@@ -15,12 +14,14 @@ namespace Papaya
   {
     RenderCommand::OnInit();
     Renderer2D::OnInit();
+    ImGuiRenderer::OnInit();
   }
 
   void Renderer::OnTerminate()
   {
     RenderCommand::OnTerminate();
     Renderer2D::OnTerminate();
+    ImGuiRenderer::OnTerminate();
   }
 
   void Renderer::Begin(const OrthographicCamera &camera)
@@ -33,9 +34,10 @@ namespace Papaya
                         const Ref<Buffer> &indexBuffer,
                         const glm::mat4 &transform)
   {
-    std::static_pointer_cast<OpenGLPipelineState>(pipelineState)->m_Shader->Bind();
-    std::static_pointer_cast<OpenGLPipelineState>(pipelineState)->m_Shader->SetMat4("u_Camera", s_ViewProjection);
-    std::static_pointer_cast<OpenGLPipelineState>(pipelineState)->m_Shader->SetMat4("u_Transform", transform);
+    pipelineState->GetShader()->Bind();
+    pipelineState->GetShader()->SetMat4("u_Camera", s_ViewProjection);
+    pipelineState->GetShader()->SetMat4("u_Transform", transform);
+      
     RenderCommand::DrawIndexed(vertexBuffers, pipelineState, indexBuffer);
   }
 
@@ -44,9 +46,9 @@ namespace Papaya
                         const Ref<Buffer> &indexBuffer,
                         const glm::mat4 &transform)
   {
-    std::static_pointer_cast<OpenGLPipelineState>(pipelineState)->m_Shader->Bind();
-    std::static_pointer_cast<OpenGLPipelineState>(pipelineState)->m_Shader->SetMat4("u_Camera", s_ViewProjection);
-    std::static_pointer_cast<OpenGLPipelineState>(pipelineState)->m_Shader->SetMat4("u_Transform", transform);
+    pipelineState->GetShader()->Bind();
+    pipelineState->GetShader()->SetMat4("u_Camera", s_ViewProjection);
+    pipelineState->GetShader()->SetMat4("u_Transform", transform);
     RenderCommand::DrawIndexed({vertexBuffer}, pipelineState, indexBuffer);
   }
 

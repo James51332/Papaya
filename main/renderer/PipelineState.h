@@ -29,7 +29,8 @@ namespace Papaya
     // is a static call (maybe something like RenderDevice::SetUniform()) and simply uses
     // the bound object to upload.
     virtual Ref<Shader> &GetShader() = 0;
-
+    virtual const VertexDescriptor& GetLayout() const = 0;
+      
     virtual void Bind() = 0;
     virtual void Unbind() = 0;
   };

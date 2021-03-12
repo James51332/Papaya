@@ -18,6 +18,7 @@
 @interface PView : NSView
 {
   NSUInteger flags;
+  Papaya::WindowAttribs* attribs;
 }
 
 - (instancetype) init;
@@ -52,7 +53,8 @@
 - (void) mouseMoved:(NSEvent *)event
 {
   NSPoint location = [event locationInWindow];
-  Papaya::EventQueue::PushEvent(Papaya::CreateScope<Papaya::MouseMoveEvent>(location.x, location.y));
+  NSRect windowSize = [[event window] contentRectForFrameRect: [[event window] frame]];
+  Papaya::EventQueue::PushEvent(Papaya::CreateScope<Papaya::MouseMoveEvent>(location.x, windowSize.size.height - location.y));
 }
 
 - (void) rightMouseDragged:(NSEvent *)event

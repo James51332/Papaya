@@ -28,9 +28,17 @@
 namespace Papaya
 {
 
-  Game::Game()
+  Game* Game::s_Instance = nullptr;
+
+  Game::Game(const String& title)
   {
-    WindowAttribs attribs = WindowAttribs(1200, 675, "Papaya", true);
+    if (s_Instance)
+    {
+        PAPAYA_ASSERT(false, "Only one instance of Game may be created!");
+    }
+    s_Instance = this;
+      
+    WindowAttribs attribs = WindowAttribs(1200, 675, title);
     attribs.Resizable = true;
     m_Window = Window::Create(attribs);
 

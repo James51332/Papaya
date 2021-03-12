@@ -21,10 +21,12 @@
 {
   Papaya::Ref<Papaya::CocoaContext> context;
   Papaya::RenderApi::API api;
+  Papaya::WindowAttribs* attribs;
 }
 
 - (instancetype) init: (Papaya::RenderApi::API) type;
 - (void) setContext: (Papaya::Ref<Papaya::CocoaContext>) ctx;
+- (void) setAttribs: (Papaya::WindowAttribs*) attrib;
 @end
 
 @implementation PWindowDelegate
@@ -37,6 +39,11 @@
   }
   
   return self;
+}
+
+- (void) setAttribs:(Papaya::WindowAttribs *)attrib
+{
+    attribs = attrib;
 }
 
 - (void) setContext: (Papaya::Ref<Papaya::CocoaContext>) ctx
@@ -58,6 +65,11 @@
 
   NSRect content = [object contentRectForFrameRect:[object frame]];
   Papaya::EventQueue::PushEvent(Papaya::CreateScope<Papaya::WindowResizeEvent>(content.size.width, content.size.height));
+
+    if (attribs) {
+        attribs->Width = content.size.width;
+        attribs->Height = content.size.height;
+    }
 }
 
 - (NSSize)window:(NSWindow *)window

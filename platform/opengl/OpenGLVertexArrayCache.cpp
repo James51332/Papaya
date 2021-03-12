@@ -78,7 +78,7 @@ namespace Papaya
       }
     }
 
-    Papaya::HashCombine(seed, indexBuffer ? std::static_pointer_cast<OpenGLBuffer>(indexBuffer)->GetUniqueID() : 0); // This should almost always be included5
+    Papaya::HashCombine(seed, indexBuffer ? std::static_pointer_cast<OpenGLBuffer>(indexBuffer)->GetUniqueID() : 0); // This should almost always be included
 
     return seed;
   }
@@ -91,8 +91,8 @@ namespace Papaya
                                                                 const Ref<PipelineState> &pipelineState,
                                                                 const Ref<Buffer> &indexBuffer)
   {
-    VertexDescriptor layout = std::static_pointer_cast<OpenGLPipelineState>(pipelineState)->m_Layout;
-
+    VertexDescriptor layout = pipelineState->GetLayout();
+      
     std::size_t key = GenerateKey(vertexBuffers, layout, indexBuffer);
 
     auto vao = s_Cache.find(key);
@@ -102,6 +102,12 @@ namespace Papaya
     }
     else
     {
+        if (layout.GetCount() != vertexBuffers.size())
+        {
+            PAPAYA_WARN("Vertex Buffers and Pipeline State Layout don't have the same number of elements!");
+        }
+
+        
       // Create new VAO
       Ref<OpenGLVertexArray> vertexArray = CreateRef<OpenGLVertexArray>();
 
@@ -109,12 +115,7 @@ namespace Papaya
       {
         vertexArray->SetVertexBuffer(buffer);
       }
-
-      if (layout.GetCount() != vertexBuffers.size())
-      {
-        PAPAYA_WARN("Vertex Buffers and Pipeline State Layout don't have the same number of elements!");
-      }
-
+        
       // Setting the vertex buffers binds the vao
       int buffer = 0;
       int index = 0;
@@ -126,7 +127,6 @@ namespace Papaya
         for (auto &element : bl)
         {
           bool normalizedByte = element.Normalized && (element.Type == ShaderDataType::Byte);
-          int stride = bl.GetStride(); // for debugging
           glVertexAttribPointer(index,
                                 normalizedByte ? 4 : element.Size / 4,
                                 ShaderDataTypeToGLType(element.Type),

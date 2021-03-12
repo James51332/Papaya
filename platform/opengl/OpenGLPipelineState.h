@@ -16,13 +16,13 @@ namespace Papaya
   class OpenGLPipelineState : public PipelineState
   {
     friend class OpenGLVertexArrayCache;
-    friend class Renderer;
-
+      
   public:
     OpenGLPipelineState(const PipelineStateDesc &desc);
     virtual ~OpenGLPipelineState();
 
     Ref<Shader> &GetShader() { return m_Shader; }
+    const VertexDescriptor& GetLayout() const { return m_Layout; }
 
     void Bind();
     void Unbind();

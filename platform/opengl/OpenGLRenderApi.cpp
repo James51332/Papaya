@@ -17,15 +17,9 @@ namespace Papaya
 
   void OpenGLRenderApi::OnInit()
   {
-    // glEnable(GL_BLEND);
-    // glBlendEquation(GL_FUNC_ADD);
-    // glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
-    // glDisable(GL_CULL_FACE);
-    // glDisable(GL_DEPTH_TEST);
-    // glEnable(GL_SCISSOR_TEST);
-    // glDisable(GL_STENCIL_TEST);
-    // glDisable(GL_PRIMITIVE_RESTART);
-    // glDisable(GL_DITHER);
+      glEnable(GL_BLEND);
+      glBlendEquation(GL_FUNC_ADD);
+      glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
   }
 
   void OpenGLRenderApi::OnTerminate()
