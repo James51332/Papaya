@@ -60,27 +60,48 @@ public:
 
     Papaya::Renderer2D::EndScene();
       
+    Papaya::ImGui_NewFrame();
     ImGui::NewFrame();
+
+    ImGui::Begin("FPS");
+    ImGui::Text("FPS: %f", 1 / ts);
+    ImGui::End();
 
     if (m_ShowDemoWindow)
         ImGui::ShowDemoWindow();
 
-      ImGui::Render();
-      Papaya::ImGui_Render();
+ImGui::Render();
+     Papaya::ImGui_Render();
   }
 
-  virtual void OnEvent(const Papaya::Scope<Papaya::Event> &event) override
+  virtual void OnEvent(const Papaya::Scope<Papaya::Event>& event) override
   {
-    Papaya::EventDispatcher::Dispatch<Papaya::WindowResizeEvent>(event, [&](Papaya::WindowResizeEvent *event) {
-      float width = (1.6f / 1200.0f) * event->GetWidth();
-      float height = (1.6f / 1200.0f) * event->GetHeight();
-        
-        ImGuiIO& io = ImGui::GetIO();
-        io.DisplaySize.x = event->GetWidth();
-        io.DisplaySize.y = event->GetHeight();
+      Papaya::EventDispatcher::Dispatch<Papaya::WindowResizeEvent>(event, [&](Papaya::WindowResizeEvent* event) {
+          float width = (1.6f / 1200.0f) * event->GetWidth();
+          float height = (1.6f / 1200.0f) * event->GetHeight();
 
-      m_Camera.SetProjection(-width, width, -height, height);
-    });
+          ImGuiIO& io = ImGui::GetIO();
+          io.DisplaySize.x = event->GetWidth();
+          io.DisplaySize.y = event->GetHeight();
+
+          m_Camera.SetProjection(-width, width, -height, height);
+          });
+
+      Papaya::EventDispatcher::Dispatch<Papaya::MousePressEvent>(event, [&](Papaya::MousePressEvent* event) {
+          ImGuiIO& io = ImGui::GetIO();
+          io.MouseDown[event->GetMouseCode() - 1] = true;
+          });
+
+      Papaya::EventDispatcher::Dispatch<Papaya::MouseReleaseEvent>(event, [&](Papaya::MouseReleaseEvent* event) {
+          ImGuiIO& io = ImGui::GetIO();
+          io.MouseDown[event->GetMouseCode() - 1] = false;
+          });
+
+      Papaya::EventDispatcher::Dispatch<Papaya::MouseMoveEvent>(event, [&](Papaya::MouseMoveEvent* e)
+          {
+              ImGuiIO& io = ImGui::GetIO();
+              io.MousePos = ImVec2(e->GetXPosition(), e->GetYPosition());
+          });
   }
 
 private:
@@ -90,7 +111,7 @@ private:
   Papaya::Ref<Papaya::Buffer> m_VertexBuffer;
   Papaya::Ref<Papaya::Buffer> m_IndexBuffer;
   Papaya::Ref<Papaya::PipelineState> m_PipelineState;
-    bool m_ShowDemoWindow = true;
+  bool m_ShowDemoWindow = true;
 };
 
 Papaya::Game *Papaya::CreateGame()

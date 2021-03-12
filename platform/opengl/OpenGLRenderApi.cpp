@@ -17,12 +17,15 @@ namespace Papaya
 
   void OpenGLRenderApi::OnInit()
   {
-    glEnable(GL_BLEND);
-    glBlendEquation(GL_FUNC_ADD);
-    glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
-    glDisable(GL_CULL_FACE);
-    glDisable(GL_DEPTH_TEST);
-    glDisable(GL_STENCIL_TEST);
+    // glEnable(GL_BLEND);
+    // glBlendEquation(GL_FUNC_ADD);
+    // glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+    // glDisable(GL_CULL_FACE);
+    // glDisable(GL_DEPTH_TEST);
+    // glEnable(GL_SCISSOR_TEST);
+    // glDisable(GL_STENCIL_TEST);
+    // glDisable(GL_PRIMITIVE_RESTART);
+    // glDisable(GL_DITHER);
   }
 
   void OpenGLRenderApi::OnTerminate()
@@ -51,7 +54,8 @@ namespace Papaya
                                     const Ref<PipelineState> &pipelineState,
                                     const Ref<Buffer> &indexBuffer,
                                     uint32_t indexSize,
-                                    uint32_t indexOffset)
+                                    uint32_t indexOffset,
+                                    uint32_t elemCount)
   {
     Ref<OpenGLVertexArray> vertexArray = OpenGLVertexArrayCache::GetVertexArray(vertexBuffers,
                                                                                 pipelineState,
@@ -59,7 +63,7 @@ namespace Papaya
 
     vertexArray->Bind();
     pipelineState->Bind();
-    int count = indexBuffer->GetSize() / indexSize;
+    int count = elemCount == 0 ? indexBuffer->GetSize() / indexSize : elemCount;
     glDrawElements(GL_TRIANGLES, count, indexSize == 2 ? GL_UNSIGNED_SHORT : GL_UNSIGNED_INT, (GLvoid *)(long long)indexOffset);
   }
 

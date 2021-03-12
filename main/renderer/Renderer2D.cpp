@@ -212,7 +212,8 @@ namespace Papaya
 
     RenderCommand::SetIndexSize(sizeof(uint32_t));
     RenderCommand::SetIndexOffset(0);
-    RenderCommand::DrawIndexed({s_Data.QuadVertexBuffer}, s_Data.QuadPipelineState, s_Data.QuadIndexBuffer);
+    RenderCommand::SetElementCount(0);
+    RenderCommand::DrawIndexed({ s_Data.QuadVertexBuffer }, s_Data.QuadPipelineState, s_Data.QuadIndexBuffer);
   }
 
   void Renderer2D::DrawQuad(const glm::mat4 &transform, const glm::vec4 &color)

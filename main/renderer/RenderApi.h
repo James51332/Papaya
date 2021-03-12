@@ -36,7 +36,8 @@ namespace Papaya
                              const Ref<PipelineState>& pipelineState,
                              const Ref<Buffer> &indexBuffer,
                              uint32_t indexSize,
-                             uint32_t indexOffset) = 0;
+                             uint32_t indexOffset,
+                             uint32_t elemCount) = 0;
   };
 
 } // namespace Papaya

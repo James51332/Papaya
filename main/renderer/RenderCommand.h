@@ -43,7 +43,7 @@ namespace Papaya
                             const Ref<Buffer> &indexBuffer)
 
     {
-      s_Api->DrawIndexed(vertexBuffers, pipelineState, indexBuffer, s_IndexSize, s_IndexOffset);
+      s_Api->DrawIndexed(vertexBuffers, pipelineState, indexBuffer, s_IndexSize, s_IndexOffset, s_ElementCount);
     }
 
     static void SetIndexSize(uint32_t size)
@@ -56,11 +56,17 @@ namespace Papaya
       s_IndexOffset = offset;
     }
 
+    static void SetElementCount(uint32_t count)
+    {
+        s_ElementCount = count;
+    }
+
   private:
     static Scope<RenderApi> s_Api;
     
     static uint32_t s_IndexSize;
     static uint32_t s_IndexOffset;
+    static uint32_t s_ElementCount;
   };
 
 } // namespace Papaya

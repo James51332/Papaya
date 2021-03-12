@@ -125,7 +125,8 @@ namespace Papaya
 
         for (auto &element : bl)
         {
-          bool normalizedByte = element.Normalized && element.Type == ShaderDataType::Byte;
+          bool normalizedByte = element.Normalized && (element.Type == ShaderDataType::Byte);
+          int stride = bl.GetStride(); // for debugging
           glVertexAttribPointer(index,
                                 normalizedByte ? 4 : element.Size / 4,
                                 ShaderDataTypeToGLType(element.Type),

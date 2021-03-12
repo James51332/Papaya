@@ -17,6 +17,9 @@ Makefile
 *.sln
 *.vcxproj
 
+# ImGui
+*.ini
+
 # Prerequisites
 *.d
 

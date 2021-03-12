@@ -8,6 +8,7 @@ namespace Papaya {
 // Backend API
 IMGUI_IMPL_API bool     ImGui_Init();
 IMGUI_IMPL_API void     ImGui_Render();
+IMGUI_IMPL_API void     ImGui_NewFrame();
 
 // (Optional) Called by Init/NewFrame/Shutdown
 IMGUI_IMPL_API bool     ImGui_CreateFontsTexture();

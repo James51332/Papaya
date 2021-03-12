@@ -49,9 +49,9 @@ namespace Papaya
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
     GLenum format = channels == 4 ? GL_RGBA : GL_RGB;
-    GLenum internal = channels == 4 ? GL_RGBA8 : GL_RGB;
+    GLenum internal = channels == 4 ? GL_RGBA : GL_RGB;
     glTexImage2D(GL_TEXTURE_2D, 0, internal, m_Width, m_Height, 0, format, GL_UNSIGNED_BYTE, data);
-    glGenerateMipmap(GL_TEXTURE_2D);
+    //glGenerateMipmap(GL_TEXTURE_2D);
 
     stbi_image_free(data);
   }
