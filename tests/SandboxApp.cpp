@@ -36,7 +36,6 @@ public:
 
     if (Papaya::Input::KeyDown(Papaya::KeyLeft))
       m_Camera.SetRotation(static_cast<float>(m_Camera.GetRotation() - 200.0f * ts));
-
     if (Papaya::Input::KeyDown(Papaya::KeyRight))
       m_Camera.SetRotation(static_cast<float>(m_Camera.GetRotation() + 200.0f * ts));
 
@@ -49,7 +48,7 @@ public:
     Papaya::Renderer2D::DrawQuad(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f)), m_Texture);
 
     Papaya::Renderer2D::EndScene();
-      
+
     ImGui::NewFrame();
 
     ImGui::Begin("FPS");
@@ -57,47 +56,52 @@ public:
     ImGui::End();
 
     if (m_ShowDemoWindow)
-        ImGui::ShowDemoWindow();
+      ImGui::ShowDemoWindow();
 
     ImGui::Render();
     Papaya::ImGuiRenderer::Flush();
   }
 
-  virtual void OnEvent(const Papaya::Scope<Papaya::Event>& event) override
+  virtual void OnEvent(const Papaya::Scope<Papaya::Event> &event) override
   {
-      Papaya::EventDispatcher::Dispatch<Papaya::WindowResizeEvent>(event, [&](Papaya::WindowResizeEvent* event) {
-          float width = (1.6f / 1200.0f) * event->GetWidth();
-          float height = (1.6f / 1200.0f) * event->GetHeight();
+    Papaya::EventDispatcher::Dispatch<Papaya::WindowResizeEvent>(event, [&](Papaya::WindowResizeEvent *event) {
+      float width = (1.6f / 1200.0f) * event->GetWidth();
+      float height = (1.6f / 1200.0f) * event->GetHeight();
 
-          ImGuiIO& io = ImGui::GetIO();
-          io.DisplaySize.x = event->GetWidth();
-          io.DisplaySize.y = event->GetHeight();
+      ImGuiIO &io = ImGui::GetIO();
+      io.DisplaySize.x = event->GetWidth();
+      io.DisplaySize.y = event->GetHeight();
 
-          m_Camera.SetProjection(-width, width, -height, height);
-      });
+      m_Camera.SetProjection(-width, width, -height, height);
+    });
 
-      Papaya::EventDispatcher::Dispatch<Papaya::MousePressEvent>(event, [&](Papaya::MousePressEvent* event) {
-          ImGuiIO& io = ImGui::GetIO();
-          io.MouseDown[event->GetMouseCode() - 1] = true;
-      });
+    Papaya::EventDispatcher::Dispatch<Papaya::MousePressEvent>(event, [&](Papaya::MousePressEvent *event) {
+      ImGuiIO &io = ImGui::GetIO();
+      io.MouseDown[event->GetMouseCode() - 1] = true;
+    });
 
-      Papaya::EventDispatcher::Dispatch<Papaya::MouseReleaseEvent>(event, [&](Papaya::MouseReleaseEvent* event) {
-          ImGuiIO& io = ImGui::GetIO();
-          io.MouseDown[event->GetMouseCode() - 1] = false;
-      });
+    Papaya::EventDispatcher::Dispatch<Papaya::MouseReleaseEvent>(event, [&](Papaya::MouseReleaseEvent *event) {
+      ImGuiIO &io = ImGui::GetIO();
+      io.MouseDown[event->GetMouseCode() - 1] = false;
+    });
 
-      Papaya::EventDispatcher::Dispatch<Papaya::MouseMoveEvent>(event, [&](Papaya::MouseMoveEvent* e)
-      {
-          ImGuiIO& io = ImGui::GetIO();
-          io.MousePos = ImVec2(e->GetXPosition(), e->GetYPosition());
-      });
+    Papaya::EventDispatcher::Dispatch<Papaya::MouseMoveEvent>(event, [&](Papaya::MouseMoveEvent *e) {
+      ImGuiIO &io = ImGui::GetIO();
+      io.MousePos = ImVec2(e->GetXPosition(), e->GetYPosition());
+    });
+
+    Papaya::EventDispatcher::Dispatch<Papaya::MouseScrollEvent>(event, [&](Papaya::MouseScrollEvent *e) {
+      ImGuiIO &io = ImGui::GetIO();
+      io.MouseWheel += e->GetYScroll();
+      io.MouseWheelH += e->GetXScroll();
+    });
   }
 
 private:
   Papaya::OrthographicCamera m_Camera;
   Papaya::Ref<Papaya::Texture2D> m_Texture;
   Papaya::Ref<Papaya::Texture2D> m_Checkerboard;
-    
+
   bool m_ShowDemoWindow = true;
 };
 

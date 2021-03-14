@@ -1,13 +1,14 @@
 #pragma once
 
-namespace Papaya {
-
-class ImGuiRenderer
+namespace Papaya
 {
-public:
+
+  class ImGuiRenderer
+  {
+  public:
     static void OnInit();
     static void Flush();
     static void OnTerminate();
-};
+  };
 
 } // namespace Papaya
