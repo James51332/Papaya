@@ -9,6 +9,7 @@ public:
     : m_Camera(-1.6f, 1.6f, -0.9f, 0.9f), Layer("SandboxLayer")
   {
     m_Texture = Papaya::Texture2D::Create("tests/assets/textures/logo.png");
+    m_Checkerboard = Papaya::Texture2D::Create("tests/assets/textures/checkboard.png");
   }
 
   ~SandboxLayer()
@@ -53,6 +54,7 @@ public:
 
     ImGui::Begin("FPS");
     ImGui::Text("FPS: %i", static_cast<int>(std::round(1 / ts)));
+    ImGui::Image(*((void**)(&m_Checkerboard)), { 100, 100 });
     ImGui::End();
 
     ImGui::ShowDemoWindow();

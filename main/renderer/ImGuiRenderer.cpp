@@ -258,7 +258,10 @@ namespace Papaya
 
         if (clip_rect.x < fb_width && clip_rect.y < fb_height && clip_rect.z >= 0.0f && clip_rect.w >= 0.0f)
         {
-          s_Data.ImGuiTexture->Bind();
+          if (pcmd->TextureId)
+            (*((Ref<Texture>*)(&pcmd->TextureId)))->Bind(); // Cast from void* to Ref<Texture>
+          else
+            s_Data.ImGuiTexture->Bind();
 
           RenderCommand::SetIndexSize(sizeof(ImDrawIdx));
           RenderCommand::SetIndexOffset(pcmd->IdxOffset * sizeof(ImDrawIdx));
