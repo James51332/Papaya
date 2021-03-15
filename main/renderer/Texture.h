@@ -32,6 +32,7 @@ namespace Papaya
 
     static Ref<Texture2D> Create(const String &path);
     static Ref<Texture2D> Create(const unsigned char* data, uint32_t width, uint32_t height, ChannelType channels);
+    static Ref<Texture2D> Create(const uint32_t* data, uint32_t width, uint32_t height, ChannelType channels);
   };
 
 } // namespace Papaya

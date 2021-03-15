@@ -1,5 +1,7 @@
 #pragma once
 
+#include "main/events/Event.h"
+
 namespace Papaya
 {
 
@@ -7,8 +9,12 @@ namespace Papaya
   {
   public:
     static void OnInit();
-    static void Flush();
     static void OnTerminate();
+
+    static void Begin();
+    static void End();
+
+    static void OnEvent(const Scope<Event>& event);
   };
 
 } // namespace Papaya

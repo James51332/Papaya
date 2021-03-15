@@ -32,12 +32,12 @@ namespace Papaya
     return 0;
   }
 
-  OpenGLTexture2D::OpenGLTexture2D(const String &path)
-      : m_Path(path)
+  OpenGLTexture2D::OpenGLTexture2D(const String& path)
+    : m_Path(path)
   {
     int width, height, channels;
     stbi_set_flip_vertically_on_load(1);
-    stbi_uc *data = stbi_load(path.Raw(), &width, &height, &channels, 0);
+    stbi_uc* data = stbi_load(path.Raw(), &width, &height, &channels, 0);
     PAPAYA_ASSERT(data, "Failed to load image");
     m_Width = width;
     m_Height = height;
@@ -56,7 +56,7 @@ namespace Papaya
     stbi_image_free(data);
   }
 
-  OpenGLTexture2D::OpenGLTexture2D(const unsigned char *data, uint32_t width, uint32_t height, ChannelType channels)
+  OpenGLTexture2D::OpenGLTexture2D(const unsigned char* data, uint32_t width, uint32_t height, ChannelType channels)
   {
     m_Width = width;
     m_Height = height;
@@ -68,16 +68,40 @@ namespace Papaya
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
     glTexImage2D(GL_TEXTURE_2D,
-                 0,
-                 ChannelTypeToGLenum(channels),
-                 m_Width,
-                 m_Height,
-                 0,
-                 ChannelTypeToGLenum(channels),
-                 GL_UNSIGNED_BYTE,
-                 data);
+      0,
+      ChannelTypeToGLenum(channels),
+      m_Width,
+      m_Height,
+      0,
+      ChannelTypeToGLenum(channels),
+      GL_UNSIGNED_BYTE,
+      data);
 
-    //glGenerateMipmap(GL_TEXTURE_2D);
+    glGenerateMipmap(GL_TEXTURE_2D);
+  }
+
+  OpenGLTexture2D::OpenGLTexture2D(const uint32_t* data, uint32_t width, uint32_t height, ChannelType channels)
+  {
+    m_Width = width;
+    m_Height = height;
+
+    glGenTextures(1, &m_RendererID);
+    glBindTexture(GL_TEXTURE_2D, m_RendererID);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+    glTexImage2D(GL_TEXTURE_2D,
+      0,
+      ChannelTypeToGLenum(channels),
+      m_Width,
+      m_Height,
+      0,
+      ChannelTypeToGLenum(channels),
+      GL_UNSIGNED_BYTE,
+      data);
+
+    glGenerateMipmap(GL_TEXTURE_2D);
   }
 
   OpenGLTexture2D::~OpenGLTexture2D()

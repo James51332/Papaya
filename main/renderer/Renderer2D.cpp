@@ -43,11 +43,11 @@ namespace Papaya
     uint32_t QuadIndexCount = 0;
 
     // This is the head of an array of vertices.
-    QuadVertex *QuadVertexBufferBase = nullptr;
+    QuadVertex* QuadVertexBufferBase = nullptr;
 
     // This pointer moves as we add quads to the batch so
     // we can determine the size of the data to send to the gpu
-    QuadVertex *QuadVertexBufferPtr = nullptr;
+    QuadVertex* QuadVertexBufferPtr = nullptr;
 
     Ref<Texture2D> WhiteTexture;
 
@@ -63,12 +63,12 @@ namespace Papaya
   {
     // Create Vertex Buffer
     s_Data.QuadVertexBuffer = Buffer::Create(nullptr,
-                                             sizeof(QuadVertex) * s_Data.MaxVertices,
-                                             BufferType::Vertex,
-                                             BufferUsage::Dynamic);
+      sizeof(QuadVertex) * s_Data.MaxVertices,
+      BufferType::Vertex,
+      BufferUsage::Dynamic);
 
     // Create Index Buffer Data
-    uint32_t *quadIndices = new uint32_t[s_Data.MaxIndices];
+    uint32_t* quadIndices = new uint32_t[s_Data.MaxIndices];
     uint32_t offset = 0; // transforms are baked into data so we need to offset indices to vertices later in data
     for (int i = 0; i < s_Data.MaxIndices; i += 6)
     {
@@ -85,9 +85,9 @@ namespace Papaya
 
     // Create Index Buffer
     s_Data.QuadIndexBuffer = Buffer::Create(quadIndices,
-                                            sizeof(uint32_t) * s_Data.MaxIndices,
-                                            BufferType::Index,
-                                            BufferUsage::Immutable);
+      sizeof(uint32_t) * s_Data.MaxIndices,
+      BufferType::Index,
+      BufferUsage::Immutable);
 
     // Free Index Buffer Data
     delete[] quadIndices;
@@ -139,30 +139,31 @@ namespace Papaya
     Ref<Shader> shader = Shader::Create(vs, fs);
 
     // Set the layout of a vertex
-    VertexDescriptor layout = {{{ShaderDataType::Float3, "a_Pos"},
+    VertexDescriptor layout = { {{ShaderDataType::Float3, "a_Pos"},
                                 {ShaderDataType::Float4, "a_Color"},
                                 {ShaderDataType::Float2, "a_TexCoord"},
                                 {ShaderDataType::Float, "a_TexIndex"},
-                                {ShaderDataType::Float, "a_TilingFactor"}}};
+                                {ShaderDataType::Float, "a_TilingFactor"}} };
 
     // Create the pipeline state using the shader and layout
-    s_Data.QuadPipelineState = PipelineState::Create({shader, layout});
+    s_Data.QuadPipelineState = PipelineState::Create({ shader, layout });
 
     int samplers[s_Data.MaxTextureSlots];
     for (int i = 0; i < s_Data.MaxTextureSlots; ++i)
       samplers[i] = i;
 
     s_Data.QuadPipelineState->GetShader()->Bind();
-    s_Data.QuadPipelineState->GetShader()->SetIntArray("u_Textures", samplers, s_Data.MaxTextureSlots);  
+    s_Data.QuadPipelineState->GetShader()->SetIntArray("u_Textures", samplers, s_Data.MaxTextureSlots);
 
-    s_Data.WhiteTexture = Texture2D::Create("tests/assets/textures/checkboard.png");
+    uint32_t whiteTextureData = 0xffffffff;
+    s_Data.WhiteTexture = Texture2D::Create(&whiteTextureData, 1, 1, ChannelType::RGBA);
     s_Data.TextureSlots[0] = s_Data.WhiteTexture;
 
     // Create basic quad vertices that we can later sample from
-    s_Data.QuadVertexPositions[0] = {-0.5f, -0.5f, 0.0f, 1.0f};
-    s_Data.QuadVertexPositions[1] = {0.5f, -0.5f, 0.0f, 1.0f};
-    s_Data.QuadVertexPositions[2] = {0.5f, 0.5f, 0.0f, 1.0f};
-    s_Data.QuadVertexPositions[3] = {-0.5f, 0.5f, 0.0f, 1.0f};
+    s_Data.QuadVertexPositions[0] = { -0.5f, -0.5f, 0.0f, 1.0f };
+    s_Data.QuadVertexPositions[1] = { 0.5f, -0.5f, 0.0f, 1.0f };
+    s_Data.QuadVertexPositions[2] = { 0.5f, 0.5f, 0.0f, 1.0f };
+    s_Data.QuadVertexPositions[3] = { -0.5f, 0.5f, 0.0f, 1.0f };
   }
 
   void Renderer2D::OnTerminate()
@@ -171,7 +172,7 @@ namespace Papaya
     delete[] s_Data.QuadVertexBufferBase;
   }
 
-  void Renderer2D::BeginScene(const OrthographicCamera &camera)
+  void Renderer2D::BeginScene(const OrthographicCamera& camera)
   {
     s_Data.QuadPipelineState->GetShader()->Bind();
     s_Data.QuadPipelineState->GetShader()->SetMat4("u_ViewProjection", camera.GetViewProjectionMatrix());
@@ -216,11 +217,11 @@ namespace Papaya
     RenderCommand::DrawIndexed({ s_Data.QuadVertexBuffer }, s_Data.QuadPipelineState, s_Data.QuadIndexBuffer);
   }
 
-  void Renderer2D::DrawQuad(const glm::mat4 &transform, const glm::vec4 &color)
+  void Renderer2D::DrawQuad(const glm::mat4& transform, const glm::vec4& color)
   {
     constexpr size_t quadVertexCount = 4;
     const float textureIndex = 0.0f; // White Texture
-    constexpr glm::vec2 textureCoords[] = {{0.0f, 0.0f}, {1.0f, 0.0f}, {1.0f, 1.0f}, {0.0f, 1.0f}};
+    constexpr glm::vec2 textureCoords[] = { {0.0f, 0.0f}, {1.0f, 0.0f}, {1.0f, 1.0f}, {0.0f, 1.0f} };
     const float tilingFactor = 1.0f;
 
     if (s_Data.QuadIndexCount >= s_Data.MaxIndices)

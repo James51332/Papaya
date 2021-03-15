@@ -1,6 +1,7 @@
 #include "ImGuiRenderer.h"
 
 #include "main/core/Game.h"
+#include "main/core/KeyCode.h"
 
 #include "main/renderer/BufferLayout.h"
 #include "main/renderer/Buffer.h"
@@ -8,6 +9,11 @@
 #include "main/renderer/Texture.h"
 #include "main/renderer/PipelineState.h"
 #include "main/renderer/RenderCommand.h"
+
+#include "main/events/Event.h"
+#include "main/events/KeyEvent.h"
+#include "main/events/MouseEvent.h"
+#include "main/events/AppEvent.h"
 
 #include "main/utils/String.h"
 #include "main/utils/Memory.h"
@@ -27,6 +33,8 @@ namespace Papaya
     Ref<PipelineState> ImGuiPipelineState;
 
     Ref<Texture2D> ImGuiTexture;
+
+    float Width, Height;
   };
 
   static ImGuiRenderData s_Data;
@@ -35,8 +43,8 @@ namespace Papaya
   {
     ImGui::CreateContext();
 
-    ImGuiStyle *style = &ImGui::GetStyle();
-    ImVec4 *colors = style->Colors;
+    ImGuiStyle* style = &ImGui::GetStyle();
+    ImVec4* colors = style->Colors;
 
     colors[ImGuiCol_Text] = ImVec4(1.000f, 1.000f, 1.000f, 1.000f);
     colors[ImGuiCol_TextDisabled] = ImVec4(0.500f, 0.500f, 0.500f, 1.000f);
@@ -76,8 +84,8 @@ namespace Papaya
     colors[ImGuiCol_TabActive] = ImVec4(0.195f, 0.195f, 0.195f, 1.000f);
     colors[ImGuiCol_TabUnfocused] = ImVec4(0.098f, 0.098f, 0.098f, 1.000f);
     colors[ImGuiCol_TabUnfocusedActive] = ImVec4(0.195f, 0.195f, 0.195f, 1.000f);
-    // colors[ImGuiCol_DockingPreview] = ImVec4(1.000f, 0.391f, 0.000f, 0.781f);
-    // colors[ImGuiCol_DockingEmptyBg] = ImVec4(0.180f, 0.180f, 0.180f, 1.000f);
+    colors[ImGuiCol_DockingPreview] = ImVec4(1.000f, 0.391f, 0.000f, 0.781f);
+    colors[ImGuiCol_DockingEmptyBg] = ImVec4(0.180f, 0.180f, 0.180f, 1.000f);
     colors[ImGuiCol_PlotLines] = ImVec4(0.469f, 0.469f, 0.469f, 1.000f);
     colors[ImGuiCol_PlotLinesHovered] = ImVec4(1.000f, 0.391f, 0.000f, 1.000f);
     colors[ImGuiCol_PlotHistogram] = ImVec4(0.586f, 0.586f, 0.586f, 1.000f);
@@ -100,12 +108,40 @@ namespace Papaya
     style->TabRounding = 0.0f;
     style->WindowRounding = 4.0f;
 
-    ImGuiIO &io = ImGui::GetIO();
+    ImGuiIO& io = ImGui::GetIO();
     io.BackendRendererName = "Papaya Renderer";
     io.BackendPlatformName = "Papaya Engine";
 
-    io.DisplaySize.x = Game::Get()->GetWindow()->GetAttribs().Width;
-    io.DisplaySize.y = Game::Get()->GetWindow()->GetAttribs().Height;
+    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable | ImGuiConfigFlags_ViewportsEnable;
+    io.ConfigDockingWithShift = false;
+
+    s_Data.Width = Game::Get()->GetWindow()->GetAttribs().Width;
+    s_Data.Height = Game::Get()->GetWindow()->GetAttribs().Height;
+    io.DisplaySize.x = s_Data.Width;
+    io.DisplaySize.y = s_Data.Height;
+
+    io.KeyMap[ImGuiKey_Tab] = KeyTab;
+    io.KeyMap[ImGuiKey_LeftArrow] = KeyLeft;
+    io.KeyMap[ImGuiKey_RightArrow] = KeyRight;
+    io.KeyMap[ImGuiKey_UpArrow] = KeyUp;
+    io.KeyMap[ImGuiKey_DownArrow] = KeyDown;
+    // io.KeyMap[ImGuiKey_PageUp]      = KeyPageUp;
+    // io.KeyMap[ImGuiKey_PageDown]    = KeyPageDown;
+    // io.KeyMap[ImGuiKey_Home]        = KeyHome;
+    // io.KeyMap[ImGuiKey_End]         = KeyEnd;
+    // io.KeyMap[ImGuiKey_Insert]      = KeyInsert;
+    // io.KeyMap[ImGuiKey_Delete]      = KeyDelete;
+    io.KeyMap[ImGuiKey_Backspace] = KeyBackspace;
+    io.KeyMap[ImGuiKey_Space] = KeySpace;
+    io.KeyMap[ImGuiKey_Enter] = KeyEnter;
+    io.KeyMap[ImGuiKey_Escape] = KeyEscape;
+    //io.KeyMap[ImGuiKey_KeyPadEnter] = KeyKeyPadEnter;
+    io.KeyMap[ImGuiKey_A] = KeyA;
+    io.KeyMap[ImGuiKey_C] = KeyC;
+    io.KeyMap[ImGuiKey_V] = KeyV;
+    io.KeyMap[ImGuiKey_X] = KeyX;
+    io.KeyMap[ImGuiKey_Y] = KeyY;
+    io.KeyMap[ImGuiKey_Z] = KeyZ;
 
     String vertexSrc = R"(
     #version 410 core
@@ -143,16 +179,16 @@ namespace Papaya
 
     Ref<Shader> shader = Shader::Create(vertexSrc, fragmentSrc);
 
-    VertexDescriptor layout = {{{ShaderDataType::Float2, "a_Pos"},
+    VertexDescriptor layout = { {{ShaderDataType::Float2, "a_Pos"},
                                 {ShaderDataType::Float2, "a_UV"},
-                                {ShaderDataType::Byte, "a_Color", true}}};
+                                {ShaderDataType::Byte, "a_Color", true}} };
 
-    s_Data.ImGuiPipelineState = PipelineState::Create({shader, layout});
+    s_Data.ImGuiPipelineState = PipelineState::Create({ shader, layout });
 
     s_Data.ImGuiVertexBuffer = Buffer::Create();
     s_Data.ImGuiIndexBuffer = Buffer::Create();
 
-    unsigned char *pixels;
+    unsigned char* pixels;
     int width, height;
     io.Fonts->GetTexDataAsRGBA32(&pixels, &width, &height);
     s_Data.ImGuiTexture = Texture2D::Create(pixels, width, height, ChannelType::RGBA);
@@ -160,9 +196,22 @@ namespace Papaya
     // is so small). Consider moving to Alpha8() for the texture;
   }
 
-  void ImGuiRenderer::Flush()
+  void ImGuiRenderer::OnTerminate()
   {
-    ImDrawData *draw_data = ImGui::GetDrawData();
+  }
+
+  void ImGuiRenderer::Begin() {
+    // Create a global window for docking
+    ImGui::NewFrame();
+
+
+    ImGui::DockSpaceOverViewport(ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
+  }
+
+  void ImGuiRenderer::End()
+  {
+    ImGui::Render();
+    ImDrawData* draw_data = ImGui::GetDrawData();
 
     int fb_width = (int)(draw_data->DisplaySize.x * draw_data->FramebufferScale.x);
     int fb_height = (int)(draw_data->DisplaySize.y * draw_data->FramebufferScale.y);
@@ -185,21 +234,21 @@ namespace Papaya
 
     for (int n = 0; n < draw_data->CmdListsCount; n++)
     {
-      const ImDrawList *cmd_list = draw_data->CmdLists[n];
+      const ImDrawList* cmd_list = draw_data->CmdLists[n];
 
       s_Data.ImGuiVertexBuffer->Reset(cmd_list->VtxBuffer.Data,
-                                      cmd_list->VtxBuffer.Size * sizeof(ImDrawVert),
-                                      BufferType::Vertex,
-                                      BufferUsage::Stream);
+        cmd_list->VtxBuffer.Size * sizeof(ImDrawVert),
+        BufferType::Vertex,
+        BufferUsage::Stream);
 
       s_Data.ImGuiIndexBuffer->Reset(cmd_list->IdxBuffer.Data,
-                                     cmd_list->IdxBuffer.Size * sizeof(ImDrawIdx),
-                                     BufferType::Index,
-                                     BufferUsage::Stream);
+        cmd_list->IdxBuffer.Size * sizeof(ImDrawIdx),
+        BufferType::Index,
+        BufferUsage::Stream);
 
       for (int cmd_i = 0; cmd_i < cmd_list->CmdBuffer.Size; cmd_i++)
       {
-        const ImDrawCmd *pcmd = &cmd_list->CmdBuffer[cmd_i];
+        const ImDrawCmd* pcmd = &cmd_list->CmdBuffer[cmd_i];
 
         ImVec4 clip_rect;
         clip_rect.x = (pcmd->ClipRect.x - clip_off.x) * clip_scale.x;
@@ -214,13 +263,56 @@ namespace Papaya
           RenderCommand::SetIndexSize(sizeof(ImDrawIdx));
           RenderCommand::SetIndexOffset(pcmd->IdxOffset * sizeof(ImDrawIdx));
           RenderCommand::SetElementCount(pcmd->ElemCount);
-          RenderCommand::DrawIndexed({s_Data.ImGuiVertexBuffer}, s_Data.ImGuiPipelineState, s_Data.ImGuiIndexBuffer);
+          RenderCommand::DrawIndexed({ s_Data.ImGuiVertexBuffer }, s_Data.ImGuiPipelineState, s_Data.ImGuiIndexBuffer);
         }
       }
     }
   }
 
-  void ImGuiRenderer::OnTerminate()
+  void ImGuiRenderer::OnEvent(const Scope<Event>& event)
   {
+    Papaya::EventDispatcher::Dispatch<Papaya::WindowResizeEvent>(event, [&](Papaya::WindowResizeEvent* event) {
+      ImGuiIO& io = ImGui::GetIO();
+      io.DisplaySize.x = event->GetWidth();
+      io.DisplaySize.y = event->GetHeight();
+      });
+
+    Papaya::EventDispatcher::Dispatch<Papaya::MousePressEvent>(event, [&](Papaya::MousePressEvent* event) {
+      ImGuiIO& io = ImGui::GetIO();
+      io.MouseDown[event->GetMouseCode() - 1] = true;
+      });
+
+    Papaya::EventDispatcher::Dispatch<Papaya::MouseReleaseEvent>(event, [&](Papaya::MouseReleaseEvent* event) {
+      ImGuiIO& io = ImGui::GetIO();
+      io.MouseDown[event->GetMouseCode() - 1] = false;
+      });
+
+    Papaya::EventDispatcher::Dispatch<Papaya::MouseMoveEvent>(event, [&](Papaya::MouseMoveEvent* e) {
+      ImGuiIO& io = ImGui::GetIO();
+      io.MousePos = ImVec2(e->GetXPosition(), e->GetYPosition());
+      });
+
+    Papaya::EventDispatcher::Dispatch<Papaya::MouseScrollEvent>(event, [&](Papaya::MouseScrollEvent* e) {
+      ImGuiIO& io = ImGui::GetIO();
+      io.MouseWheel += e->GetYScroll();
+      io.MouseWheelH += e->GetXScroll();
+      });
+
+    Papaya::EventDispatcher::Dispatch<Papaya::KeyPressEvent>(event, [&](Papaya::KeyPressEvent* e) {
+      ImGuiIO& io = ImGui::GetIO();
+      io.KeysDown[e->GetKeyCode()] = true;
+      io.AddInputCharacter(e->GetKeyCode());
+
+      if (e->GetKeyCode() == Papaya::KeyControl)
+        io.KeyCtrl = true;
+      });
+
+    Papaya::EventDispatcher::Dispatch<Papaya::KeyReleaseEvent>(event, [&](Papaya::KeyReleaseEvent* e) {
+      ImGuiIO& io = ImGui::GetIO();
+      io.KeysDown[e->GetKeyCode()] = false;
+
+      if (e->GetKeyCode() == Papaya::KeyControl)
+        io.KeyCtrl = false;
+      });
   }
 } // namespace Papaya

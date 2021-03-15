@@ -18,6 +18,7 @@
 #include "main/renderer/Shader.h"
 #include "main/renderer/Renderer.h"
 #include "main/renderer/RenderCommand.h"
+#include "main/renderer/ImGuiRenderer.h"
 
 #include "main/utils/String.h"
 
@@ -34,10 +35,10 @@ namespace Papaya
   {
     if (s_Instance)
     {
-        PAPAYA_ASSERT(false, "Only one instance of Game may be created!");
+      PAPAYA_ASSERT(false, "Only one instance of Game may be created!");
     }
     s_Instance = this;
-      
+
     WindowAttribs attribs = WindowAttribs(1200, 675, title);
     attribs.Resizable = true;
     m_Window = Window::Create(attribs);
@@ -50,13 +51,13 @@ namespace Papaya
   {
   }
 
-  void Game::PushLayer(Layer *layer)
+  void Game::PushLayer(Layer* layer)
   {
     m_LayerStack.PushLayer(layer);
     layer->OnAttach();
   }
 
-  void Game::PushOverlay(Layer *overlay)
+  void Game::PushOverlay(Layer* overlay)
   {
     m_LayerStack.PushOverlay(overlay);
     overlay->OnAttach();
@@ -70,9 +71,9 @@ namespace Papaya
     {
       double time = Platform::GetSysTime();
       Timestep timestep = time - m_TimeSinceLastFrame;
-      
+
       if (timestep < 1.0f / 60.0f)
-          continue;
+        continue;
 
       m_TimeSinceLastFrame = time;
 
@@ -83,16 +84,17 @@ namespace Papaya
         Scope<Event> e(EventQueue::PopEvent());
         //PAPAYA_CORE_INFO(e);
 
-        EventDispatcher::Dispatch<WindowCloseEvent>(e, [&](WindowCloseEvent *event) {
+        EventDispatcher::Dispatch<WindowCloseEvent>(e, [&](WindowCloseEvent* event) {
           m_Running = false;
           // continue; // Don't pass window close events to user (this isn't techinally needed)
-        });
+          });
 
-        EventDispatcher::Dispatch<WindowResizeEvent>(e, [](WindowResizeEvent *event) {
+        EventDispatcher::Dispatch<WindowResizeEvent>(e, [](WindowResizeEvent* event) {
           RenderCommand::SetViewport(0, 0, event->GetWidth(), event->GetHeight());
-        });
+          });
 
         Input::OnEvent(e);
+        ImGuiRenderer::OnEvent(e);
 
         for (auto it = m_LayerStack.rbegin(); it != m_LayerStack.rend(); ++it)
         {
@@ -102,7 +104,7 @@ namespace Papaya
 
       Input::OnUpdate(); // Update Input Class
 
-      for (Layer *layer : m_LayerStack) // Update Layers
+      for (Layer* layer : m_LayerStack) // Update Layers
         layer->OnUpdate(timestep);
 
       m_Window->OnUpdate(); // Swap Buffers
