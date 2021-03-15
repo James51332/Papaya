@@ -7,3 +7,4 @@
 [submodule "thirdparty/imgui/imgui"]
 	path = thirdparty/imgui/imgui
 	url = https://github.com/ocornut/imgui
+  branch = docking
