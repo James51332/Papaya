@@ -11,7 +11,7 @@ OpenGLVertexArray::OpenGLVertexArray()
 
 OpenGLVertexArray::~OpenGLVertexArray()
 {
-  // TODO: Add deletion
+  glDeleteVertexArrays(1, &m_RendererID);
 }
 
 void OpenGLVertexArray::SetVertexBuffer(const Ref<Buffer>& buffer)

@@ -13,6 +13,7 @@
 #include "main/renderer/Shader.h"
 #include "main/renderer/Texture.h"
 #include "main/renderer/PipelineState.h"
+#include "main/renderer/Framebuffer.h"
 #include "main/renderer/Renderer.h"
 #include "main/renderer/Renderer2D.h"
 #include "main/renderer/RenderCommand.h"

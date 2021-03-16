@@ -259,6 +259,7 @@ typedef unsigned char GLboolean;
   GLE(GLuint, CreateShader, GLenum type)                                                                                                                               \
   GLE(void, DeleteBuffers, GLsizei n, const GLuint *buffers)                                                                                                           \
   GLE(void, Disable, GLenum)                                                                                                                                           \
+  GLE(void, DeleteVertexArrays, GLsizei n, const GLuint *array)                                                                                                        \
   GLE(void, DeleteFramebuffers, GLsizei n, const GLuint *framebuffers)                                                                                                 \
   GLE(void, DeleteTextures, GLsizei n, const GLuint *textures)                                                                                                         \
   GLE(void, DeleteShader, GLuint target)                                                                                                                               \

@@ -5,8 +5,11 @@
 namespace Papaya
 {
 
+  class OpenGLFramebuffer;
+
   class OpenGLTexture2D : public Texture2D
   {
+    friend class OpenGLFramebuffer;
   public:
     OpenGLTexture2D(const String& path);
     OpenGLTexture2D(const unsigned char* data, uint32_t width, uint32_t height, ChannelType channels);

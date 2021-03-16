@@ -115,6 +115,8 @@ namespace Papaya
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable | ImGuiConfigFlags_ViewportsEnable;
     io.ConfigDockingWithShift = false;
 
+    io.Fonts->AddFontFromFileTTF("resources/fonts/Roboto-Medium.ttf", 14);
+
     s_Data.Width = Game::Get()->GetWindow()->GetAttribs().Width;
     s_Data.Height = Game::Get()->GetWindow()->GetAttribs().Height;
     io.DisplaySize.x = s_Data.Width;
@@ -203,8 +205,6 @@ namespace Papaya
   void ImGuiRenderer::Begin() {
     // Create a global window for docking
     ImGui::NewFrame();
-
-
     ImGui::DockSpaceOverViewport(ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
   }
 
@@ -212,6 +212,8 @@ namespace Papaya
   {
     ImGui::Render();
     ImDrawData* draw_data = ImGui::GetDrawData();
+
+    ImGuiIO &io = ImGui::GetIO();
 
     int fb_width = (int)(draw_data->DisplaySize.x * draw_data->FramebufferScale.x);
     int fb_height = (int)(draw_data->DisplaySize.y * draw_data->FramebufferScale.y);
@@ -263,6 +265,7 @@ namespace Papaya
           else
             s_Data.ImGuiTexture->Bind();
 
+          RenderCommand::SetViewport(0, 0, io.DisplaySize.x, io.DisplaySize.y);
           RenderCommand::SetIndexSize(sizeof(ImDrawIdx));
           RenderCommand::SetIndexOffset(pcmd->IdxOffset * sizeof(ImDrawIdx));
           RenderCommand::SetElementCount(pcmd->ElemCount);

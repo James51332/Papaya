@@ -121,7 +121,7 @@ project "Sandbox"
   
   links {
     "Papaya",
-    "ImGui", -- HACK: Gmake throws a fit if we don't add ImGui as a dependency. (Consider deprecating/removing gmake)
+    "ImGui",
   }
 
   filter "configurations:Debug"
