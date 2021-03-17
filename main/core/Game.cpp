@@ -93,8 +93,8 @@ namespace Papaya
           RenderCommand::SetViewport(0, 0, event->GetWidth(), event->GetHeight());
           });
 
+        ImGuiRenderer::OnEvent(e); // Call this first because it blocks events in some cases
         Input::OnEvent(e);
-        ImGuiRenderer::OnEvent(e);
 
         for (auto it = m_LayerStack.rbegin(); it != m_LayerStack.rend(); ++it)
         {

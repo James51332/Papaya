@@ -74,7 +74,8 @@ namespace Papaya
     {
       if (event->GetEventType() == T::GetStaticType())
       {
-        func(static_cast<T *>(event.get()));
+        if (!event->Handled)
+          func(static_cast<T *>(event.get()));
         return true;
       }
       return false;

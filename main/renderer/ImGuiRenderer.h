@@ -14,6 +14,7 @@ namespace Papaya
     static void Begin();
     static void End();
 
+    static void BlockEvents(bool block);
     static void OnEvent(const Scope<Event>& event);
   };
 

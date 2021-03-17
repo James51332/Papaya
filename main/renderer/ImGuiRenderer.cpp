@@ -35,6 +35,8 @@ namespace Papaya
     Ref<Texture2D> ImGuiTexture;
 
     float Width, Height;
+
+    bool BlockEvents = false;
   };
 
   static ImGuiRenderData s_Data;
@@ -275,6 +277,11 @@ namespace Papaya
     }
   }
 
+  void ImGuiRenderer::BlockEvents(bool block)
+  {
+    s_Data.BlockEvents = block;
+  }
+
   void ImGuiRenderer::OnEvent(const Scope<Event>& event)
   {
     Papaya::EventDispatcher::Dispatch<Papaya::WindowResizeEvent>(event, [&](Papaya::WindowResizeEvent* event) {
@@ -320,5 +327,7 @@ namespace Papaya
       if (e->GetKeyCode() == Papaya::KeyControl)
         io.KeyCtrl = false;
       });
+
+    event->Handled = s_Data.BlockEvents;
   }
 } // namespace Papaya

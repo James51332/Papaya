@@ -58,9 +58,11 @@ public:
     Papaya::Renderer2D::EndScene();
     m_Framebuffer->Unbind();
 
+
     Papaya::ImGuiRenderer::Begin();
 
     ImGui::Begin("Scene");
+    Papaya::ImGuiRenderer::BlockEvents(!ImGui::IsWindowFocused() && !ImGui::IsWindowHovered());
     ImVec2 viewSize = ImGui::GetContentRegionAvail();
     ImGui::Image(*((void**)(&m_Framebuffer->GetColorTexture())), viewSize, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
     ImGui::End();
