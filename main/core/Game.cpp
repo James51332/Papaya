@@ -39,8 +39,7 @@ namespace Papaya
     }
     s_Instance = this;
 
-    WindowAttribs attribs = WindowAttribs(1200, 675, title);
-    attribs.Resizable = true;
+    WindowAttribs attribs = WindowAttribs(1200, 675, title, true);
     m_Window = Window::Create(attribs);
 
     Input::OnInit();
