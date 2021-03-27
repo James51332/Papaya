@@ -78,6 +78,7 @@ project "Papaya"
   filter "action:vs*"
     characterset "ASCII"
     defines "_CRT_SECURE_NO_WARNINGS"
+    flags { "MultiProcessorCompile" }
 
   filter { "system:windows", "action:gmake" }
     buildoptions "-std=gnu++17"
@@ -158,6 +159,7 @@ project "Sandbox"
     characterset "ASCII"
     defines "_CRT_SECURE_NO_WARNINGS"
     debugdir "$(SolutionDir)"
+    flags { "MultiProcessorCompile" }
 
   filter { "system:windows", "action:gmake" }
     buildoptions "-std=gnu++17"
