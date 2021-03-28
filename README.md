@@ -15,3 +15,7 @@ As we're currently are focusing on building a strong foundation for performant a
 ## Roadmap
 
 The biggest feature under development is the 2D Renderer and workflow. We are working to create a toolset that can be used to build a full game from start to finish in our editor and export to MacOS and Windows from it. Papaya's in-depth roadmap is layed out on our public [Trello page](https://trello.com/b/225yK9yq/papaya), and is subject to change at any time.
+
+## Contributions
+
+Contributions are welcome and encouraged! If you see something in the code that could be improved, or want to add an entirely new feature, the best way to get your code into the core engine is to submit a pull request. If you would like to become a member of our team directly, join our [discord](https://discord.gg/x4gxGc9YMa)!
