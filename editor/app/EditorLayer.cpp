@@ -1,15 +1,16 @@
-#include <Papaya/Papaya.h>
+#include "EditorLayer.h"
+
 #include <imgui/imgui.h>
 #include <glm/gtc/matrix_transform.hpp>
 
-class SandboxLayer : public Papaya::Layer
+namespace Papaya
 {
-public:
-  SandboxLayer()
-    : m_Camera(-1.6f, 1.6f, -0.9f, 0.9f), Layer("SandboxLayer")
+
+  EditorLayer::EditorLayer()
+    : m_Camera(-1.6f, 1.6f, -0.9f, 0.9f), Layer("EditorLayer")
   {
-    m_Texture = Papaya::Texture2D::Create("tests/assets/textures/logo.png");
-    m_Checkerboard = Papaya::Texture2D::Create("tests/assets/textures/checkboard.png");
+    m_Texture = Papaya::Texture2D::Create("editor/assets/textures/logo.png");
+    m_Checkerboard = Papaya::Texture2D::Create("editor/assets/textures/checkboard.png");
 
     Papaya::FramebufferDesc desc;
     desc.Width = 1280;
@@ -17,19 +18,31 @@ public:
     m_Framebuffer = Papaya::Framebuffer::Create(desc);
   }
 
-  ~SandboxLayer()
+  EditorLayer::~EditorLayer()
   {
+
   }
 
-  virtual void OnAttach() override
+  void EditorLayer::OnAttach()
   {
+
   }
 
-  virtual void OnDetach() override
+  void EditorLayer::OnDetach()
   {
+
   }
 
-  virtual void OnUpdate(Papaya::Timestep ts) override
+  void EditorLayer::OnEvent(const Scope<Event>& event)
+  {
+    Papaya::EventDispatcher::Dispatch<Papaya::WindowResizeEvent>(event, [&](Papaya::WindowResizeEvent* event) {
+      float width = (1.6f / 1200.0f) * m_ViewportSize.x;
+      float height = (1.6f / 1200.0f) * m_ViewportSize.y;
+      m_Camera.SetProjection(-width, width, -height, height);
+      });
+  }
+
+  void EditorLayer::OnUpdate(Timestep ts)
   {
     if (Papaya::Input::KeyDown(Papaya::KeyW))
       m_Camera.SetPosition(m_Camera.GetPosition() + glm::vec3(0.0f, 4.0f * ts, 0.0f));
@@ -61,11 +74,13 @@ public:
 
     Papaya::ImGuiRenderer::Begin();
 
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, { 0,0 });
     ImGui::Begin("Scene");
     Papaya::ImGuiRenderer::BlockEvents(!ImGui::IsWindowFocused() && !ImGui::IsWindowHovered());
     ImVec2 viewSize = ImGui::GetContentRegionAvail();
     ImGui::Image(*((void**)(&m_Framebuffer->GetColorTexture())), viewSize, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
     ImGui::End();
+    ImGui::PopStyleVar();
 
     ImGui::ShowDemoWindow();
 
@@ -82,29 +97,4 @@ public:
     }
   }
 
-  virtual void OnEvent(const Papaya::Scope<Papaya::Event>& event) override
-  {
-    Papaya::EventDispatcher::Dispatch<Papaya::WindowResizeEvent>(event, [&](Papaya::WindowResizeEvent* event) {
-      float width = (1.6f / 1200.0f) * m_ViewportSize.x;
-      float height = (1.6f / 1200.0f) * m_ViewportSize.y;
-      m_Camera.SetProjection(-width, width, -height, height);
-      });
-  }
-
-private:
-  Papaya::OrthographicCamera m_Camera;
-  Papaya::Ref<Papaya::Texture2D> m_Texture;
-  Papaya::Ref<Papaya::Texture2D> m_Checkerboard;
-  Papaya::Ref<Papaya::Framebuffer> m_Framebuffer;
-
-  glm::vec2 m_ViewportSize = glm::vec2(0.0f);
-
-  bool m_ShowDemoWindow = true;
-};
-
-Papaya::Game* Papaya::CreateGame()
-{
-  Papaya::Game* game = new Papaya::Game();
-  game->PushLayer(new SandboxLayer());
-  return game;
-}
+} // namespace Papaya

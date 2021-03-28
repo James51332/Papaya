@@ -328,6 +328,7 @@ namespace Papaya
         io.KeyCtrl = false;
       });
 
-    event->Handled = s_Data.BlockEvents;
+    // Don't block key release events
+    // event->Handled = s_Data.BlockEvents;
   }
 } // namespace Papaya
