@@ -18,6 +18,7 @@ namespace Papaya
     virtual void OnAttach() {}
     virtual void OnDetach() {}
     virtual void OnUpdate(Timestep t) {}
+    virtual void OnImGuiRender() {}
     virtual void OnEvent(const Scope<Event> &event) {}
 
   private:

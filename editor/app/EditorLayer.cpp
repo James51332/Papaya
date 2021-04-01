@@ -41,6 +41,31 @@ namespace Papaya
       m_Camera.SetProjection(-width, width, -height, height);
       });
   }
+  
+  void EditorLayer::OnImGuiRender()
+  {
+    
+    // Entities
+    ImGui::Begin("Entities");
+    
+    ImGui::End();
+    
+    // Viewport
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, { 0,0 });
+    ImGui::Begin("Viewport");
+    
+    // ImGui should block events unless the viewport is in focus
+    ImGuiRenderer::BlockEvents(!ImGui::IsWindowFocused() && !ImGui::IsWindowHovered());
+
+    ImVec2 viewSize = ImGui::GetContentRegionAvail();
+    ImGui::Image(reinterpret_cast<void*>(&m_Framebuffer->GetColorTexture()), viewSize, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
+    
+    m_LastViewportSize = m_ViewportSize;
+    m_ViewportSize = glm::vec2(viewSize.x, viewSize.y);
+    
+    ImGui::End();
+    ImGui::PopStyleVar();
+  }
 
   void EditorLayer::OnUpdate(Timestep ts)
   {
@@ -71,25 +96,9 @@ namespace Papaya
     Papaya::Renderer2D::EndScene();
     m_Framebuffer->Unbind();
 
-
-    Papaya::ImGuiRenderer::Begin();
-
-    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, { 0,0 });
-    ImGui::Begin("Scene");
-    Papaya::ImGuiRenderer::BlockEvents(!ImGui::IsWindowFocused() && !ImGui::IsWindowHovered());
-    ImVec2 viewSize = ImGui::GetContentRegionAvail();
-    ImGui::Image(*((void**)(&m_Framebuffer->GetColorTexture())), viewSize, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
-    ImGui::End();
-    ImGui::PopStyleVar();
-
-    ImGui::ShowDemoWindow();
-
-    Papaya::ImGuiRenderer::End();
-
-    if (viewSize.x != m_ViewportSize.x || viewSize.y != m_ViewportSize.y)
+    if (m_ViewportSize != m_LastViewportSize)
     {
-      m_ViewportSize = glm::vec2(viewSize.x, viewSize.y);
-      m_Framebuffer->Resize(m_ViewportSize.x, m_ViewportSize.y);
+      m_Framebuffer->Resize(static_cast<float>(m_ViewportSize.x), static_cast<float>(m_ViewportSize.y));
 
       float width = (1.6f / 1200.0f) * m_ViewportSize.x;
       float height = (1.6f / 1200.0f) * m_ViewportSize.y;

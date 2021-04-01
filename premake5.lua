@@ -160,6 +160,9 @@ project "Editor"
     debugdir "$(SolutionDir)"
     flags { "MultiProcessorCompile" }
 
+  filter "action:xcode4"
+    debugdir "$(SRCROOT)/../"
+  
   filter { "system:windows", "action:gmake" }
     buildoptions "-std=gnu++17"
   
@@ -248,6 +251,9 @@ project "Sandbox"
     defines "_CRT_SECURE_NO_WARNINGS"
     debugdir "$(SolutionDir)"
     flags { "MultiProcessorCompile" }
+  
+  filter "action:xcode4"
+    debugdir "$(SRCROOT)/../"
 
   filter { "system:windows", "action:gmake" }
     buildoptions "-std=gnu++17"

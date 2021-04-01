@@ -105,6 +105,11 @@ namespace Papaya
 
       for (Layer* layer : m_LayerStack) // Update Layers
         layer->OnUpdate(timestep);
+      
+      ImGuiRenderer::Begin();
+      for (Layer* layer : m_LayerStack) // Render ImGui
+        layer->OnImGuiRender();
+      ImGuiRenderer::End();
 
       m_Window->OnUpdate(); // Swap Buffers
 

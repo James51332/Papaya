@@ -14,6 +14,7 @@ namespace Papaya
     virtual void OnAttach() override;
     virtual void OnDetach() override;
     virtual void OnEvent(const Scope<Event>& event) override;
+    virtual void OnImGuiRender() override;
     virtual void OnUpdate(Timestep ts) override;
   private:
     Papaya::OrthographicCamera m_Camera;
@@ -21,7 +22,8 @@ namespace Papaya
     Papaya::Ref<Papaya::Texture2D> m_Checkerboard;
     Papaya::Ref<Papaya::Framebuffer> m_Framebuffer;
 
-    glm::vec2 m_ViewportSize = glm::vec2(0.0f);
+    glm::vec2 m_ViewportSize, m_LastViewportSize;
+    
   };
 
 } // namespace Papaya
