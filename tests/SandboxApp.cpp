@@ -74,7 +74,7 @@ public:
     if (viewSize.x != m_ViewportSize.x || viewSize.y != m_ViewportSize.y)
     {
       m_ViewportSize = glm::vec2(viewSize.x, viewSize.y);
-      m_Framebuffer->Resize(m_ViewportSize.x, m_ViewportSize.y);
+      m_Framebuffer->Resize(static_cast<uint32_t>(m_ViewportSize.x), static_cast<uint32_t>(m_ViewportSize.y));
 
       float width = (1.6f / 1200.0f) * m_ViewportSize.x;
       float height = (1.6f / 1200.0f) * m_ViewportSize.y;

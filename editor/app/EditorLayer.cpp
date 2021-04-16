@@ -71,7 +71,7 @@ namespace Papaya
   {
     if (m_ViewportSize != m_LastViewportSize)
     {
-      m_Framebuffer->Resize(static_cast<float>(m_ViewportSize.x), static_cast<float>(m_ViewportSize.y));
+      m_Framebuffer->Resize(static_cast<uint32_t>(m_ViewportSize.x), static_cast<uint32_t>(m_ViewportSize.y));
 
       float width = (1.6f / 1200.0f) * m_ViewportSize.x;
       float height = (1.6f / 1200.0f) * m_ViewportSize.y;

@@ -1,12 +1,20 @@
-#ifndef Papaya_h
-#define Papaya_h
+#pragma once
+
+// -------------------------------------------
+// ----- Core Engine -------------------------
+// -------------------------------------------
 
 #include "main/core/EntryPoint.h"
+
 #include "main/core/Game.h"
 #include "main/core/Layer.h"
 #include "main/core/Log.h"
 #include "main/core/Timestep.h"
 #include "main/core/Input.h"
+
+// -------------------------------------------
+// ----- Rendering ---------------------------
+// -------------------------------------------
 
 #include "main/renderer/Buffer.h"
 #include "main/renderer/BufferLayout.h"
@@ -19,16 +27,26 @@
 #include "main/renderer/RenderCommand.h"
 #include "main/renderer/ImGuiRenderer.h"
 
+// -------------------------------------------
+// ----- Utilities ---------------------------
+// -------------------------------------------
+
 #include "main/utils/Memory.h"
 #include "main/utils/String.h"
+
+// -------------------------------------------
+// ----- Events ===---------------------------
+// -------------------------------------------
 
 #include "main/events/Event.h"
 #include "main/events/KeyEvent.h"
 #include "main/events/MouseEvent.h"
 #include "main/events/AppEvent.h"
 
+// -------------------------------------------
+// ----- Math --------------------------------
+// -------------------------------------------
+
 #include <glm/matrix.hpp>
 #include <glm/vec4.hpp>
 #include <glm/vec3.hpp>
-
-#endif /* end of include guard: Papaya_h */

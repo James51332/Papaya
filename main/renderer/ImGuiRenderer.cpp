@@ -119,8 +119,8 @@ namespace Papaya
 
     io.Fonts->AddFontFromFileTTF("resources/fonts/Roboto-Medium.ttf", 14);
 
-    s_Data.Width = Game::Get()->GetWindow()->GetAttribs().Width;
-    s_Data.Height = Game::Get()->GetWindow()->GetAttribs().Height;
+    s_Data.Width = static_cast<float>(Game::Get()->GetWindow()->GetAttribs().Width);
+    s_Data.Height = static_cast<float>(Game::Get()->GetWindow()->GetAttribs().Height);
     io.DisplaySize.x = s_Data.Width;
     io.DisplaySize.y = s_Data.Height;
 

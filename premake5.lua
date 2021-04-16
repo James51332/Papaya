@@ -35,6 +35,7 @@ project "Papaya"
     "thirdparty/stb_image",
     "thirdparty/opengl",
     "thirdparty/imgui",
+    "thirdparty/entt/single_include",
     ".",
   }
 
@@ -64,6 +65,7 @@ project "Papaya"
       "thirdparty/glm",
       "thirdparty/stb_image",
       "thirdparty/imgui",
+      "thirdparty/entt/single_include",
       ".",
     }
 
@@ -116,6 +118,7 @@ project "Editor"
     "thirdparty/glm",
     "thirdparty/opengl",
     "thirdparty/imgui",
+    "thirdparty/entt/single_include",
     ".",
   }
   
@@ -147,6 +150,7 @@ project "Editor"
       "thirdparty/spdlog/include",
       "thirdparty/glm",
       "thirdparty/imgui",
+      "thirdparty/entt/single_include",
       "."
     }
 
@@ -208,6 +212,7 @@ project "Sandbox"
     "thirdparty/glm",
     "thirdparty/opengl",
     "thirdparty/imgui",
+    "thirdparty/entt/single_include",
     ".",
   }
   
@@ -239,6 +244,7 @@ project "Sandbox"
       "thirdparty/spdlog/include",
       "thirdparty/glm",
       "thirdparty/imgui",
+      "thirdparty/entt/single_include",
       "."
     }
 

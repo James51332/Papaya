@@ -228,7 +228,7 @@ namespace Papaya
     s_Data.QuadPipelineState->Bind();
 
     // Bind Textures
-    for (int i = 0; i < s_Data.TextureIndex; ++i)
+    for (uint32_t i = 0; i < s_Data.TextureIndex; ++i)
       s_Data.TextureSlots[i]->Bind(i);
 
     RenderCommand::SetIndexSize(sizeof(uint32_t));
@@ -275,7 +275,7 @@ namespace Papaya
     }
 
     float textureIndex = 0.0f;
-    for (int i = 0; i < s_Data.TextureIndex; i++)
+    for (uint32_t i = 0; i < s_Data.TextureIndex; i++)
     { // check if texture is already used in batch
       if (*s_Data.TextureSlots[i] == *texture)
       {
@@ -292,7 +292,7 @@ namespace Papaya
         StartBatch();
       }
 
-      textureIndex = s_Data.TextureIndex;
+      textureIndex = static_cast<float>(s_Data.TextureIndex);
       s_Data.TextureSlots[s_Data.TextureIndex] = texture;
       s_Data.TextureIndex++;
     }
