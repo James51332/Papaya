@@ -69,6 +69,15 @@ namespace Papaya
 
   void EditorLayer::OnUpdate(Timestep ts)
   {
+    if (m_ViewportSize != m_LastViewportSize)
+    {
+      m_Framebuffer->Resize(static_cast<float>(m_ViewportSize.x), static_cast<float>(m_ViewportSize.y));
+
+      float width = (1.6f / 1200.0f) * m_ViewportSize.x;
+      float height = (1.6f / 1200.0f) * m_ViewportSize.y;
+      m_Camera.SetProjection(-width, width, -height, height);
+    }
+
     if (Papaya::Input::KeyDown(Papaya::KeyW))
       m_Camera.SetPosition(m_Camera.GetPosition() + glm::vec3(0.0f, 4.0f * ts, 0.0f));
     if (Papaya::Input::KeyDown(Papaya::KeyS))
@@ -95,15 +104,6 @@ namespace Papaya
     Papaya::Renderer2D::DrawQuad(glm::translate(glm::mat4(1.0f), glm::vec3(-1.0f, -0.4f, 0.0f)), glm::vec4(1.0f));
     Papaya::Renderer2D::EndScene();
     m_Framebuffer->Unbind();
-
-    if (m_ViewportSize != m_LastViewportSize)
-    {
-      m_Framebuffer->Resize(static_cast<float>(m_ViewportSize.x), static_cast<float>(m_ViewportSize.y));
-
-      float width = (1.6f / 1200.0f) * m_ViewportSize.x;
-      float height = (1.6f / 1200.0f) * m_ViewportSize.y;
-      m_Camera.SetProjection(-width, width, -height, height);
-    }
   }
 
 } // namespace Papaya
