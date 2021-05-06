@@ -2,6 +2,16 @@
 
 #include <Papaya/Papaya.h>
 
+#include <glm/vec2.hpp>
+#include <glm/vec3.hpp>
+#include <glm/vec4.hpp>
+#include <glm/matrix.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+
+#include <imgui/imgui.h>
+
+#include <entt/entt.hpp>
+
 namespace Papaya
 {
 
@@ -17,13 +27,13 @@ namespace Papaya
     virtual void OnImGuiRender() override;
     virtual void OnUpdate(Timestep ts) override;
   private:
-    Papaya::OrthographicCamera m_Camera;
-    Papaya::Ref<Papaya::Texture2D> m_Texture;
-    Papaya::Ref<Papaya::Texture2D> m_Checkerboard;
-    Papaya::Ref<Papaya::Framebuffer> m_Framebuffer;
+    OrthographicCamera m_Camera;
+    Ref<Texture2D> m_Texture;
+    Ref<Texture2D> m_Checkerboard;
+    Ref<Framebuffer> m_Framebuffer;
+    Ref<Scene> m_Scene;
 
     glm::vec2 m_ViewportSize, m_LastViewportSize;
-    
   };
 
 } // namespace Papaya

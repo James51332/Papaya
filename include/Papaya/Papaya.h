@@ -35,7 +35,7 @@
 #include "main/utils/String.h"
 
 // -------------------------------------------
-// ----- Events ===---------------------------
+// ----- Events ------------------------------
 // -------------------------------------------
 
 #include "main/events/Event.h"
@@ -44,9 +44,8 @@
 #include "main/events/AppEvent.h"
 
 // -------------------------------------------
-// ----- Math --------------------------------
+// ----- ECS ---------------------------------
 // -------------------------------------------
 
-#include <glm/matrix.hpp>
-#include <glm/vec4.hpp>
-#include <glm/vec3.hpp>
+#include "main/scene/Scene.h"
+#include "main/scene/Entity.h"

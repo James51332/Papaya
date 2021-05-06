@@ -1,8 +1,5 @@
 #include "EditorLayer.h"
 
-#include <imgui/imgui.h>
-#include <glm/gtc/matrix_transform.hpp>
-
 namespace Papaya
 {
 
@@ -16,6 +13,8 @@ namespace Papaya
     desc.Width = 1280;
     desc.Height = 720;
     m_Framebuffer = Papaya::Framebuffer::Create(desc);
+  
+    m_Scene = CreateRef<Scene>();
   }
 
   EditorLayer::~EditorLayer()
@@ -30,7 +29,6 @@ namespace Papaya
 
   void EditorLayer::OnDetach()
   {
-
   }
 
   void EditorLayer::OnEvent(const Scope<Event>& event)
@@ -101,7 +99,6 @@ namespace Papaya
 
     Papaya::Renderer2D::BeginScene(m_Camera);
     Papaya::Renderer2D::DrawQuad(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f)), m_Texture);
-    Papaya::Renderer2D::DrawQuad(glm::translate(glm::mat4(1.0f), glm::vec3(-1.0f, -0.4f, 0.0f)), glm::vec4(1.0f));
     Papaya::Renderer2D::EndScene();
     m_Framebuffer->Unbind();
   }
