@@ -2,15 +2,14 @@
 
 #include <Papaya/Papaya.h>
 
-#include <glm/vec2.hpp>
-#include <glm/vec3.hpp>
-#include <glm/vec4.hpp>
-#include <glm/matrix.hpp>
+#include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
 #include <imgui/imgui.h>
 
 #include <entt/entt.hpp>
+
+#include "panels/SceneHierarchyPanel.h"
 
 namespace Papaya
 {
@@ -32,6 +31,8 @@ namespace Papaya
     Ref<Texture2D> m_Checkerboard;
     Ref<Framebuffer> m_Framebuffer;
     Ref<Scene> m_Scene;
+    
+    SceneHierarchyPanel m_SceneHierarchy;
 
     glm::vec2 m_ViewportSize, m_LastViewportSize;
   };

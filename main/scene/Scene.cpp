@@ -1,6 +1,7 @@
 #include "Scene.h"
 
 #include "Entity.h"
+#include "Components.h"
 
 namespace Papaya
 {
@@ -17,7 +18,9 @@ namespace Papaya
 
   Entity Scene::CreateEntity()
   {
-    return { this, m_Registry.create() };
+    Entity e = { this, m_Registry.create() };
+    e.AddComponent<TagComponent>("Empty Entity");
+    return e;
   }
 
 } // namespace Papaya

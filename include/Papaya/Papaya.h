@@ -5,7 +5,6 @@
 // -------------------------------------------
 
 #include "main/core/EntryPoint.h"
-
 #include "main/core/Game.h"
 #include "main/core/Layer.h"
 #include "main/core/Log.h"
@@ -47,5 +46,6 @@
 // ----- ECS ---------------------------------
 // -------------------------------------------
 
-#include "main/scene/Scene.h"
 #include "main/scene/Entity.h"
+#include "main/scene/Components.h"
+#include "main/scene/Scene.h"
