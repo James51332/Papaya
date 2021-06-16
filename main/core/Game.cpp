@@ -86,11 +86,11 @@ namespace Papaya
         EventDispatcher::Dispatch<WindowCloseEvent>(e, [&](WindowCloseEvent* event) {
           m_Running = false;
           // continue; // Don't pass window close events to user (this isn't techinally needed)
-          });
+        });
 
         EventDispatcher::Dispatch<WindowResizeEvent>(e, [](WindowResizeEvent* event) {
           RenderCommand::SetViewport(0, 0, event->GetWidth(), event->GetHeight());
-          });
+        });
 
         ImGuiRenderer::OnEvent(e); // Call this first because it blocks events in some cases
         Input::OnEvent(e);

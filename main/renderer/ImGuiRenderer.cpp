@@ -279,6 +279,7 @@ namespace Papaya
 
   void ImGuiRenderer::BlockEvents(bool block)
   {
+    PAPAYA_CORE_INFO("Events Blocked: {}", block);
     s_Data.BlockEvents = block;
   }
 
@@ -328,7 +329,8 @@ namespace Papaya
         io.KeyCtrl = false;
       });
 
-    // Don't block key release events
-    // event->Handled = s_Data.BlockEvents;
+    // Don't block release events
+    if (event->GetEventType() != EventType::KeyRelease && event->GetEventType() != EventType::KeyRelease)
+      event->Handled = s_Data.BlockEvents;
   }
 } // namespace Papaya
