@@ -16,6 +16,10 @@ namespace Papaya {
 
     Entity(const Entity&) = default;
 
+    void Destroy() {
+      m_Scene->m_Registry.destroy(m_Entity);
+    }
+
     template<typename T>
     bool HasComponent()
     {
@@ -43,9 +47,12 @@ namespace Papaya {
       m_Scene->m_Registry.remove<T>(m_Entity);
     }
 
+     bool operator==(const Entity& e) const { return m_Entity == e.m_Entity; }
+     bool operator==(Entity& e) { return m_Entity == e.m_Entity; }
+
+    entt::entity m_Entity{ entt::null };
   private:
     Scene* m_Scene = nullptr;
-    entt::entity m_Entity{ entt::null };
   };
 
 } // namespace Papaya

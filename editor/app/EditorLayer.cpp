@@ -15,6 +15,7 @@ namespace Papaya
     m_Framebuffer = Papaya::Framebuffer::Create(desc);
   
     m_Scene = CreateRef<Scene>();
+    m_SceneHierarchy = SceneHierarchyPanel(m_Scene);
 
     Entity e = m_Scene->CreateEntity();
   }

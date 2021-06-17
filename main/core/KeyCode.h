@@ -85,8 +85,8 @@ enum KeyCode
 
   KeySpace // 1 Space Bar
 
-}; // 71 Total Keys (Not Including KeyNone)
+}; // 72 Total Keys (Not Including KeyNone) (I think)
 
-#define PAPAYA_TOTAL_KEYCODES 71
+#define PAPAYA_TOTAL_KEYCODES 72
 
 } // namespace Papaya

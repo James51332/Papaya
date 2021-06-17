@@ -262,6 +262,8 @@ namespace Papaya
 
         if (clip_rect.x < fb_width && clip_rect.y < fb_height && clip_rect.z >= 0.0f && clip_rect.w >= 0.0f)
         {
+          // TODO: Fix Clip Rects
+
           if (pcmd->TextureId)
             (*reinterpret_cast<Ref<Texture2D>*>(pcmd->TextureId))->Bind(); // Cast from void* to Ref<Texture>
           else
@@ -279,7 +281,6 @@ namespace Papaya
 
   void ImGuiRenderer::BlockEvents(bool block)
   {
-    PAPAYA_CORE_INFO("Events Blocked: {}", block);
     s_Data.BlockEvents = block;
   }
 
@@ -315,7 +316,7 @@ namespace Papaya
     Papaya::EventDispatcher::Dispatch<Papaya::KeyPressEvent>(event, [&](Papaya::KeyPressEvent* e) {
       ImGuiIO& io = ImGui::GetIO();
       io.KeysDown[e->GetKeyCode()] = true;
-      io.AddInputCharacter(e->GetKeyCode());
+      //io.AddInputCharacter(e->GetKeyCode());
 
       if (e->GetKeyCode() == Papaya::KeyControl)
         io.KeyCtrl = true;
