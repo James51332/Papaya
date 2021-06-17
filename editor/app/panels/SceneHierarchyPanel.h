@@ -28,7 +28,6 @@ private:
 
 private:
   Ref<Scene> m_Scene;
-
   Entity m_SelectedEntity;
 };
   

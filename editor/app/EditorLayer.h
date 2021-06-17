@@ -10,6 +10,7 @@
 #include <entt/entt.hpp>
 
 #include "panels/SceneHierarchyPanel.h"
+#include "panels/PropertiesPanel.h"
 
 namespace Papaya
 {
@@ -32,7 +33,8 @@ namespace Papaya
     Ref<Framebuffer> m_Framebuffer;
     Ref<Scene> m_Scene;
     
-    SceneHierarchyPanel m_SceneHierarchy;
+    SceneHierarchyPanel m_SceneHierarchyPanel;
+    PropertiesPanel m_PropertiesPanel;
 
     glm::vec2 m_ViewportSize, m_LastViewportSize;
   };

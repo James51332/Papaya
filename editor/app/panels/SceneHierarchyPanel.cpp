@@ -29,20 +29,17 @@ namespace Papaya {
       m_Scene->m_Registry.each([&](entt::entity entity) {
         Entity e = { m_Scene.get(), entity };
 
-        ImGui::PushID(static_cast<int>(e.m_Entity));
-        if (ImGui::Selectable(e.GetComponent<TagComponent>().Name.Raw(), e == m_SelectedEntity))
+        ImGui::PushID(static_cast<uint32_t>(entity));
+        if (ImGui::Selectable(e.GetComponent<TagComponent>().Name.Raw(), e == m_SelectedEntity)) {
           m_SelectedEntity = e;
+          PAPAYA_CORE_INFO("Selected Entity (Hierarchy)", static_cast<uint32_t>(e));
+        }
         ImGui::PopID();
 
         ShowItemMenu(e);
         });
 
       ImGui::End();
-
-      ImGui::Begin("Properties");
-      ImGui::End();
-
-      ImGui::ShowDemoWindow();
     }
   }
 
@@ -60,16 +57,16 @@ namespace Papaya {
   {
     if (ImGui::BeginPopupContextItem()) //(const char*)(void*)e.m_Entity))
     {
-      if (ImGui::MenuItem("Delete Entity"))
-        e.Destroy();
-
       if (ImGui::BeginMenu("Add Component"))
       {
-        if (ImGui::MenuItem("Transform"))
-          e.AddComponent<TransformComponent>(0.0f, 0.0f, 0.0f);
+        if (ImGui::MenuItem("Transform Component"))
+          e.AddComponent<TransformComponent>(glm::vec3(0.0f, 0.0f, 0.0f));
       
         ImGui::EndMenu();
       }
+
+      if (ImGui::MenuItem("Delete Entity"))
+        e.Destroy();
 
       ImGui::EndPopup();
     }
