@@ -28,15 +28,13 @@ namespace Papaya
     virtual void OnUpdate(Timestep ts) override;
   private:
     OrthographicCamera m_Camera;
-    Ref<Texture2D> m_Texture;
-    Ref<Texture2D> m_Checkerboard;
     Ref<Framebuffer> m_Framebuffer;
+    glm::vec2 m_ViewportSize, m_LastViewportSize;
+
     Ref<Scene> m_Scene;
-    
     SceneHierarchyPanel m_SceneHierarchyPanel;
     PropertiesPanel m_PropertiesPanel;
 
-    glm::vec2 m_ViewportSize, m_LastViewportSize;
   };
 
 } // namespace Papaya

@@ -4,11 +4,8 @@ namespace Papaya
 {
 
   EditorLayer::EditorLayer()
-    : m_Camera(-1.6f, 1.6f, -0.9f, 0.9f), Layer("EditorLayer")
+    : m_Camera(-16.0f, 16.0f, -9.0f, 9.0f), Layer("EditorLayer")
   {
-    m_Texture = Papaya::Texture2D::Create("editor/assets/textures/logo.png");
-    m_Checkerboard = Papaya::Texture2D::Create("editor/assets/textures/checkboard.png");
-
     Papaya::FramebufferDesc desc;
     desc.Width = 1280;
     desc.Height = 720;
@@ -18,7 +15,9 @@ namespace Papaya
     m_SceneHierarchyPanel = SceneHierarchyPanel(m_Scene);
     m_PropertiesPanel = PropertiesPanel(m_Scene);
 
-    Entity e = m_Scene->CreateEntity();
+    Entity e = m_Scene->CreateEntity("Sprite");
+    e.AddComponent<TransformComponent>();
+    e.AddComponent<SpriteRendererComponent>(glm::vec4(1.0f));
   }
 
   EditorLayer::~EditorLayer()
@@ -97,13 +96,16 @@ namespace Papaya
     Papaya::RenderCommand::ClearColor(0.1f, 0.1f, 0.1f, 1.1f);
     Papaya::RenderCommand::Clear();
 
-    m_Framebuffer->Bind();
-    Papaya::RenderCommand::ClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-    Papaya::RenderCommand::Clear();
+    // The layer probably shouldn't own the 
+    // framebuffer. We need to figure out a 
+    // more ideal way to handle cameras and framebuffers
+    m_Framebuffer->Bind(); 
 
-    Papaya::Renderer2D::BeginScene(m_Camera);
-    Papaya::Renderer2D::DrawQuad(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f)), m_Texture);
-    Papaya::Renderer2D::EndScene();
+    RenderCommand::ClearColor(0.0f, 0.0f, 0.0f);
+    RenderCommand::Clear();
+
+    m_Scene->OnUpdate(ts, m_Camera);
+    
     m_Framebuffer->Unbind();
   }
 

@@ -25,18 +25,16 @@ namespace Papaya
     if (m_Open)
     {
       ImGui::Begin("Properties");
-
-      ImGui::TextWrapped("We'll eventually show all the different UI widgets for editing each of the components here. (and we'll make them look prettier ;)");
-      
+  
       if (m_SelectedEntity) {
 
         // TRANSFORM
 				if (m_SelectedEntity.HasComponent<TransformComponent>())
-				{
           ShowTransformMenu(m_SelectedEntity);
-				}
 
         // SPRITE RENDERER
+        if (m_SelectedEntity.HasComponent<SpriteRendererComponent>())
+          ShowSpriteMenu(m_SelectedEntity);
 
       }
 
@@ -48,16 +46,38 @@ namespace Papaya
 
   void PropertiesPanel::ShowTransformMenu(Entity e)
   {
-    auto& transform = e.GetComponent<TransformComponent>();
-    
-    ImGui::DragFloat3("Translation", glm::value_ptr(transform.Translation));
-    ImGui::DragFloat3("Rotation", glm::value_ptr(transform.Rotation));
-    ImGui::DragFloat3("Scale", glm::value_ptr(transform.Scale));
+    int flags = ImGuiTreeNodeFlags_Framed
+      | ImGuiTreeNodeFlags_OpenOnArrow
+      | ImGuiTreeNodeFlags_OpenOnDoubleClick
+      | ImGuiTreeNodeFlags_DefaultOpen;
+
+    if (ImGui::TreeNodeEx("Transform", flags))
+    {
+      auto& transform = e.GetComponent<TransformComponent>();
+
+      ImGui::DragFloat3("Translation", glm::value_ptr(transform.Translation), 0.05f, 0.0f, 0.0f, "%.2f");
+      ImGui::DragFloat3("Rotation", glm::value_ptr(transform.Rotation), 0.05f, 0.0f, 0.0f, "%.2f");
+      ImGui::DragFloat3("Scale", glm::value_ptr(transform.Scale), 0.05f, 0.0f, 0.0f, "%.2f");
+
+      ImGui::TreePop();
+    }
   }
 
   void PropertiesPanel::ShowSpriteMenu(Entity e)
   {
-    
+    int flags = ImGuiTreeNodeFlags_Framed
+      | ImGuiTreeNodeFlags_OpenOnArrow
+      | ImGuiTreeNodeFlags_OpenOnDoubleClick
+      | ImGuiTreeNodeFlags_DefaultOpen;
+
+    if (ImGui::TreeNodeEx("Sprite Renderer", flags))
+    {
+      auto& sprite = e.GetComponent<SpriteRendererComponent>();
+
+      ImGui::ColorEdit4("Color", glm::value_ptr(sprite.Color));
+
+      ImGui::TreePop();
+    }
   }
 
 } // namespace Papaya
