@@ -39,7 +39,7 @@ namespace Papaya
       }
 
       ImGui::End();
-    
+
       ImGui::ShowDemoWindow();
     }
   }

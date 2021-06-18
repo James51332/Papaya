@@ -181,8 +181,8 @@ namespace Papaya
     GetClientRect(GetDesktopWindow(), &size);
     size.left = (size.right - attribs.Width) / 2;
     size.top = (size.bottom - attribs.Height) / 2;
-    size.right = size.left + attribs.Width;  // HACK: Add 4 px because Windows is weird. (This might be my fault.)
-    size.bottom = size.top + attribs.Height; // TODO: Look here if window isn't sizing correctly
+    size.right = size.left + attribs.Width; 
+    size.bottom = size.top + attribs.Height;
 
     AdjustWindowRectEx(&size, style, FALSE, 0);
 

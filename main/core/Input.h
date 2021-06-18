@@ -25,6 +25,8 @@ namespace Papaya
     static bool MouseReleased(MouseCode btn); // true as long as key is down
     static bool MouseDown(MouseCode btn);     // only true for one frame on release
 
+    static int ToASCII(KeyCode key, bool capital = false);
+
   private:
     static void OnInit();
     static void OnUpdate(); // called once per frame and sets the current state to the previous state
@@ -36,6 +38,9 @@ namespace Papaya
 
     static bool s_MouseState[PAPAYA_TOTAL_MOUSECODES];
     static bool s_LastMouseState[PAPAYA_TOTAL_MOUSECODES];
+
+    static int s_AsciiCapital[PAPAYA_TOTAL_KEYCODES];
+    static int s_AsciiLowercase[PAPAYA_TOTAL_KEYCODES];
   };
 
 } // namespace Papaya

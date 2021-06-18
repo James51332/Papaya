@@ -2,6 +2,7 @@
 
 #include "main/core/Game.h"
 #include "main/core/KeyCode.h"
+#include "main/core/Input.h"
 
 #include "main/renderer/BufferLayout.h"
 #include "main/renderer/Buffer.h"
@@ -316,7 +317,8 @@ namespace Papaya
     Papaya::EventDispatcher::Dispatch<Papaya::KeyPressEvent>(event, [&](Papaya::KeyPressEvent* e) {
       ImGuiIO& io = ImGui::GetIO();
       io.KeysDown[e->GetKeyCode()] = true;
-      //io.AddInputCharacter(e->GetKeyCode());
+      io.AddInputCharacter(Input::ToASCII(e->GetKeyCode(), Input::KeyDown(KeyShift)));
+      PAPAYA_CORE_TRACE(Input::ToASCII(e->GetKeyCode(), Input::KeyDown(KeyShift)));
 
       if (e->GetKeyCode() == Papaya::KeyControl)
         io.KeyCtrl = true;
