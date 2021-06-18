@@ -23,6 +23,7 @@ namespace Papaya {
     void OnImGuiRender();
 
   private:
+    void ShowTagMenu(Entity e);
     void ShowTransformMenu(Entity e);
     void ShowSpriteMenu(Entity e);
 

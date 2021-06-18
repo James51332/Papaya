@@ -2,6 +2,8 @@
 
 #include "main/events/Event.h"
 
+#include "main/core/Timestep.h"
+
 namespace Papaya
 {
 
@@ -11,7 +13,7 @@ namespace Papaya
     static void OnInit();
     static void OnTerminate();
 
-    static void Begin();
+    static void Begin(Timestep ts);
     static void End();
 
     static void BlockEvents(bool block);

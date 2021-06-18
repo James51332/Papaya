@@ -71,8 +71,8 @@ namespace Papaya
       double time = Platform::GetSysTime();
       Timestep timestep = time - m_TimeSinceLastFrame;
 
-      // if (timestep < 1.0f / 60.0f)
-      //   continue;
+      //if (timestep < 1.0f / 60.0f)
+      //  continue;
 
       m_TimeSinceLastFrame = time;
 
@@ -106,7 +106,7 @@ namespace Papaya
       for (Layer* layer : m_LayerStack) // Update Layers
         layer->OnUpdate(timestep);
       
-      ImGuiRenderer::Begin();
+      ImGuiRenderer::Begin(timestep);
       for (Layer* layer : m_LayerStack) // Render ImGui
         layer->OnImGuiRender();
       ImGuiRenderer::End();

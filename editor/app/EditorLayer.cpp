@@ -14,10 +14,6 @@ namespace Papaya
     m_Scene = CreateRef<Scene>();
     m_SceneHierarchyPanel = SceneHierarchyPanel(m_Scene);
     m_PropertiesPanel = PropertiesPanel(m_Scene);
-
-    Entity e = m_Scene->CreateEntity("Sprite");
-    e.AddComponent<TransformComponent>();
-    e.AddComponent<SpriteRendererComponent>(glm::vec4(1.0f));
   }
 
   EditorLayer::~EditorLayer()

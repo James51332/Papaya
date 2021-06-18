@@ -205,8 +205,11 @@ namespace Papaya
   {
   }
 
-  void ImGuiRenderer::Begin() {
+  void ImGuiRenderer::Begin(Timestep ts) {
     // Create a global window for docking
+    ImGuiIO& io = ImGui::GetIO();
+    io.DeltaTime = static_cast<float>(ts);
+
     ImGui::NewFrame();
     ImGui::DockSpaceOverViewport(ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
   }
@@ -317,8 +320,9 @@ namespace Papaya
     Papaya::EventDispatcher::Dispatch<Papaya::KeyPressEvent>(event, [&](Papaya::KeyPressEvent* e) {
       ImGuiIO& io = ImGui::GetIO();
       io.KeysDown[e->GetKeyCode()] = true;
-      io.AddInputCharacter(Input::ToASCII(e->GetKeyCode(), Input::KeyDown(KeyShift)));
-      PAPAYA_CORE_TRACE(Input::ToASCII(e->GetKeyCode(), Input::KeyDown(KeyShift)));
+
+      int asciiCode = Input::ToASCII(e->GetKeyCode(), io.KeysDown[KeyShift]);
+      io.AddInputCharacter(asciiCode);
 
       if (e->GetKeyCode() == Papaya::KeyControl)
         io.KeyCtrl = true;
@@ -333,7 +337,7 @@ namespace Papaya
       });
 
     // Don't block release events
-    if (event->GetEventType() != EventType::KeyRelease && event->GetEventType() != EventType::KeyRelease)
+    if (event->GetEventType() != EventType::KeyRelease && event->GetEventType() != EventType::MouseRelease)
       event->Handled = s_Data.BlockEvents;
   }
 } // namespace Papaya

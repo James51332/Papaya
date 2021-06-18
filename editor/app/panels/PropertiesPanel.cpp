@@ -28,6 +28,10 @@ namespace Papaya
   
       if (m_SelectedEntity) {
 
+        // TAG
+        if (m_SelectedEntity.HasComponent<TagComponent>())
+          ShowTagMenu(m_SelectedEntity);
+
         // TRANSFORM
 				if (m_SelectedEntity.HasComponent<TransformComponent>())
           ShowTransformMenu(m_SelectedEntity);
@@ -39,8 +43,28 @@ namespace Papaya
       }
 
       ImGui::End();
+    }
+  }
 
-      ImGui::ShowDemoWindow();
+  void PropertiesPanel::ShowTagMenu(Entity e)
+  {
+    int flags = ImGuiTreeNodeFlags_Framed
+      | ImGuiTreeNodeFlags_OpenOnArrow
+      | ImGuiTreeNodeFlags_OpenOnDoubleClick
+      | ImGuiTreeNodeFlags_DefaultOpen;
+    if (ImGui::TreeNodeEx("Tag", flags))
+    {
+      auto& tag = e.GetComponent<TagComponent>();
+
+      char buffer[256];
+      memset(buffer, 0, sizeof(buffer));
+      std::strncpy(buffer, tag.Name.Raw(), sizeof(buffer));
+      if (ImGui::InputText("##Tag", buffer, sizeof(buffer)))
+      {
+        tag = String(buffer);
+      }
+
+      ImGui::TreePop();
     }
   }
 

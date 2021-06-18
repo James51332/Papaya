@@ -114,6 +114,7 @@ namespace Papaya
     s_AsciiCapital[KeyTab] = 9;
     s_AsciiCapital[KeyEscape] = 27;
     s_AsciiCapital[KeyBackspace] = 8;
+    s_AsciiLowercase[KeySpace] = 32;
 
     s_AsciiLowercase[KeyA] = 97;
     s_AsciiLowercase[KeyB] = 98;
@@ -163,6 +164,7 @@ namespace Papaya
     s_AsciiLowercase[KeyTab] = 9;
     s_AsciiLowercase[KeyEscape] = 27;
     s_AsciiLowercase[KeyBackspace] = 8;
+    s_AsciiLowercase[KeySpace] = 32;
   }
 
   void Input::OnUpdate()
