@@ -8,7 +8,8 @@
 namespace Papaya
 {
 
-  Scene::Scene()
+  Scene::Scene(const String& name)
+    : m_Name(name)
   {
   
   }

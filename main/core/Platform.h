@@ -18,6 +18,7 @@ namespace Papaya
     // returns time in seconds
     static double GetSysTime();
     static String LoadFile(const String& path);
+    static void WriteFile(const String& path, const String& data);
 
   protected:
     static Scope<Platform> Create();

@@ -101,10 +101,10 @@ namespace Papaya
         }
       }
 
-      Input::OnUpdate(); // Update Input Class
-
       for (Layer* layer : m_LayerStack) // Update Layers
         layer->OnUpdate(timestep);
+
+      Input::OnUpdate(); // Update Input Class
       
       ImGuiRenderer::Begin(timestep);
       for (Layer* layer : m_LayerStack) // Render ImGui

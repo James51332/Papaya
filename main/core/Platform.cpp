@@ -45,6 +45,14 @@ String Platform::LoadFile(const String& path)
 	return ss.str().c_str();
 }
 
+void Platform::WriteFile(const String& path, const String& data)
+{
+  std::ofstream stream;
+  stream.open(path.Raw());
+  stream << data.Raw();
+  stream.close();
+}
+
 Scope<Platform> Platform::Create() {
 #ifdef PAPAYA_MACOS
   return CreateScope<CocoaPlatform>();

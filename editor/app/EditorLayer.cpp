@@ -84,6 +84,14 @@ namespace Papaya
     if (Papaya::Input::KeyDown(Papaya::KeyA))
       m_Camera.SetPosition(m_Camera.GetPosition() + glm::vec3(-4.0f * ts, 0.0f, 0.0f));
 
+    if (Input::KeyPressed(KeyF)) {
+      // We just set up the code to run from here 
+      // but this can be run from anywhere! This
+      // means we can add it to ImGui panels with
+      // only a few lines of code!
+      SceneSerializer::SerializeScene(m_Scene); 
+    }
+    
     if (Papaya::Input::KeyDown(Papaya::KeyLeft))
       m_Camera.SetRotation(static_cast<float>(m_Camera.GetRotation() - 200.0f * ts));
     if (Papaya::Input::KeyDown(Papaya::KeyRight))

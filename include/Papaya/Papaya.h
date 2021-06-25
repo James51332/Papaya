@@ -49,3 +49,4 @@
 #include "main/scene/Entity.h"
 #include "main/scene/Components.h"
 #include "main/scene/Scene.h"
+#include "main/scene/SceneSerializer.h"

@@ -1,4 +1,4 @@
-project "ImGui"
+project "yaml-cpp"
 	kind "StaticLib"
 	language "C++"
   cppdialect "C++17"
@@ -6,20 +6,12 @@ project "ImGui"
   targetdir ("../../bin/Papaya-%{cfg.system}-%{cfg.longname}")
   objdir ("../../bin-obj/Papaya-%{cfg.system}-%{cfg.longname}")
 
-	files
-	{
-		"imgui/imconfig.h",
-		"imgui/imgui.h",
-		"imgui/imgui.cpp",
-		"imgui/imgui_draw.cpp",
-		"imgui/imgui_internal.h",
-		"imgui/imgui_widgets.cpp",
-		"imgui/imgui_tables.cpp",
-		"imgui/imstb_rectpack.h",
-		"imgui/imstb_textedit.h",
-		"imgui/imstb_truetype.h",
-		"imgui/imgui_demo.cpp"
+	files {
+		"yaml-cpp/src/**.cpp",
+    "yaml-cpp/src/**.h",
 	}
+
+	includedirs "yaml-cpp/include"
 
 	filter "system:windows"
 		systemversion "latest"
@@ -28,6 +20,8 @@ project "ImGui"
     defines { "PAPAYA_MACOS", "GL_SILENCE_DEPRECATION", }
     buildoptions "-Wno-deprecated-declarations"
     xcodebuildsettings { ["ALWAYS_SEARCH_USER_PATHS"] = "YES" }
+
+		sysincludedirs "yaml-cpp/include"
 
 	filter "configurations:Debug"
 		runtime "Debug"

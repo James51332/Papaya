@@ -7,6 +7,7 @@ builddir = ("bin/Papaya-%{cfg.system}-%{cfg.longname}")
 objectdir = ("bin-obj/Papaya-%{cfg.system}-%{cfg.longname}")
 
 include "thirdparty/imgui"
+include "thirdparty/yaml-cpp"
 
 project "Papaya"
   location "Papaya"
@@ -36,6 +37,7 @@ project "Papaya"
     "thirdparty/opengl",
     "thirdparty/imgui",
     "thirdparty/entt/single_include",
+    "thirdparty/yaml-cpp/yaml-cpp/include",
     ".",
   }
 
@@ -66,6 +68,7 @@ project "Papaya"
       "thirdparty/stb_image",
       "thirdparty/imgui",
       "thirdparty/entt/single_include",
+      "thirdparty/yaml-cpp/yaml-cpp/include",
       ".",
     }
 
@@ -119,12 +122,14 @@ project "Editor"
     "thirdparty/opengl",
     "thirdparty/imgui",
     "thirdparty/entt/single_include",
+    "thirdparty/yaml-cpp/yaml-cpp/include",
     ".",
   }
   
   links {
     "Papaya",
     "ImGui",
+    "yaml-cpp",
   }
 
   filter "configurations:Debug"
@@ -151,6 +156,7 @@ project "Editor"
       "thirdparty/glm",
       "thirdparty/imgui",
       "thirdparty/entt/single_include",
+      "thirdparty/yaml-cpp/yaml-cpp/include",
       "."
     }
 
@@ -213,12 +219,14 @@ project "Sandbox"
     "thirdparty/opengl",
     "thirdparty/imgui",
     "thirdparty/entt/single_include",
+    "thirdparty/yaml-cpp/yaml-cpp/include",
     ".",
   }
   
   links {
     "Papaya",
     "ImGui",
+    "yaml-cpp",
   }
 
   filter "configurations:Debug"
@@ -245,6 +253,7 @@ project "Sandbox"
       "thirdparty/glm",
       "thirdparty/imgui",
       "thirdparty/entt/single_include",
+      "thirdparty/yaml-cpp/yaml-cpp/include",
       "."
     }
 

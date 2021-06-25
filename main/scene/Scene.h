@@ -11,20 +11,26 @@ namespace Papaya {
 
   class Entity;
   class SceneHierarchyPanel;
+  class SceneSerializer;
 
   class Scene {
     friend class Entity;
     friend class SceneHierarchyPanel;
+    friend class SceneSerializer;
   public:
-    Scene();
+    Scene(const String& name = "Untitled");
     ~Scene();
 
     Entity CreateEntity(const String& name = "Empty Entity");
+
+    const String& GetName() const { return m_Name; }
+    void SetName(const String& name) { m_Name = name; }
 
     void OnUpdate(Timestep ts, OrthographicCamera& camera); // Eventually the camera will become a component but it can remain seperate for now
     
   private:
     entt::registry m_Registry;
+    String m_Name;
   };
 
 } // namespace Papaya
