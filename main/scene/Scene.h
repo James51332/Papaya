@@ -23,6 +23,8 @@ namespace Papaya {
 
     Entity CreateEntity(const String& name = "Empty Entity");
 
+    void Reset(const String& name = "Untitled");
+
     const String& GetName() const { return m_Name; }
     void SetName(const String& name) { m_Name = name; }
 

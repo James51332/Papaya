@@ -26,6 +26,12 @@ namespace Papaya
     return e;
   }
 
+  void Scene::Reset(const String& name)
+  {
+    m_Name = name;
+    m_Registry.clear();
+  }
+
   void Scene::OnUpdate(Timestep ts, OrthographicCamera& camera)
   {
     // Basic System for rendering
@@ -37,7 +43,6 @@ namespace Papaya
     for (auto entity : group)
     {
       auto[transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
-      
       Renderer2D::DrawQuad(transform.GetTransform(), sprite.Color);
     }
 
