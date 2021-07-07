@@ -43,7 +43,10 @@ namespace Papaya
     for (auto entity : group)
     {
       auto[transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
-      Renderer2D::DrawQuad(transform.GetTransform(), sprite.Color);
+      if (sprite.Texture)
+        Renderer2D::DrawQuad(transform.GetTransform(), sprite.Texture, 1.0f, sprite.Color);
+      else
+        Renderer2D::DrawQuad(transform.GetTransform(), sprite.Color);
     }
 
     Renderer2D::EndScene();

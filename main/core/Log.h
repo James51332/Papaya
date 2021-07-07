@@ -5,8 +5,9 @@
 #include "spdlog/fmt/ostr.h"
 #pragma warning(pop)
 
-#include "main/utils/String.h"
 #include "main/utils/Memory.h"
+
+#include <cstring>
 
 namespace Papaya
 {
@@ -41,7 +42,7 @@ namespace Papaya
 #define PAPAYA_ASSERT(x, msg)                                                        \
   if (!x)                                                                            \
   {                                                                                  \
-    PAPAYA_CORE_ERROR(::Papaya::String("Failed Assert: ") + ::Papaya::String(#msg)); \
+    PAPAYA_CORE_ERROR(msg); \
   }
 
 #else

@@ -47,11 +47,11 @@ namespace Papaya {
 	struct SpriteRendererComponent
 	{
 		glm::vec4 Color;
-		// We'll add a texture to this eventually but it's not the primary concern
+		Ref<Texture2D> Texture;
 
 		SpriteRendererComponent() = default;
 		SpriteRendererComponent(const SpriteRendererComponent&) = default;
 		SpriteRendererComponent(const glm::vec4& color)
-			: Color(color) {}
+			: Color(color), Texture(nullptr) {}
 	};
 } // namespace Papaya

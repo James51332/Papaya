@@ -11,6 +11,7 @@
 
 #include "panels/SceneHierarchyPanel.h"
 #include "panels/PropertiesPanel.h"
+#include "panels/FilesPanel.h"
 
 namespace Papaya
 {
@@ -34,6 +35,7 @@ namespace Papaya
     Ref<Scene> m_Scene;
     SceneHierarchyPanel m_SceneHierarchyPanel;
     PropertiesPanel m_PropertiesPanel;
+    FilesPanel m_FilesPanel;
 
   };
 

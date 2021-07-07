@@ -14,6 +14,7 @@ namespace Papaya
     m_Scene = CreateRef<Scene>();
     m_SceneHierarchyPanel = SceneHierarchyPanel(m_Scene);
     m_PropertiesPanel = PropertiesPanel(m_Scene);
+    m_FilesPanel = FilesPanel(m_Scene);
   }
 
   EditorLayer::~EditorLayer()
@@ -46,6 +47,8 @@ namespace Papaya
 
     m_PropertiesPanel.SetSelectedEntity(m_SceneHierarchyPanel.GetSelectedEntity());
     m_PropertiesPanel.OnImGuiRender();
+
+    m_FilesPanel.OnImGuiRender();
 
     // Viewport
     ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, { 0,0 });

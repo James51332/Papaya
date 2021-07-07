@@ -1,5 +1,7 @@
 #include "String.h"
 
+#include "main/core/Log.h"
+
 namespace Papaya
 {
 
@@ -69,19 +71,53 @@ namespace Papaya
     return (*this);
   }
 
+  void String::MakeSubstring(uint32_t begin, uint32_t end)
+  {
+    char* tmp = new char[m_Size + 1];
+    strcpy(tmp, m_Buffer);
+
+    m_Size = static_cast<uint64_t>(end) - static_cast<uint64_t>(begin) + 1; // String("0123567").Substring(1, 3) has a size of 3
+    
+    delete[] m_Buffer;
+    m_Buffer = new char[m_Size + 1];
+    
+    tmp += begin;
+    memcpy(m_Buffer, tmp, m_Size); // we have to use memcpy here because of different sizes. (I think)
+    m_Buffer[m_Size] = 0;   
+  }
+
+  String String::Substring(uint32_t begin, uint32_t end)
+  {
+    int size = static_cast<uint64_t>(end) - static_cast<uint64_t>(begin) + 1;
+    char* buf = new char[size + 1];
+    memcpy(buf, m_Buffer + begin, size);
+    buf[size] = 0;
+    return buf;
+  }
+
   std::ostream &operator<<(std::ostream &stream, const String &string)
   {
     return stream << string.m_Buffer;
   }
 
-  String operator+(const String &string, const String &other)
+  String operator+(const String& string, const String& other)
   {
-    char *buffer = new char[string.m_Size + other.m_Size + 1];
+    char* buffer = new char[string.m_Size + other.m_Size + 1];
 
     strcpy(buffer, string.m_Buffer);
     strcat(buffer, other.m_Buffer);
 
     return buffer;
+  }
+
+  bool operator==(const String& string, const String& other)
+  {
+    return !strcmp(string.m_Buffer, other.m_Buffer);
+  }
+
+  bool operator!=(const String& string, const String& other)
+  {
+    return !(string == other);
   }
 
 } // namespace Papaya

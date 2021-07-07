@@ -1,5 +1,7 @@
 #pragma once
 
+#include "main/core/Log.h"
+
 #include <ostream>
 #include <cstring>
 
@@ -23,8 +25,18 @@ namespace Papaya
     std::size_t Length() const { return m_Size; }
     const char *Raw() const { return m_Buffer; }
 
+    void MakeSubstring(uint32_t begin, uint32_t end);
+    String Substring(uint32_t begin, uint32_t end);
+
     friend std::ostream &operator<<(std::ostream &stream, const String &string);
     friend String operator+(const String &string, const String &other);
+    friend bool operator==(const String& string, const String& other);
+    friend bool operator!=(const String& string, const String& other);
+
+    char& operator[](int index) { PAPAYA_ASSERT((index >= 0) && (index < m_Size), "String index out of bounds!"); return m_Buffer[index]; }
+    char operator[](int index) const { PAPAYA_ASSERT((index >= 0) && (index < m_Size), "String index out of bounds!"); return m_Buffer[index]; }
+
+    // TODO: Create begin() and end() methods
 
   private:
     char *m_Buffer;
