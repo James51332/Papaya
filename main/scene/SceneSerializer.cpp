@@ -8,9 +8,7 @@
 
 namespace Papaya {
 
-  YAML::Emitter& operator<<(YAML::Emitter& emitter, const String& string) {
-    return emitter << string.Raw();
-  }
+  // OPERATORS
 
   YAML::Emitter& operator<<(YAML::Emitter& emitter, const glm::vec3& vector) {
     return emitter << YAML::Flow << YAML::BeginSeq << vector.x << vector.y << vector.z << YAML::EndSeq;
@@ -18,6 +16,10 @@ namespace Papaya {
 
   YAML::Emitter& operator<<(YAML::Emitter& emitter, const glm::vec4& vector) {
     return emitter << YAML::Flow << YAML::BeginSeq << vector.x << vector.y << vector.z << vector.w << YAML::EndSeq;
+  }
+
+  YAML::Emitter& operator<<(YAML::Emitter& emitter, const String& string) {
+    return emitter << string.Raw();
   }
 
   YAML::Emitter& operator<<(YAML::Emitter& out, Entity& entity) {
@@ -52,13 +54,15 @@ namespace Papaya {
     return out;
   }
 
+  // IMPLEMENTATION
+
   void SceneSerializer::SerializeScene(Ref<Scene>& scene)
   {
     YAML::Emitter out;
     
     out << YAML::BeginMap;
 
-    out << YAML::Key << "Scene" << YAML::Value << scene->GetName().Raw();    
+    out << YAML::Key << "Scene" << YAML::Value << scene->GetName();    
     out << YAML::Key << "Entities" << YAML::BeginSeq;
     scene->m_Registry.each([&](entt::entity e) {
       Entity entity = { scene.get(), e };
@@ -70,6 +74,8 @@ namespace Papaya {
 
     Papaya::Platform::WriteFile(scene->GetName() + ".pscene", out.c_str());
   }
+
+  // OPERATORS
 
   void operator>>(const YAML::Node& node, glm::vec3& rhs)
   {
@@ -97,6 +103,8 @@ namespace Papaya {
     rhs = node.Scalar().c_str(); // Unfortunately YAML-cpp uses std::string internally so we need this work around
   }
 
+  // OPERATORS
+
   void SceneSerializer::DeserializeScene(Ref<Scene>& scene, const String& filePath)
   {
     YAML::Node data = YAML::LoadFile(filePath.Raw());
@@ -118,7 +126,7 @@ namespace Papaya {
         if (tagComponent)
           tagComponent["Name"] >> name;
 
-        PAPAYA_CORE_TRACE("Deserialized entity with ID = {0}, name = {1}", uuid, name);
+        //PAPAYA_CORE_TRACE("Deserialized entity with ID = {0}, name = {1}", uuid, name);
 
         Entity deserializedEntity = scene->CreateEntity(name);
 
