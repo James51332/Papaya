@@ -28,7 +28,7 @@ namespace Papaya
     virtual void OnImGuiRender() override;
     virtual void OnUpdate(Timestep ts) override;
   private:
-    OrthographicCamera m_Camera;
+    Camera m_EditorCamera;
     Ref<Framebuffer> m_Framebuffer;
     glm::vec2 m_ViewportSize, m_LastViewportSize;
 

@@ -21,7 +21,7 @@ namespace Papaya
     static void OnInit();
     static void OnTerminate();
 
-    static void Begin(const OrthographicCamera &camera);
+    static void Begin(const Camera &camera);
 
     static void Submit(const std::vector<Ref<Buffer>> &vertexBuffers,
                        const Ref<PipelineState> pipelineState,

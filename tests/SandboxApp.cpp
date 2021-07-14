@@ -92,7 +92,7 @@ public:
   }
 
 private:
-  Papaya::OrthographicCamera m_Camera;
+  Papaya::Camera m_EditorCamera;
   Papaya::Ref<Papaya::Texture2D> m_Texture;
   Papaya::Ref<Papaya::Texture2D> m_Checkerboard;
   Papaya::Ref<Papaya::Framebuffer> m_Framebuffer;

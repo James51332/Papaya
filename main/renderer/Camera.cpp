@@ -5,19 +5,19 @@
 namespace Papaya
 {
 
-  OrthographicCamera::OrthographicCamera(float left, float right, float bottom, float top)
-      : m_ProjectionMatrix(glm::ortho(left, right, bottom, top, -1.0f, 1.0f)), m_ViewMatrix(1.0f)
+  Camera::Camera(const glm::mat4& projection)
+    : m_Projection(projection), m_View(1.0f), m_Position(0.0f), m_Rotation(0.0f)
   {
-    m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
+    m_ViewProjection = m_Projection * m_View; // column major is backwards. First we translate, then we distort into 3d space.
   }
 
-  void OrthographicCamera::SetProjection(float left, float right, float bottom, float top)
+  void Camera::SetProjectionMatrix(const glm::mat4& projection)
   {
-    m_ProjectionMatrix = glm::ortho(left, right, bottom, top, -1.0f, 1.0f);
-    m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
+    m_Projection = projection;
+    m_ViewProjection = m_Projection * m_View;
   }
 
-  void OrthographicCamera::RecalculateViewMatrix()
+  void Camera::RecalculateViewMatrix()
   {
     // First Rotate
     // Second Translate
@@ -27,8 +27,8 @@ namespace Papaya
     glm::mat4 transform = glm::translate(glm::mat4(1.0f), m_Position) *
                           glm::rotate(glm::mat4(1.0f), glm::radians(-m_Rotation), glm::vec3(0, 0, 1));
 
-    m_ViewMatrix = glm::inverse(transform);
-    m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
+    m_View = glm::inverse(transform);
+    m_ViewProjection = m_Projection * m_View;
   }
 
 } // namespace Papaya

@@ -1,23 +1,20 @@
 #pragma once
 
-#include <glm/matrix.hpp>
+#include <glm/glm.hpp>
 
 namespace Papaya
 {
 
-  ////////////////////////////////////////////
-  ///// CocoaContext /////////////////////////
-  ////////////////////////////////////////////
-
-  class OrthographicCamera
-  {
+  class Camera {
   public:
-    OrthographicCamera(float left, float right, float bottom, float top);
+    Camera(const glm::mat4& projection);
+    ~Camera() = default;
 
-    void SetProjection(float left, float right, float bottom, float top);
+    void SetProjectionMatrix(const glm::mat4& projection);
+    const glm::mat4& GetViewProjectionMatrix() const { return m_ViewProjection; }
 
-    const glm::vec3 &GetPosition() const { return m_Position; }
-    void SetPosition(const glm::vec3 &position)
+    const glm::vec3& GetPosition() const { return m_Position; }
+    void SetPosition(const glm::vec3& position)
     {
       m_Position = position;
       RecalculateViewMatrix();
@@ -30,20 +27,16 @@ namespace Papaya
       RecalculateViewMatrix();
     }
 
-    const glm::mat4 &GetProjectionMatrix() const { return m_ProjectionMatrix; }
-    const glm::mat4 &GetViewMatrix() const { return m_ViewMatrix; }
-    const glm::mat4 &GetViewProjectionMatrix() const { return m_ViewProjectionMatrix; }
-
   private:
     void RecalculateViewMatrix();
 
   private:
-    glm::mat4 m_ProjectionMatrix;
-    glm::mat4 m_ViewMatrix;
-    glm::mat4 m_ViewProjectionMatrix;
+    glm::mat4 m_View;
+    glm::mat4 m_Projection;
+    glm::mat4 m_ViewProjection;
 
-    glm::vec3 m_Position = {0.0f, 0.0f, 0.0f};
-    float m_Rotation = 0.0f;
+    glm::vec3 m_Position;
+    float m_Rotation;
   };
 
 } // namespace Papaya

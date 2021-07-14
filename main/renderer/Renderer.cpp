@@ -24,7 +24,7 @@ namespace Papaya
     ImGuiRenderer::OnTerminate();
   }
 
-  void Renderer::Begin(const OrthographicCamera &camera)
+  void Renderer::Begin(const Camera &camera)
   {
     s_ViewProjection = camera.GetViewProjectionMatrix();
   }

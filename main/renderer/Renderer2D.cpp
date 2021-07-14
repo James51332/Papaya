@@ -192,7 +192,7 @@ namespace Papaya
     delete[] s_Data.QuadVertexBufferBase;
   }
 
-  void Renderer2D::BeginScene(const OrthographicCamera& camera)
+  void Renderer2D::BeginScene(const Camera& camera)
   {
     s_Data.QuadPipelineState->GetShader()->Bind();
     s_Data.QuadPipelineState->GetShader()->SetMat4("u_ViewProjection", camera.GetViewProjectionMatrix());

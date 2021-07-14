@@ -32,7 +32,7 @@ namespace Papaya
     m_Registry.clear();
   }
 
-  void Scene::OnUpdate(Timestep ts, OrthographicCamera& camera)
+  void Scene::OnUpdate(Timestep ts, Camera& camera)
   {
     // Basic System for rendering
     // until we flesh out more components and move this to a seperate class.

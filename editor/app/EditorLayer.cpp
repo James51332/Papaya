@@ -1,10 +1,12 @@
 #include "EditorLayer.h"
 
+#include <glm/gtc/matrix_transform.hpp>
+
 namespace Papaya
 {
 
   EditorLayer::EditorLayer()
-    : m_Camera(-16.0f, 16.0f, -9.0f, 9.0f), Layer("EditorLayer")
+    : m_EditorCamera(glm::ortho(-16.0f, 16.0f, -9.0f, 9.0f)), Layer("EditorLayer")
   {
     Papaya::FramebufferDesc desc;
     desc.Width = 1280;
@@ -36,7 +38,7 @@ namespace Papaya
     Papaya::EventDispatcher::Dispatch<Papaya::WindowResizeEvent>(event, [&](Papaya::WindowResizeEvent* event) {
       float width = (1.6f / 1200.0f) * m_ViewportSize.x;
       float height = (1.6f / 1200.0f) * m_ViewportSize.y;
-      m_Camera.SetProjection(-width, width, -height, height);
+      m_EditorCamera.SetProjectionMatrix(glm::ortho(-width, width, -height, height));
       });
   }
   
@@ -75,17 +77,17 @@ namespace Papaya
 
       float width = (1.6f / 1200.0f) * m_ViewportSize.x;
       float height = (1.6f / 1200.0f) * m_ViewportSize.y;
-      m_Camera.SetProjection(-width, width, -height, height);
+      m_EditorCamera.SetProjectionMatrix(glm::ortho(-width, width, -height, height));
     }
 
-    if (Papaya::Input::KeyDown(Papaya::KeyW))
-      m_Camera.SetPosition(m_Camera.GetPosition() + glm::vec3(0.0f, 4.0f * ts, 0.0f));
-    if (Papaya::Input::KeyDown(Papaya::KeyS))
-      m_Camera.SetPosition(m_Camera.GetPosition() + glm::vec3(0.0f, -4.0f * ts, 0.0f));
-    if (Papaya::Input::KeyDown(Papaya::KeyD))
-      m_Camera.SetPosition(m_Camera.GetPosition() + glm::vec3(4.0f * ts, 0.0f, 0.0f));
-    if (Papaya::Input::KeyDown(Papaya::KeyA))
-      m_Camera.SetPosition(m_Camera.GetPosition() + glm::vec3(-4.0f * ts, 0.0f, 0.0f));
+    if (Input::KeyDown(Papaya::KeyW))
+      m_EditorCamera.SetPosition(m_EditorCamera.GetPosition() + glm::vec3(0.0f, 4.0f * ts, 0.0f));
+    if (Input::KeyDown(Papaya::KeyS))
+      m_EditorCamera.SetPosition(m_EditorCamera.GetPosition() + glm::vec3(0.0f, -4.0f * ts, 0.0f));
+    if (Input::KeyDown(Papaya::KeyD))
+      m_EditorCamera.SetPosition(m_EditorCamera.GetPosition() + glm::vec3(4.0f * ts, 0.0f, 0.0f));
+    if (Input::KeyDown(Papaya::KeyA))
+      m_EditorCamera.SetPosition(m_EditorCamera.GetPosition() + glm::vec3(-4.0f * ts, 0.0f, 0.0f));
 
     if (Input::KeyPressed(KeyF)) {
       // We just set up the code to run from here 
@@ -104,9 +106,9 @@ namespace Papaya
     }
     
     if (Papaya::Input::KeyDown(Papaya::KeyLeft))
-      m_Camera.SetRotation(static_cast<float>(m_Camera.GetRotation() - 200.0f * ts));
+      m_EditorCamera.SetRotation(static_cast<float>(m_EditorCamera.GetRotation() - 200.0f * ts));
     if (Papaya::Input::KeyDown(Papaya::KeyRight))
-      m_Camera.SetRotation(static_cast<float>(m_Camera.GetRotation() + 200.0f * ts));
+      m_EditorCamera.SetRotation(static_cast<float>(m_EditorCamera.GetRotation() + 200.0f * ts));
 
     Papaya::RenderCommand::ClearColor(0.1f, 0.1f, 0.1f, 1.1f);
     Papaya::RenderCommand::Clear();
@@ -119,7 +121,7 @@ namespace Papaya
     RenderCommand::ClearColor(0.0f, 0.0f, 0.0f);
     RenderCommand::Clear();
 
-    m_Scene->OnUpdate(ts, m_Camera);
+    m_Scene->OnUpdate(ts, m_EditorCamera);
     
     m_Framebuffer->Unbind();
   }

@@ -15,7 +15,7 @@ namespace Papaya
     friend class Renderer;
 
   public:
-    static void BeginScene(const OrthographicCamera& camera);
+    static void BeginScene(const Camera& camera);
     static void EndScene();
 
     // These are the two base function all other public functions call

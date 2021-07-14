@@ -28,7 +28,7 @@ namespace Papaya {
     const String& GetName() const { return m_Name; }
     void SetName(const String& name) { m_Name = name; }
 
-    void OnUpdate(Timestep ts, OrthographicCamera& camera); // Eventually the camera will become a component but it can remain seperate for now
+    void OnUpdate(Timestep ts, Camera& camera); // Eventually the camera will become a component but it can remain seperate for now
     
   private:
     entt::registry m_Registry;
