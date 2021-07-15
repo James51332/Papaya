@@ -190,7 +190,7 @@ namespace Papaya
 
     AdjustWindowRectEx(&size, style, FALSE, 0);
 
-    m_Hwnd = ::CreateWindowEx(NULL,
+    m_Hwnd = ::CreateWindowEx(0,
                               "PapayaWindow",
                               attribs.Title.Raw(),
                               style,
