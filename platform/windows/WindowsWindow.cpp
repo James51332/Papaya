@@ -10,6 +10,10 @@
 
 #include <windowsx.h>
 
+#if defined(__GCC__) // This is why MinGW sucks
+#define WM_MOUSEHWHEEL                  0x020E
+#endif
+
 LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
   switch (msg)
