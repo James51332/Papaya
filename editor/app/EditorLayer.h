@@ -31,6 +31,7 @@ namespace Papaya
     Camera m_EditorCamera;
     Ref<Framebuffer> m_Framebuffer;
     glm::vec2 m_ViewportSize, m_LastViewportSize;
+    bool m_Runtime = false;
 
     Ref<Scene> m_Scene;
     SceneHierarchyPanel m_SceneHierarchyPanel;

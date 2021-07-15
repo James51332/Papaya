@@ -57,9 +57,14 @@ namespace Papaya {
     {
       if (ImGui::BeginMenu("Add Component"))
       {
-        if (ImGui::MenuItem("SpriteRenderer Component"))
+        if (ImGui::MenuItem("SpriteRenderer Component") && !e.HasComponent<SpriteRendererComponent>())
         {
           e.AddComponent<SpriteRendererComponent>(glm::vec4(1.0f));
+        }
+
+        if (ImGui::MenuItem("Camera Component") && !e.HasComponent<CameraComponent>())
+        {
+          e.AddComponent<CameraComponent>();
         }
       
         ImGui::EndMenu();

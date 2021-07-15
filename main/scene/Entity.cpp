@@ -20,5 +20,13 @@ namespace Papaya {
     m_Scene->m_Registry.destroy(m_EntityHandle);
   }
 
+  bool Entity::Valid() const
+  {
+    if (m_Scene)
+      return m_Scene->m_Registry.valid(m_EntityHandle);
+    else
+      return false;
+  }
+
 
 } // namespace Papaya

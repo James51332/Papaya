@@ -30,6 +30,7 @@ namespace Papaya {
     const String& GetName() const { return m_Name; }
     void SetName(const String& name) { m_Name = name; }
     void SetSceneCamera(Entity e);
+    void SetViewportSize(uint32_t width, uint32_t height);
 
     void OnUpdate(Timestep ts, Camera& camera);
     void OnUpdateRuntime(Timestep ts);

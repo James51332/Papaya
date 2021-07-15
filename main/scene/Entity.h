@@ -17,6 +17,7 @@ namespace Papaya {
     Entity(const Entity&) = default;
 
     void Destroy();
+    bool Valid() const;
 
     template<typename T>
     bool HasComponent()
@@ -45,7 +46,8 @@ namespace Papaya {
       m_Scene->m_Registry.remove<T>(m_EntityHandle);
     }
 
-    operator bool() const { return m_EntityHandle != entt::null; }
+
+    operator bool() const { return Valid(); }
     operator uint32_t() const { return static_cast<uint32_t>(m_EntityHandle); }
     bool operator==(const Entity& e) const { return m_EntityHandle == e.m_EntityHandle; }
     bool operator==(Entity& e) { return m_EntityHandle == e.m_EntityHandle; }

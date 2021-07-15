@@ -120,15 +120,14 @@ namespace Papaya
       auto& camera = e.GetComponent<CameraComponent>();
 
       float zoom = camera.Zoom;
-      ImGui::DragFloat("Zoom", &camera.Zoom);
+      ImGui::DragFloat("Zoom", &camera.Zoom, 0.05f, 0.01f, 1000.f);
       if (zoom != camera.Zoom)
         camera.RefreshProjection();
 
-      //ImGui::
-      if (ImGui::Button("Make Active"))
-      {
+      bool active = camera.IsActive();
+      ImGui::Checkbox("Active", &active);
+      if (active)
         m_Scene->SetSceneCamera(e);
-      }
 
       ImGui::TreePop();
     }
