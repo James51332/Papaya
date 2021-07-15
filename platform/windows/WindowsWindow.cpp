@@ -10,7 +10,7 @@
 
 #include <windowsx.h>
 
-#if defined(__GCC__) // This is why MinGW sucks
+#if defined(__MINGW64__) // This is why MinGW sucks
 #define WM_MOUSEHWHEEL                  0x020E
 #endif
 
