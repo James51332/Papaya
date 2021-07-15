@@ -66,7 +66,8 @@ namespace Papaya
 
   void EditorCamera::RecalculateProjectionMatrix()
   {
-    SetProjectionMatrix(glm::perspective(m_FOV, m_Width / m_Height, m_Near, m_Far));
+    float aspect = m_Width / m_Height;
+    SetProjectionMatrix(glm::perspective(m_FOV, aspect > 0 ? aspect : 1, m_Near, m_Far));
   }
 
 } // namespace Papaya
