@@ -205,13 +205,12 @@ namespace Papaya
   {
   }
 
-  void ImGuiRenderer::Begin(Timestep ts) {
-    // Create a global window for docking
+  void ImGuiRenderer::Begin(Timestep ts) 
+  {
     ImGuiIO& io = ImGui::GetIO();
     io.DeltaTime = static_cast<float>(ts);
 
     ImGui::NewFrame();
-    ImGui::DockSpaceOverViewport(ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
   }
 
   void ImGuiRenderer::End()

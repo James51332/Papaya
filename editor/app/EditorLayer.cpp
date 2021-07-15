@@ -1,12 +1,13 @@
 #include "EditorLayer.h"
 
+#include <imgui/imgui.h>
 #include <glm/gtc/matrix_transform.hpp>
 
 namespace Papaya
 {
 
   EditorLayer::EditorLayer()
-    : m_EditorCamera(glm::ortho(-16.0f, 16.0f, -9.0f, 9.0f)), Layer("EditorLayer")
+    : Layer("EditorLayer")
   {
     Papaya::FramebufferDesc desc;
     desc.Width = 1280;
@@ -39,6 +40,17 @@ namespace Papaya
 
   void EditorLayer::OnImGuiRender()
   {
+    ImGui::BeginMainMenuBar();
+    if (ImGui::BeginMenu("File"))
+    {
+      if (ImGui::MenuItem("Save Scene"))
+      {
+
+      }
+      ImGui::EndMenu();
+    }
+    ImGui::EndMainMenuBar();
+    ImGui::DockSpaceOverViewport(ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
 
     m_SceneHierarchyPanel.OnImGuiRender();
 
@@ -71,41 +83,28 @@ namespace Papaya
   {
     if (m_ViewportSize != m_LastViewportSize)
     {
-      m_Framebuffer->Resize(static_cast<uint32_t>(m_ViewportSize.x), static_cast<uint32_t>(m_ViewportSize.y));
+      uint32_t width = static_cast<uint32_t>(m_ViewportSize.x);
+      uint32_t height = static_cast<uint32_t>(m_ViewportSize.y);
 
-      float width = (1.6f / 1200.0f) * m_ViewportSize.x;
-      float height = (1.6f / 1200.0f) * m_ViewportSize.y;
-      m_EditorCamera.SetProjectionMatrix(glm::ortho(-width, width, -height, height));
-      m_Scene->SetViewportSize(m_ViewportSize.x, m_ViewportSize.y);
+      m_Framebuffer->Resize(width, height);
+      m_EditorCamera.SetViewportSize(width, height);
+      m_Scene->SetViewportSize(width, height);
     }
 
+    // We just set up the code to run from here 
+    // but this can be run from anywhere! This
+    // means we can add it to ImGui panels with
+    // only a few lines of code!
     if (!m_Runtime)
     {
-      if (Input::KeyDown(Papaya::KeyW))
-        m_EditorCamera.SetPosition(m_EditorCamera.GetPosition() + glm::vec3(0.0f, 4.0f * ts, 0.0f));
-      if (Input::KeyDown(Papaya::KeyS))
-        m_EditorCamera.SetPosition(m_EditorCamera.GetPosition() + glm::vec3(0.0f, -4.0f * ts, 0.0f));
-      if (Input::KeyDown(Papaya::KeyD))
-        m_EditorCamera.SetPosition(m_EditorCamera.GetPosition() + glm::vec3(4.0f * ts, 0.0f, 0.0f));
-      if (Input::KeyDown(Papaya::KeyA))
-        m_EditorCamera.SetPosition(m_EditorCamera.GetPosition() + glm::vec3(-4.0f * ts, 0.0f, 0.0f));
-      if (Input::KeyDown(Papaya::KeyLeft))
-        m_EditorCamera.SetRotation(static_cast<float>(m_EditorCamera.GetRotation() - 200.0f * ts));
-      if (Input::KeyDown(Papaya::KeyRight))
-        m_EditorCamera.SetRotation(static_cast<float>(m_EditorCamera.GetRotation() + 200.0f * ts));
-
       if (Input::KeyPressed(KeyF))
-      {
-        // We just set up the code to run from here 
-        // but this can be run from anywhere! This
-        // means we can add it to ImGui panels with
-        // only a few lines of code!
         SceneSerializer::SerializeScene(m_Scene);
-      }
-
       if (Input::KeyPressed(KeyL))
         SceneSerializer::DeserializeScene(m_Scene, "Untitled.pscene");
     }
+
+    m_EditorCamera.OnUpdate(ts, m_Runtime);
+    m_EditorCamera.SetPosition({ 0.0f, 0.0f, 10.0f });
 
     Papaya::RenderCommand::ClearColor(0.1f, 0.1f, 0.1f, 1.1f);
     Papaya::RenderCommand::Clear();

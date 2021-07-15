@@ -1,5 +1,6 @@
 #include "Scene.h"
 
+#include "Entity.h"
 #include "Components.h"
 
 #include "main/renderer/Renderer2D.h"
@@ -12,8 +13,8 @@ namespace Papaya
   Scene::Scene(const String& name)
     : m_Name(name)
   {
-    m_CameraEntity = CreateEntity("Camera");
-    m_CameraEntity.AddComponent<CameraComponent>();
+    m_CameraEntity = static_cast<entt::entity>(CreateEntity("Camera"));
+    m_Registry.emplace<CameraComponent>(m_CameraEntity);
   }
 
   Scene::~Scene()
@@ -32,9 +33,8 @@ namespace Papaya
   void Scene::Reset(const String& name)
   {
     m_Registry.clear();
-    PAPAYA_CORE_TRACE("Is registry emptied: {}", m_Registry.empty());
     m_Name = name;
-    m_CameraEntity = { nullptr, entt::null };
+    m_CameraEntity = entt::null;
   }
 
   void Scene::OnUpdate(Timestep ts, Camera& camera)
@@ -42,9 +42,9 @@ namespace Papaya
     // Basic System for rendering
     // until we flesh out more components and move this to a seperate class.
 
-    Renderer2D::BeginScene(camera);
+    Renderer2D::BeginScene(camera);// , glm::mat4(1.0f));
 
-    auto& group = m_Registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
+    auto group = m_Registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
     for (auto entity : group)
     {
       auto[transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
@@ -65,32 +65,35 @@ namespace Papaya
       return;
     }
 
-    auto& view = m_Registry.view<CameraComponent>();
+    auto view = m_Registry.view<CameraComponent>();
     for (auto entity : view)
       m_Registry.get<CameraComponent>(entity).m_Primary = false;
 
-    m_CameraEntity = e;
-    m_CameraEntity.GetComponent<CameraComponent>().m_Primary = true;
+    m_CameraEntity = static_cast<entt::entity>(e);
+    m_Registry.get<CameraComponent>(m_CameraEntity).m_Primary = true;
   }
 
   void Scene::SetViewportSize(uint32_t width, uint32_t height)
   {
-    auto& cam = m_CameraEntity.GetComponent<CameraComponent>();
+    auto& cam = m_Registry.get<CameraComponent>(m_CameraEntity);
     cam.Aspect = static_cast<float>(width) / static_cast<float>(height);
-    PAPAYA_TRACE("TESt {}", cam.Aspect);
     cam.RefreshProjection();
   }
 
   void Scene::OnUpdateRuntime(Timestep ts)
   {
-    PAPAYA_ASSERT(m_CameraEntity, "Scene does not have a main camera!");
+    if (!m_Registry.valid(m_CameraEntity))
+    {
+      PAPAYA_ASSERT(false, "Scene does not have a main camera!");
+      return;
+    }
 
-    SceneCamera& camera = m_CameraEntity.GetComponent<CameraComponent>().Camera;
-    auto& transform = m_CameraEntity.GetComponent<TransformComponent>();
+    SceneCamera& camera = m_Registry.get<CameraComponent>(m_CameraEntity).Camera;
+    auto& transform = m_Registry.get<TransformComponent>(m_CameraEntity);
     glm::mat4 noScaleTransform = glm::translate(glm::mat4(1.0f), transform.Translation) * glm::toMat4(glm::quat(transform.Rotation));
     Renderer2D::BeginScene(camera, noScaleTransform);
 
-    auto& group = m_Registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
+    auto group = m_Registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
     for (auto entity : group)
     {
       auto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);

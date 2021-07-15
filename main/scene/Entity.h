@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Scene.h"
+
 #include "main/core/Log.h"
 
 #include <entt/entt.hpp>
@@ -49,6 +51,7 @@ namespace Papaya {
 
     operator bool() const { return Valid(); }
     operator uint32_t() const { return static_cast<uint32_t>(m_EntityHandle); }
+    operator entt::entity() const { return m_EntityHandle;  }
     bool operator==(const Entity& e) const { return m_EntityHandle == e.m_EntityHandle; }
     bool operator==(Entity& e) { return m_EntityHandle == e.m_EntityHandle; }
 

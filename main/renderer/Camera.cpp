@@ -1,6 +1,12 @@
 #include "Camera.h"
 
+#include "main/core/Log.h"
+
 #include <glm/gtc/matrix_transform.hpp>
+#define GLM_ENABLE_EXPERIMENTAL
+#include <glm/gtx/quaternion.hpp>
+
+#include <iostream>
 
 namespace Papaya
 {
@@ -22,12 +28,17 @@ namespace Papaya
     // First Rotate
     // Second Translate
     // Third Invert (TODO: Consider Taking Negative Positions instead of inverting)
-    // Four Project
+    // Fourth Calculate ViewProjection
 
     glm::mat4 transform = glm::translate(glm::mat4(1.0f), m_Position) *
                           glm::rotate(glm::mat4(1.0f), glm::radians(-m_Rotation), glm::vec3(0, 0, 1));
 
     m_View = glm::inverse(transform);
+    m_ViewProjection = m_Projection * m_View;
+  }
+
+  void Camera::RecalculateViewProjectionMatrix()
+  {
     m_ViewProjection = m_Projection * m_View;
   }
 

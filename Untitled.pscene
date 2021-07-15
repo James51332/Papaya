@@ -1,15 +1,23 @@
 Scene: Untitled
 Entities:
-  - Entity: 4
-    TagComponent:
-      Name: Player
-    TransformComponent:
-      Translation: [0, -0.150000006, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.25, 0.649999976, 1]
-    SpriteRendererComponent:
-      Color: [0.334883749, 0.271022201, 0.271022201, 1]
   - Entity: 3
+    TagComponent:
+      Name: Camera
+    TransformComponent:
+      Translation: [0, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    CameraComponent:
+      Zoom: 1
+      Active: true
+  - Entity: 2
+    TagComponent:
+      Name: Dummy
+    TransformComponent:
+      Translation: [0, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+  - Entity: 1
     TagComponent:
       Name: Ground
     TransformComponent:
@@ -18,20 +26,12 @@ Entities:
       Scale: [2.3499999, 0.5, 1]
     SpriteRendererComponent:
       Color: [0.167478964, 0.446511626, 0.0913791284, 1]
-  - Entity: 2
-    TagComponent:
-      Name: Dummy
-    TransformComponent:
-      Translation: [0, 0, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
   - Entity: 0
     TagComponent:
-      Name: Camera
+      Name: Player
     TransformComponent:
-      Translation: [0, 0, 0]
+      Translation: [0, -0.150000006, 0]
       Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    CameraComponent:
-      Zoom: 1.0
-      Active: true
+      Scale: [0.25, 0.649999976, 1]
+    SpriteRendererComponent:
+      Color: [0.334883749, 0.271022201, 0.271022201, 1]

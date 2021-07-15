@@ -2,6 +2,7 @@
 
 #pragma warning(push, 0)
 #include "spdlog/sinks/stdout_color_sinks.h"
+//#include "spdlog/sinks/ostream_sink.h" // TODO: In release and dist builds for the editor we can log into an ImGui window!
 #pragma warning(pop)
 
 namespace Papaya

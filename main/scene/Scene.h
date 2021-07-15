@@ -1,7 +1,5 @@
 #pragma once
 
-#include "Entity.h"
-
 #include "main/core/Timestep.h"
 #include "main/renderer/Camera.h"
 
@@ -12,8 +10,6 @@
 namespace Papaya {
 
   class Entity;
-  class SceneHierarchyPanel;
-  class SceneSerializer;
 
   class Scene {
     friend class Entity;
@@ -37,8 +33,8 @@ namespace Papaya {
 
   private:
     entt::registry m_Registry;
+    entt::entity m_CameraEntity{ entt::null };
     String m_Name;
-    Entity m_CameraEntity;
   };
 
 } // namespace Papaya

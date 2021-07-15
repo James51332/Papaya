@@ -5,11 +5,16 @@
 namespace Papaya
 {
 
+  enum class CameraType {
+    Orthographic,
+    Perspective
+  };
+
   class Camera {
   public:
     Camera() = default;
     Camera(const glm::mat4& projection);
-    ~Camera() = default;
+    virtual ~Camera() = default;
 
     void SetProjectionMatrix(const glm::mat4& projection);
     const glm::mat4& GetViewProjectionMatrix() const { return m_ViewProjection; }
@@ -29,16 +34,16 @@ namespace Papaya
       RecalculateViewMatrix();
     }
 
-  private:
-    void RecalculateViewMatrix();
-
   protected:
-    glm::mat4 m_View;
-    glm::mat4 m_Projection;
-    glm::mat4 m_ViewProjection;
+    void RecalculateViewMatrix();
+    void RecalculateViewProjectionMatrix();
+  protected:
+    glm::mat4 m_View = glm::mat4(1.0f);
+    glm::mat4 m_Projection = glm::mat4(1.0f);
+    glm::mat4 m_ViewProjection = glm::mat4(1.0f);
 
-    glm::vec3 m_Position;
-    float m_Rotation;
+    glm::vec3 m_Position = glm::vec3(0.0f);
+    float m_Rotation = 0.0f;
   };
 
 } // namespace Papaya

@@ -3,12 +3,8 @@
 #include <Papaya/Papaya.h>
 
 #include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
 
-#include <imgui/imgui.h>
-
-#include <entt/entt.hpp>
-
+#include "EditorCamera.h"
 #include "panels/SceneHierarchyPanel.h"
 #include "panels/PropertiesPanel.h"
 #include "panels/FilesPanel.h"
@@ -28,7 +24,7 @@ namespace Papaya
     virtual void OnImGuiRender() override;
     virtual void OnUpdate(Timestep ts) override;
   private:
-    Camera m_EditorCamera;
+    EditorCamera m_EditorCamera;
     Ref<Framebuffer> m_Framebuffer;
     glm::vec2 m_ViewportSize, m_LastViewportSize;
     bool m_Runtime = false;
