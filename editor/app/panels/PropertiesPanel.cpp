@@ -25,7 +25,7 @@ namespace Papaya
     if (m_Open)
     {
       ImGui::Begin("Properties");
-  
+
       if (m_SelectedEntity) {
 
         // TAG
@@ -33,12 +33,16 @@ namespace Papaya
           ShowTagMenu(m_SelectedEntity);
 
         // TRANSFORM
-				if (m_SelectedEntity.HasComponent<TransformComponent>())
+        if (m_SelectedEntity.HasComponent<TransformComponent>())
           ShowTransformMenu(m_SelectedEntity);
 
         // SPRITE RENDERER
         if (m_SelectedEntity.HasComponent<SpriteRendererComponent>())
           ShowSpriteMenu(m_SelectedEntity);
+
+        // CAMERA
+        if (m_SelectedEntity.HasComponent<CameraComponent>())
+          ShowCameraMenu(m_SelectedEntity);
 
       }
 
@@ -99,6 +103,32 @@ namespace Papaya
       auto& sprite = e.GetComponent<SpriteRendererComponent>();
 
       ImGui::ColorEdit4("Color", glm::value_ptr(sprite.Color));
+
+      ImGui::TreePop();
+    }
+  }
+
+  void PropertiesPanel::ShowCameraMenu(Entity e)
+  {
+    int flags = ImGuiTreeNodeFlags_Framed
+      | ImGuiTreeNodeFlags_OpenOnArrow
+      | ImGuiTreeNodeFlags_OpenOnDoubleClick
+      | ImGuiTreeNodeFlags_DefaultOpen;
+
+    if (ImGui::TreeNodeEx("Camera", flags))
+    {
+      auto& camera = e.GetComponent<CameraComponent>();
+
+      float zoom = camera.Zoom;
+      ImGui::DragFloat("Zoom", &camera.Zoom);
+      if (zoom != camera.Zoom)
+        camera.RefreshProjection();
+
+      //ImGui::
+      if (ImGui::Button("Make Active"))
+      {
+        m_Scene->SetSceneCamera(e);
+      }
 
       ImGui::TreePop();
     }

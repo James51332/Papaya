@@ -200,6 +200,14 @@ namespace Papaya
     StartBatch();
   }
 
+  void Renderer2D::BeginScene(const Camera& camera, const glm::mat4& transform)
+  {
+    s_Data.QuadPipelineState->GetShader()->Bind();
+    s_Data.QuadPipelineState->GetShader()->SetMat4("u_ViewProjection", camera.GetProjectionMatrix() * glm::inverse(transform));
+
+    StartBatch();
+  }
+
   void Renderer2D::EndScene()
   {
     Flush();

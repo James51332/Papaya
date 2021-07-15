@@ -1,12 +1,12 @@
 #pragma once
 
-#include "Scene.h"
-
 #include "main/core/Log.h"
 
 #include <entt/entt.hpp>
 
 namespace Papaya {
+
+  class Scene;
 
   class Entity {
   public:
@@ -16,9 +16,7 @@ namespace Papaya {
 
     Entity(const Entity&) = default;
 
-    void Destroy() {
-      m_Scene->m_Registry.destroy(m_EntityHandle);
-    }
+    void Destroy();
 
     template<typename T>
     bool HasComponent()

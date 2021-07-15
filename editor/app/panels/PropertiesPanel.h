@@ -26,6 +26,7 @@ namespace Papaya {
     void ShowTagMenu(Entity e);
     void ShowTransformMenu(Entity e);
     void ShowSpriteMenu(Entity e);
+    void ShowCameraMenu(Entity e);
 
   private:
     Ref<Scene> m_Scene;

@@ -16,6 +16,7 @@ namespace Papaya
 
   public:
     static void BeginScene(const Camera& camera);
+    static void BeginScene(const Camera& camera, const glm::mat4& transform);
     static void EndScene();
 
     // These are the two base function all other public functions call

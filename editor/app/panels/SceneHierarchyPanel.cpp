@@ -57,14 +57,8 @@ namespace Papaya {
     {
       if (ImGui::BeginMenu("Add Component"))
       {
-        if (ImGui::MenuItem("Transform Component"))
-          e.AddComponent<TransformComponent>();
-
         if (ImGui::MenuItem("SpriteRenderer Component"))
         {
-          if (!e.HasComponent<TransformComponent>())
-            e.AddComponent<TransformComponent>();
-
           e.AddComponent<SpriteRendererComponent>(glm::vec4(1.0f));
         }
       

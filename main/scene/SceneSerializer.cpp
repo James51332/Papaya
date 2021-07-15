@@ -50,6 +50,15 @@ namespace Papaya {
       out << YAML::EndMap;
     }
 
+    if (entity.HasComponent<CameraComponent>())
+    {
+      auto& cam = entity.GetComponent<CameraComponent>();
+      out << YAML::Key << "CameraComponent" << YAML::BeginMap;
+      out << YAML::Key << "Zoom" << cam.Zoom;
+      out << YAML::Key << "Active" << cam.IsActive();
+      out << YAML::EndMap;
+    }
+
     out << YAML::EndMap;
     return out;
   }
@@ -126,14 +135,14 @@ namespace Papaya {
         if (tagComponent)
           tagComponent["Name"] >> name;
 
-        //PAPAYA_CORE_TRACE("Deserialized entity with ID = {0}, name = {1}", uuid, name);
+        PAPAYA_CORE_TRACE("Deserialized entity with ID = {0}, name = {1}", uuid, name);
 
         Entity deserializedEntity = scene->CreateEntity(name);
 
         auto transformComponent = entity["TransformComponent"];
         if (transformComponent)
         {
-          auto& tc = deserializedEntity.AddComponent<TransformComponent>();
+          auto& tc = deserializedEntity.GetComponent<TransformComponent>();
           transformComponent["Translation"] >> tc.Translation;
           transformComponent["Rotation"] >> tc.Rotation;
           transformComponent["Scale"] >> tc.Scale;
@@ -144,6 +153,16 @@ namespace Papaya {
         {
           auto& src = deserializedEntity.AddComponent<SpriteRendererComponent>();
           spriteRendererComponent["Color"] >> src.Color;
+        }
+
+        auto cameraComponent = entity["CameraComponent"];
+        if (cameraComponent)
+        {
+          auto& cam = deserializedEntity.AddComponent<CameraComponent>();
+          cam.Zoom = cameraComponent["Zoom"].as<float>();
+          
+          if (cameraComponent["Active"].as<bool>())
+            scene->SetSceneCamera(deserializedEntity);
         }
       }
     }

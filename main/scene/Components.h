@@ -1,13 +1,15 @@
 #pragma once
 
+#include "SceneCamera.h"
+
 #include "main/utils/String.h"
 
 #include "main/renderer/Texture.h"
 
 #include <glm/gtc/matrix_transform.hpp>
-
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/quaternion.hpp>
+
 
 namespace Papaya {
 
@@ -53,5 +55,25 @@ namespace Papaya {
 		SpriteRendererComponent(const SpriteRendererComponent&) = default;
 		SpriteRendererComponent(const glm::vec4& color)
 			: Color(color), Texture(nullptr) {}
+	};
+ 
+	struct CameraComponent
+	{
+		SceneCamera Camera;
+		float Zoom = 1.0f;
+		float Aspect = 1.6f / 0.9f;
+		
+		CameraComponent()
+			: Camera(Zoom * Aspect * -0.5f, Zoom * Aspect * 0.5f, Zoom * -0.5f, Zoom * 0.5f) {}
+		CameraComponent(const CameraComponent&) = default;
+		CameraComponent(float left, float right, float bottom, float top)
+			: Camera(left, right, bottom, top) {}
+
+		void RefreshProjection() { Camera.SetOrthographic(Zoom * Aspect * -0.5f, Zoom * Aspect * 0.5f, Zoom * -0.5f, Zoom * 0.5f); }
+		bool IsActive() const { return m_Primary; }
+
+	private:
+		friend class Scene;
+		bool m_Primary = false;
 	};
 } // namespace Papaya

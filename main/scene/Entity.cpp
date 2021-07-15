@@ -1,4 +1,5 @@
 #include "Entity.h"
+#include "Scene.h"
 
 namespace Papaya {
 
@@ -12,6 +13,11 @@ namespace Papaya {
   Entity::~Entity()
   {
   
+  }
+
+  void Entity::Destroy()
+  {
+    m_Scene->m_Registry.destroy(m_EntityHandle);
   }
 
 

@@ -57,7 +57,7 @@ namespace Papaya
     ImGui::Begin("Viewport");
     
     // ImGui should block events unless the viewport is in focus
-    ImGuiRenderer::BlockEvents(!ImGui::IsWindowFocused() && !ImGui::IsWindowHovered());
+    ImGuiRenderer::BlockEvents(!ImGui::IsWindowFocused()); // && !ImGui::IsWindowHovered());
 
     ImVec2 viewSize = ImGui::GetContentRegionAvail();
     ImGui::Image(reinterpret_cast<void*>(&m_Framebuffer->GetColorTexture()), viewSize, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
@@ -121,7 +121,10 @@ namespace Papaya
     RenderCommand::ClearColor(0.0f, 0.0f, 0.0f);
     RenderCommand::Clear();
 
-    m_Scene->OnUpdate(ts, m_EditorCamera);
+    if (Input::KeyDown(KeyR))
+      m_Scene->OnUpdateRuntime(ts);
+    else
+      m_Scene->OnUpdate(ts, m_EditorCamera);
     
     m_Framebuffer->Unbind();
   }
