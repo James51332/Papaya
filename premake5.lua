@@ -14,6 +14,7 @@ project "Papaya"
   kind "StaticLib"
   language "C++"
   cppdialect "C++17"
+  staticruntime "On"
 
   targetdir (builddir)
   objdir (objectdir)
@@ -46,14 +47,17 @@ project "Papaya"
   }
 
   filter "configurations:Debug"
+    runtime "Debug"
     defines "PAPAYA_DEBUG"
     symbols "On"
 
   filter "configurations:Release"
+    runtime "Release"
     defines "PAPAYA_RELEASE"
     optimize "On"
 
   filter "configurations:Dist"
+    runtime "Release"  
     defines "PAPAYA_DIST"
     optimize "Full"
 
@@ -106,6 +110,7 @@ project "Editor"
   location "Papaya"
   language "C++"
   cppdialect "C++17"
+  staticruntime "On"
   
   targetdir (builddir)
   objdir (objectdir)
@@ -133,14 +138,17 @@ project "Editor"
   }
 
   filter "configurations:Debug"
+    runtime "Debug"
     defines "PAPAYA_DEBUG"
     symbols "On"
 
   filter "configurations:Release"
+    runtime "Release"
     defines "PAPAYA_RELEASE"
     optimize "On"
 
   filter "configurations:Dist"
+    runtime "Release"
     defines "PAPAYA_DIST"
     optimize "Full"
 
@@ -232,6 +240,7 @@ project "Sandbox"
   filter "configurations:Debug"
     defines "PAPAYA_DEBUG"
     symbols "On"
+    staticruntime "On"
 
   filter "configurations:Release"
     defines "PAPAYA_RELEASE"

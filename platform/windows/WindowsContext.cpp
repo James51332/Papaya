@@ -99,10 +99,11 @@ namespace Papaya
       wglDeleteContext(hglrc);
     }
 
+    // TODO: Detect OpenGL Version
     int attribs[] = {WGL_CONTEXT_MAJOR_VERSION_ARB,
-                     4,
+                     3,
                      WGL_CONTEXT_MINOR_VERSION_ARB,
-                     6,
+                     3,
                      WGL_CONTEXT_PROFILE_MASK_ARB,
                      WGL_CONTEXT_CORE_PROFILE_BIT_ARB,
                      WGL_CONTEXT_FLAGS_ARB,

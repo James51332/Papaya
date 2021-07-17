@@ -2,6 +2,7 @@ project "ImGui"
 	kind "StaticLib"
 	language "C++"
   cppdialect "C++17"
+	staticruntime "On"
 
   targetdir ("../../bin/Papaya-%{cfg.system}-%{cfg.longname}")
   objdir ("../../bin-obj/Papaya-%{cfg.system}-%{cfg.longname}")

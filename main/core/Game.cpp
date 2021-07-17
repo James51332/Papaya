@@ -70,10 +70,6 @@ namespace Papaya
     {
       double time = Platform::GetSysTime();
       Timestep timestep = time - m_TimeSinceLastFrame;
-
-      //if (timestep < 1.0f / 60.0f)
-      //  continue;
-
       m_TimeSinceLastFrame = time;
 
       Platform::OnUpdate(); // Poll Events
