@@ -45,7 +45,7 @@ namespace Papaya
     {
       if (ImGui::MenuItem("Save Scene"))
       {
-
+        SceneSerializer::SerializeScene(m_Scene);
       }
       ImGui::EndMenu();
     }

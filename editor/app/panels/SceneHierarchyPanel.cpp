@@ -29,7 +29,7 @@ namespace Papaya {
       m_Scene->m_Registry.each([&](entt::entity entity) {
         Entity e = { m_Scene.get(), entity };
 
-        ImGui::PushID(static_cast<uint32_t>(entity));
+        ImGui::PushID(static_cast<uint32_t>(entity)); // Prevents conflictions for menus
         if (ImGui::Selectable(e.GetComponent<TagComponent>().Name.Raw(), e == m_SelectedEntity))
           m_SelectedEntity = e;
         ImGui::PopID();

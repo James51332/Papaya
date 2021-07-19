@@ -330,13 +330,13 @@ static void CloseOpenGL()
 static bool InitOpenGL()
 {
   libgl = dlopen("/System/Library/Frameworks/OpenGL.framework/OpenGL", RTLD_LAZY | RTLD_LOCAL);
-  if (!libgl)
-    PAPAYA_ASSERT(false, "OpenGL.framework failed to Open!");
+  PAPAYA_ASSERT(libgl, "OpenGL.framework failed to Open!");
 
 #define GLE(ret, name, ...) gl##name = (name##proc *)((void *)dlsym(libgl, "gl" #name));
   PAPAYA_GL_LIST;
 #undef GLE
 
+  // TODO: Not sure why this line is here
   glEnable(GL_TEXTURE_2D);
 
   atexit(CloseOpenGL);
