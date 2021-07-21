@@ -23,7 +23,7 @@ namespace Papaya
 
     window->SetContext(context);
 
-    PAPAYA_CORE_INFO("Created Window: {}", window);
+    PAPAYA_CORE_TRACE("Created Window: {}", window);
     return Move(window);
 #endif
 
@@ -33,7 +33,7 @@ namespace Papaya
 
     window->SetContext(context);
 
-    PAPAYA_CORE_INFO("Created Window: {}", window);
+    PAPAYA_CORE_TRACE("Created Window: {}", window);
     return Move(window);
 #endif
 

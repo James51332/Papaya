@@ -130,6 +130,17 @@ namespace Papaya
       if (active && !before) // Don't set the scene camera if the entity was already active
         m_Scene->SetSceneCamera(e);
 
+      ImGui::SameLine();
+      ImGui::TextDisabled("(?)");
+      if (ImGui::IsItemHovered())
+      {
+        ImGui::BeginTooltip();
+        ImGui::PushTextWrapPos(ImGui::GetFontSize() * 35.0f);
+        ImGui::TextUnformatted("A scene can only have one active camera at a time. You can set this progammatically or set it here. However, to disable this camera, another camera must be activated.");
+        ImGui::PopTextWrapPos();
+        ImGui::EndTooltip();
+      }
+
       ImGui::TreePop();
     }
   }

@@ -8,6 +8,8 @@
 #include "main/utils/Memory.h"
 
 #include <cstring>
+#include <ostream>
+#include <sstream>
 
 namespace Papaya
 {
@@ -20,9 +22,15 @@ namespace Papaya
     inline static Ref<spdlog::logger> &GetCoreLogger() { return s_CoreLogger; }
     inline static Ref<spdlog::logger> &GetClientLogger() { return s_ClientLogger; }
 
+    inline static std::ostringstream& GetCoreStream() { return s_CoreStream; }
+    inline static std::ostringstream& GetClientStream() { return s_ClientStream; }
+
   private:
     static Ref<spdlog::logger> s_CoreLogger;
     static Ref<spdlog::logger> s_ClientLogger;
+
+    static std::ostringstream s_CoreStream;
+    static std::ostringstream s_ClientStream;
   };
 
 #ifdef PAPAYA_DEBUG

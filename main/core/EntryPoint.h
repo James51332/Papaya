@@ -18,7 +18,7 @@ extern Game* CreateGame();
 int main() {
   // Lifecycle of game on macOS
   Papaya::Log::OnInit();
-  PAPAYA_CORE_INFO("Engine Initializing...");
+  PAPAYA_CORE_TRACE("Engine Initializing...");
 
   Papaya::Platform::OnInit();
 
@@ -47,7 +47,7 @@ extern Game* CreateGame();
 int main() {
   // Lifecycle of game on windows
   Papaya::Log::OnInit();
-  PAPAYA_CORE_INFO("Engine Initializing...");
+  PAPAYA_CORE_TRACE("Engine Initializing...");
 
   Papaya::Platform::OnInit();
 

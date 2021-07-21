@@ -20,6 +20,7 @@ namespace Papaya
     m_SceneHierarchyPanel = SceneHierarchyPanel(m_Scene);
     m_PropertiesPanel = PropertiesPanel(m_Scene);
     m_FilesPanel = FilesPanel(m_Scene);
+    m_LogPanel = LogPanel(m_Scene);
   }
 
   EditorLayer::~EditorLayer()
@@ -40,26 +41,42 @@ namespace Papaya
   {
   }
 
-  void EditorLayer::OnImGuiRender()
+  void EditorLayer::DisplayMenu()
   {
     ImGui::BeginMainMenuBar();
     if (ImGui::BeginMenu("File"))
     {
-      if (ImGui::MenuItem("Save Scene"))
+      if (ImGui::MenuItem("Save"))
       {
         SceneSerializer::SerializeScene(m_Scene);
       }
       ImGui::EndMenu();
     }
-    ImGui::EndMainMenuBar();
-    ImGui::DockSpaceOverViewport(ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
 
+    if (ImGui::BeginMenu("Edit"))
+    {
+      ImGui::EndMenu();
+    }
+
+    if (ImGui::BeginMenu("View"))
+    {
+      ImGui::EndMenu();
+    }
+    ImGui::EndMainMenuBar();
+  }
+
+  void EditorLayer::OnImGuiRender()
+  {
+    ImGui::DockSpaceOverViewport(ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
+    DisplayMenu();
+
+    // Panels
     m_SceneHierarchyPanel.OnImGuiRender();
+    m_FilesPanel.OnImGuiRender();
+    m_LogPanel.OnImGuiRender();
 
     m_PropertiesPanel.SetSelectedEntity(m_SceneHierarchyPanel.GetSelectedEntity());
     m_PropertiesPanel.OnImGuiRender();
-
-    m_FilesPanel.OnImGuiRender();
 
     // Viewport
     ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, { 0,0 });
@@ -76,7 +93,6 @@ namespace Papaya
 
     m_LastViewportSize = m_ViewportSize;
     m_ViewportSize = glm::vec2(viewSize.x, viewSize.y);
-
     ImGui::End();
     ImGui::PopStyleVar();
   }
