@@ -122,11 +122,12 @@ namespace Papaya
       float zoom = camera.Zoom;
       ImGui::DragFloat("Zoom", &camera.Zoom, 0.05f, 0.01f, 1000.f);
       if (zoom != camera.Zoom)
-        camera.RefreshProjection();
+        camera.RecalculateProjectionMatrix();
 
-      bool active = camera.IsActive();
+      bool active = e.IsActiveCamera();
+      bool before = active;
       ImGui::Checkbox("Active", &active);
-      if (active)
+      if (active && !before) // Don't set the scene camera if the entity was already active
         m_Scene->SetSceneCamera(e);
 
       ImGui::TreePop();

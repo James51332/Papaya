@@ -20,6 +20,11 @@ namespace Papaya {
     m_Scene->m_Registry.destroy(m_EntityHandle);
   }
 
+  bool Entity::IsActiveCamera() const
+  {
+    return m_Scene->IsSceneCamera(*this);
+  }
+
   bool Entity::Valid() const
   {
     if (m_Scene)

@@ -55,7 +55,7 @@ namespace Papaya {
       auto& cam = entity.GetComponent<CameraComponent>();
       out << YAML::Key << "CameraComponent" << YAML::BeginMap;
       out << YAML::Key << "Zoom" << cam.Zoom;
-      out << YAML::Key << "Active" << cam.IsActive();
+      out << YAML::Key << "Active" << entity.IsActiveCamera();
       out << YAML::EndMap;
     }
 

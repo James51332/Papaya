@@ -22,14 +22,6 @@ namespace Papaya
   
   }
 
-  Entity Scene::CreateEntity(const String& name)
-  {
-    Entity e = { this, m_Registry.create() };
-    e.AddComponent<TagComponent>(name);
-    e.AddComponent<TransformComponent>();
-    return e;
-  }
-
   void Scene::Reset(const String& name)
   {
     m_Registry.clear();
@@ -42,12 +34,12 @@ namespace Papaya
     // Basic System for rendering
     // until we flesh out more components and move this to a seperate class.
 
-    Renderer2D::BeginScene(camera);// , glm::mat4(1.0f));
+    Renderer2D::BeginScene(camera);
 
     auto group = m_Registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
     for (auto entity : group)
     {
-      auto[transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
+      auto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
       if (sprite.Texture)
         Renderer2D::DrawQuad(transform.GetTransform(), sprite.Texture, 1.0f, sprite.Color);
       else
@@ -57,36 +49,9 @@ namespace Papaya
     Renderer2D::EndScene();
   }
 
-  void Scene::SetSceneCamera(Entity e)
-  {
-    if (!e.HasComponent<CameraComponent>())
-    { 
-      PAPAYA_ASSERT(false, "Entity does not have a CameraComponent!");
-      return;
-    }
-
-    auto view = m_Registry.view<CameraComponent>();
-    for (auto entity : view)
-      m_Registry.get<CameraComponent>(entity).m_Primary = false;
-
-    m_CameraEntity = static_cast<entt::entity>(e);
-    m_Registry.get<CameraComponent>(m_CameraEntity).m_Primary = true;
-  }
-
-  void Scene::SetViewportSize(uint32_t width, uint32_t height)
-  {
-    auto& cam = m_Registry.get<CameraComponent>(m_CameraEntity);
-    cam.Aspect = static_cast<float>(width) / static_cast<float>(height);
-    cam.RefreshProjection();
-  }
-
   void Scene::OnUpdateRuntime(Timestep ts)
   {
-    if (!m_Registry.valid(m_CameraEntity))
-    {
-      PAPAYA_ASSERT(false, "Scene does not have a main camera!");
-      return;
-    }
+    PAPAYA_ASSERT(m_Registry.valid(m_CameraEntity), "Scene does not have a main camera!");
 
     SceneCamera& camera = m_Registry.get<CameraComponent>(m_CameraEntity).Camera;
     auto& transform = m_Registry.get<TransformComponent>(m_CameraEntity);
@@ -104,6 +69,37 @@ namespace Papaya
     }
 
     Renderer2D::EndScene();
+  }
+
+  Entity Scene::CreateEntity(const String& name)
+  {
+    Entity e = { this, m_Registry.create() };
+    e.AddComponent<TagComponent>(name);
+    e.AddComponent<TransformComponent>();
+    return e;
+  }
+
+  void Scene::SetSceneCamera(Entity e)
+  {
+    if (!e.HasComponent<CameraComponent>())
+    { 
+      PAPAYA_ASSERT(false, "Entity does not have a CameraComponent!"); // This should probably be asserted in Dist builds
+      return;
+    }
+
+    m_CameraEntity = static_cast<entt::entity>(e);
+  }
+
+  void Scene::SetViewportSize(uint32_t width, uint32_t height)
+  {
+    auto& cam = m_Registry.get<CameraComponent>(m_CameraEntity);
+    cam.Aspect = static_cast<float>(width) / static_cast<float>(height);
+    cam.RecalculateProjectionMatrix();
+  }
+
+  const bool Scene::IsSceneCamera(Entity e) const
+  {
+    return static_cast<entt::entity>(e) == m_CameraEntity;
   }
 
 } // namespace Papaya

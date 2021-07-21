@@ -19,6 +19,7 @@ namespace Papaya {
     Entity(const Entity&) = default;
 
     void Destroy();
+    bool IsActiveCamera() const;
     bool Valid() const;
 
     template<typename T>

@@ -9,6 +9,8 @@ namespace Papaya
   EditorLayer::EditorLayer()
     : Layer("EditorLayer")
   {
+    m_EditorCamera.SetPosition({ 0.0f, 0.0f, 4.0f });
+    
     Papaya::FramebufferDesc desc;
     desc.Width = 1280;
     desc.Height = 720;
@@ -91,29 +93,19 @@ namespace Papaya
       m_Scene->SetViewportSize(width, height);
     }
 
-    // We just set up the code to run from here 
-    // but this can be run from anywhere! This
-    // means we can add it to ImGui panels with
-    // only a few lines of code!
     if (!m_Runtime)
     {
+      m_EditorCamera.OnUpdate(ts);
+      
       if (Input::KeyPressed(KeyF))
         SceneSerializer::SerializeScene(m_Scene);
       if (Input::KeyPressed(KeyL))
         SceneSerializer::DeserializeScene(m_Scene, "Untitled.pscene");
     }
-
-    m_EditorCamera.OnUpdate(ts, m_Runtime);
-    m_EditorCamera.SetPosition({ 0.0f, 0.0f, 10.0f });
-
+    
     Papaya::RenderCommand::ClearColor(0.1f, 0.1f, 0.1f, 1.1f);
     Papaya::RenderCommand::Clear();
 
-    // The layer probably shouldn't own the 
-    // framebuffer. We need to figure out a 
-    // more ideal way to handle framebuffers
-    // Potentially via having a renderpass hold a target
-    // framebuffer.
     m_Framebuffer->Bind();
     RenderCommand::ClearColor(0.0f, 0.0f, 0.0f);
     RenderCommand::Clear();

@@ -61,7 +61,7 @@ namespace Papaya {
   {
     SceneCamera Camera;
     float Zoom = 1.0f;
-    float Aspect = 1.6f / 0.9f;
+    float Aspect = 1.0f;
 
     CameraComponent()
       : Camera(Zoom * Aspect * -0.5f, Zoom * Aspect * 0.5f, Zoom * -0.5f, Zoom * 0.5f) {}
@@ -71,11 +71,9 @@ namespace Papaya {
     CameraComponent(float left, float right, float bottom, float top)
       : Camera(left, right, bottom, top) {}
 
-    void RefreshProjection() { Camera.SetOrthographic(Zoom * Aspect * -0.5f, Zoom * Aspect * 0.5f, Zoom * -0.5f, Zoom * 0.5f); }
-    bool IsActive() const { return m_Primary; }
+    void RecalculateProjectionMatrix() { Camera.SetOrthographic(Zoom * Aspect * -0.5f, Zoom * Aspect * 0.5f, Zoom * -0.5f, Zoom * 0.5f); }
 
   private:
     friend class Scene;
-    bool m_Primary = false;
   };
 } // namespace Papaya

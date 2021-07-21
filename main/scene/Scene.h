@@ -9,7 +9,7 @@
 
 namespace Papaya {
 
-  class Entity;
+  class Entity; 
 
   class Scene {
     friend class Entity;
@@ -19,17 +19,19 @@ namespace Papaya {
     Scene(const String& name = "Untitled");
     ~Scene();
 
-    Entity CreateEntity(const String& name = "Empty Entity");
-
     void Reset(const String& name = "Untitled");
 
-    const String& GetName() const { return m_Name; }
+    void OnUpdate(Timestep ts, Camera& camera);
+    void OnUpdateRuntime(Timestep ts);
+
+    Entity CreateEntity(const String& name = "Empty Entity");
+    
     void SetName(const String& name) { m_Name = name; }
     void SetSceneCamera(Entity e);
     void SetViewportSize(uint32_t width, uint32_t height);
 
-    void OnUpdate(Timestep ts, Camera& camera);
-    void OnUpdateRuntime(Timestep ts);
+    const String& GetName() const { return m_Name; }
+    const bool IsSceneCamera(Entity e) const;
 
   private:
     entt::registry m_Registry;

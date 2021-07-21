@@ -11,9 +11,6 @@ namespace Papaya {
 
     void SetOrthographic(float left, float right, float bottom, float top);
     // TODO: Create an API for perspective cameras in the ecs
-
-  private:
-    CameraType m_CameraType = CameraType::Orthographic;
   };
 
 } // namespace Papaya

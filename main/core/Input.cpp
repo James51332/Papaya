@@ -4,6 +4,8 @@
 
 namespace Papaya
 {
+  int Input::m_MouseX;
+  int Input::m_MouseY;
 
   bool Input::s_KeyState[PAPAYA_TOTAL_KEYCODES];
   bool Input::s_LastKeyState[PAPAYA_TOTAL_KEYCODES];
@@ -42,6 +44,16 @@ namespace Papaya
   bool Input::MouseDown(MouseCode btn)
   {
     return s_MouseState[btn];
+  }
+
+  int Input::GetMouseX()
+  {
+    return m_MouseX;
+  }
+
+  int Input::GetMouseY()
+  {
+    return m_MouseY;
   }
 
   int Input::ToASCII(KeyCode key, bool capitalized)
@@ -173,26 +185,32 @@ namespace Papaya
     memcpy(s_LastMouseState, s_MouseState, sizeof(s_MouseState));
   }
 
-  void Input::OnEvent(const Scope<Event> &event)
+  void Input::OnEvent(const Scope<Event>& event)
   {
     if (!(event->GetCategoryFlags() & EventCategoryInput))
       return;
 
-    EventDispatcher::Dispatch<KeyPressEvent>(event, [](KeyPressEvent *e) {
+    EventDispatcher::Dispatch<KeyPressEvent>(event, [](KeyPressEvent* e) {
       Input::s_KeyState[e->GetKeyCode()] = true;
-    });
+      });
 
-    EventDispatcher::Dispatch<KeyReleaseEvent>(event, [](KeyReleaseEvent *e) {
+    EventDispatcher::Dispatch<KeyReleaseEvent>(event, [](KeyReleaseEvent* e) {
       Input::s_KeyState[e->GetKeyCode()] = false;
-    });
+      });
 
-    EventDispatcher::Dispatch<MousePressEvent>(event, [](MousePressEvent *e) {
+    EventDispatcher::Dispatch<MousePressEvent>(event, [](MousePressEvent* e) {
       Input::s_MouseState[e->GetMouseCode()] = true;
-    });
+      });
 
-    EventDispatcher::Dispatch<MouseReleaseEvent>(event, [](MouseReleaseEvent *e) {
+    EventDispatcher::Dispatch<MouseReleaseEvent>(event, [](MouseReleaseEvent* e) {
       Input::s_MouseState[e->GetMouseCode()] = false;
-    });
+      });
+
+    EventDispatcher::Dispatch<MouseMoveEvent>(event, [](MouseMoveEvent* event)
+      {
+        m_MouseX = event->GetXPosition();
+        m_MouseY = event->GetYPosition();
+      });
   }
 
 } // namespace Papaya

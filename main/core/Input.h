@@ -25,6 +25,9 @@ namespace Papaya
     static bool MouseReleased(MouseCode btn); // true as long as key is down
     static bool MouseDown(MouseCode btn);     // only true for one frame on release
 
+    static int GetMouseX();
+    static int GetMouseY();
+
     static int ToASCII(KeyCode key, bool capital = false);
 
   private:
@@ -33,6 +36,9 @@ namespace Papaya
     static void OnEvent(const Scope<Event> &event);
 
   private:
+    static int m_MouseX;
+    static int m_MouseY;
+
     static bool s_KeyState[PAPAYA_TOTAL_KEYCODES];
     static bool s_LastKeyState[PAPAYA_TOTAL_KEYCODES];
 
