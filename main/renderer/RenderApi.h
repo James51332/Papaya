@@ -28,6 +28,7 @@ namespace Papaya
     virtual void OnTerminate() = 0;
 
     virtual void SetViewport(float x, float y, float w, float h) = 0;
+    virtual void SetClipRect(uint32_t x, uint32_t y, uint32_t w, uint32_t h) = 0;
 
     virtual void ClearColor(float r, float g, float b, float a) = 0;
     virtual void Clear() = 0;

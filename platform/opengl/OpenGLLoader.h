@@ -283,6 +283,7 @@ typedef unsigned char GLboolean;
   GLE(void, PixelStorei, GLenum pname, GLint param)                                                                                                                    \
   GLE(void, LinkProgram, GLuint program)                                                                                                                               \
   GLE(void, ShaderSource, GLuint shader, GLsizei count, const GLchar *const *string, const GLint *length)                                                              \
+  GLE(void, Scissor, GLint x, GLint y, GLsizei width, GLsizei height)                                                                                                \
   GLE(void, TexImage2D, GLenum target, GLint level, GLint internalFormat, GLsizei width, GLsizei height, GLint border, GLenum format, GLenum type, const GLvoid *data) \
   GLE(void, TexParameteri, GLenum target, GLenum pname, GLint param)                                                                                                   \
   GLE(void, Uniform1i, GLint location, GLint v0)                                                                                                                       \
@@ -321,7 +322,7 @@ PAPAYA_GL_LIST;
 #include <dlfcn.h>
 
 
-static void *libgl;
+static void* libgl;
 static void CloseOpenGL()
 {
   dlclose(libgl);
@@ -352,7 +353,7 @@ PAPAYA_GL_LIST;
 #include <windows.h>
 
 
-typedef PROC(__stdcall *glGetProcAddr)(LPCSTR);
+typedef PROC(__stdcall* glGetProcAddr)(LPCSTR);
 typedef void (*glProc)();
 
 static HMODULE libgl;
@@ -363,7 +364,7 @@ static void CloseOpenGL()
   FreeLibrary(libgl);
 }
 
-static glProc GetProc(const char *proc)
+static glProc GetProc(const char* proc)
 {
   glProc res;
   res = (glProc)wgl_get_proc_address(proc);

@@ -17,9 +17,6 @@
 #include "main/events/MouseEvent.h"
 #include "main/events/AppEvent.h"
 
-
-
-
 #include <imgui/imgui.h>
 
 #include <glm/matrix.hpp>
@@ -266,14 +263,14 @@ namespace Papaya
 
         if (clip_rect.x < fb_width && clip_rect.y < fb_height && clip_rect.z >= 0.0f && clip_rect.w >= 0.0f)
         {
-          // TODO: Fix Clip Rects
 
           if (pcmd->TextureId)
             (*reinterpret_cast<Ref<Texture2D>*>(pcmd->TextureId))->Bind(); // Cast from void* to Ref<Texture>
           else
             s_Data.ImGuiTexture->Bind();
 
-          RenderCommand::SetViewport(0, 0, io.DisplaySize.x, io.DisplaySize.y);
+          RenderCommand::SetClipRect(static_cast<uint32_t>(clip_rect.x), static_cast<uint32_t>(fb_height - clip_rect.w), static_cast<uint32_t>(clip_rect.z - clip_rect.x), static_cast<uint32_t>(clip_rect.w - clip_rect.y));
+          RenderCommand::SetViewport(0, 0, static_cast<float>(io.DisplaySize.x), static_cast<float>(io.DisplaySize.y));
           RenderCommand::SetIndexSize(sizeof(ImDrawIdx));
           RenderCommand::SetIndexOffset(pcmd->IdxOffset * sizeof(ImDrawIdx));
           RenderCommand::SetElementCount(pcmd->ElemCount);
@@ -281,6 +278,8 @@ namespace Papaya
         }
       }
     }
+
+    RenderCommand::SetClipRect(0, 0, static_cast<uint32_t>(io.DisplaySize.x), static_cast<uint32_t>(io.DisplaySize.y));
   }
 
   void ImGuiRenderer::BlockEvents(bool block)

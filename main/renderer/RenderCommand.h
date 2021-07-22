@@ -59,6 +59,11 @@ namespace Papaya
         s_ElementCount = count;
     }
 
+    static void SetClipRect(uint32_t x, uint32_t y, uint32_t w, uint32_t h)
+    {
+      s_Api->SetClipRect(x, y, w, h);
+    }
+
   private:
     static Scope<RenderApi> s_Api;
     

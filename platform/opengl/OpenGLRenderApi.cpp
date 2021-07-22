@@ -19,6 +19,7 @@ namespace Papaya
   void OpenGLRenderApi::OnInit()
   {
       glEnable(GL_BLEND);
+      glEnable(GL_SCISSOR_TEST);
       glBlendEquation(GL_FUNC_ADD);
       glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
   }
@@ -33,6 +34,11 @@ namespace Papaya
                static_cast<GLint>(y),
                static_cast<GLsizei>(w),
                static_cast<GLsizei>(h));
+  }
+
+  void OpenGLRenderApi::SetClipRect(uint32_t x, uint32_t y, uint32_t w, uint32_t h)
+  {
+    glScissor(static_cast<float>(x), static_cast<float>(y), static_cast<float>(w), static_cast<float>(h));
   }
 
   void OpenGLRenderApi::ClearColor(float r, float g, float b, float a)
