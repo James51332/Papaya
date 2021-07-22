@@ -1,6 +1,7 @@
+#include "papayapch.h"
 #include "Input.h"
 
-#include "main/core/Log.h"
+
 
 namespace Papaya
 {
@@ -208,8 +209,8 @@ namespace Papaya
 
     EventDispatcher::Dispatch<MouseMoveEvent>(event, [](MouseMoveEvent* event)
       {
-        m_MouseX = event->GetXPosition();
-        m_MouseY = event->GetYPosition();
+        m_MouseX = static_cast<int>(event->GetXPosition());
+        m_MouseY = static_cast<int>(event->GetYPosition());
       });
   }
 

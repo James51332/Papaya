@@ -2,13 +2,13 @@
 
 #include <Papaya/Papaya.h>
 
-#include <glm/glm.hpp>
-
 #include "EditorCamera.h"
 #include "panels/SceneHierarchyPanel.h"
 #include "panels/PropertiesPanel.h"
 #include "panels/FilesPanel.h"
 #include "panels/LogPanel.h"
+
+#include <glm/glm.hpp>
 
 namespace Papaya
 {

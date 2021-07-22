@@ -1,10 +1,5 @@
 #pragma once
 
-#include "main/core/Log.h"
-
-#include <ostream>
-#include <cstring>
-
 namespace Papaya
 {
 

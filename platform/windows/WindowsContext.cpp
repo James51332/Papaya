@@ -1,7 +1,7 @@
+#include "papayapch.h"
 #include "WindowsContext.h"
 
 #include "main/core/Window.h"
-#include "main/core/Log.h"
 
 #include "platform/windows/WindowsWindow.h"
 

@@ -1,9 +1,10 @@
+#include "papayapch.h"
 #include "OpenGLFramebuffer.h"
 #include "OpenGLLoader.h"
 
 #include "OpenGLTexture.h"
 
-#include "main/core/Log.h"
+
 
 namespace Papaya {
 

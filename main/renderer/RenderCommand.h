@@ -5,8 +5,6 @@
 #include "Shader.h"
 #include "RenderApi.h"
 
-#include "main/utils/Memory.h"
-
 namespace Papaya
 {
 

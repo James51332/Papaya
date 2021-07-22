@@ -1,3 +1,4 @@
+#include "papayapch.h"
 #include "FilesPanel.h"
 
 #include <imgui/imgui.h>

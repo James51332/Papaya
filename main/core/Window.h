@@ -1,13 +1,6 @@
 #pragma once
 
-#include "main/utils/Memory.h"
-#include "main/utils/String.h"
-
-#include "main/core/Log.h"
-
 #include "main/renderer/RenderApi.h"
-
-#include <sstream>
 
 namespace Papaya
 {

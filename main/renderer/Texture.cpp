@@ -1,6 +1,7 @@
+#include "papayapch.h"
 #include "Texture.h"
 
-#include "main/core/Log.h"
+
 
 #include "Renderer.h"
 

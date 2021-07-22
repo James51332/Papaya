@@ -1,7 +1,6 @@
+#include "papayapch.h"
 #include "OpenGLTexture.h"
 #include "OpenGLLoader.h"
-
-#include "main/core/Log.h"
 
 #include <stb_image.h>
 

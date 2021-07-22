@@ -1,3 +1,4 @@
+#include "papayapch.h"
 #include "Window.h"
 
 #include "main/renderer/Context.h"
@@ -7,7 +8,8 @@
 
 #include "platform/macos/CocoaContext.h"
 
-#include "main/core/Log.h"
+#include "papayapch.h"
+
 
 namespace Papaya
 {

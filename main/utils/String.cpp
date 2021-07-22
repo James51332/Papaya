@@ -1,6 +1,5 @@
+#include "papayapch.h"
 #include "String.h"
-
-#include "main/core/Log.h"
 
 namespace Papaya
 {

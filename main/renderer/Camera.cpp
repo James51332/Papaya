@@ -1,3 +1,4 @@
+#include "papayapch.h"
 #include "Camera.h"
 
 namespace Papaya

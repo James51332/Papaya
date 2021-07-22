@@ -2,8 +2,6 @@
 
 #include "Scene.h"
 
-#include "main/core/Log.h"
-
 #include <entt/entt.hpp>
 
 namespace Papaya {

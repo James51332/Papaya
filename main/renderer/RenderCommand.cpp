@@ -1,3 +1,4 @@
+#include "papayapch.h"
 #include "RenderCommand.h"
 
 namespace Papaya

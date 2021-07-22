@@ -2,8 +2,6 @@
 
 #include "main/renderer/Texture.h"
 
-#include "main/utils/Memory.h"
-
 namespace Papaya
 {
   

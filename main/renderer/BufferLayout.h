@@ -1,13 +1,5 @@
 #pragma once
 
-#include "main/core/Log.h"
-
-#include "main/utils/Memory.h"
-#include "main/utils/String.h"
-
-#include <vector>
-#include <initializer_list>
-
 namespace Papaya
 {
 

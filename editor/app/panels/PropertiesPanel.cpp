@@ -1,7 +1,7 @@
+#include "papayapch.h"
 #include "PropertiesPanel.h"
 
 #include <imgui/imgui.h>
-#include <imgui/imgui_internal.h>
 
 #include <glm/gtc/type_ptr.hpp>
 

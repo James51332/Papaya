@@ -16,13 +16,17 @@ project "Papaya"
   cppdialect "C++17"
   staticruntime "On"
 
+  pchheader "papayapch.h"
+  pchsource "papayapch.cpp"
+
   targetdir (builddir)
   objdir (objectdir)
 
   files {
+    "papayapch.h",
+    "papayapch.cpp",
     "main/**.cpp",
     "main/**.h",
-    "include/**.h",
     "thirdparty/opengl/**.h",
     "thirdparty/spdlog/**.h",
     "thirdparty/stb_image/**.h",
@@ -32,6 +36,7 @@ project "Papaya"
   }
 
   includedirs {
+    "include",
     "thirdparty/spdlog/include",
     "thirdparty/glm",
     "thirdparty/stb_image",
@@ -67,6 +72,7 @@ project "Papaya"
     buildoptions "-Wno-deprecated-declarations"
 
     sysincludedirs {
+      "include",
       "thirdparty/spdlog/include",
       "thirdparty/glm",
       "thirdparty/stb_image",
@@ -112,10 +118,15 @@ project "Editor"
   cppdialect "C++17"
   staticruntime "On"
   
+  pchheader "papayapch.h"
+  pchsource "papayapch.cpp"
+
   targetdir (builddir)
   objdir (objectdir)
   
   files {
+    "papayapch.h",
+    "papayapch.cpp",
     "editor/**.cpp",
     "editor/**.h",
   }
@@ -211,6 +222,9 @@ project "Sandbox"
   language "C++"
   cppdialect "C++17"
   
+  pchheader "papayapch.h"
+  pchsource "papayapch.cpp"
+
   targetdir (builddir)
   objdir (objectdir)
   

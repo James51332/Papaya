@@ -1,13 +1,9 @@
 #pragma once
 
 #include "Panel.h"
-
-#include "main/utils/Memory.h"
-#include "main/utils/String.h"
-
-#include "main/scene/Scene.h"
-#include "main/scene/Components.h"
 #include "main/scene/Entity.h"
+#include "main/scene/Components.h"
+#include "main/scene/Scene.h"
 
 #include <glm/glm.hpp>
 

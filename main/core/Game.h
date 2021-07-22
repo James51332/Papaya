@@ -4,10 +4,6 @@
 #include "main/core/LayerStack.h"
 #include "main/core/Timestep.h"
 
-#include "main/utils/Memory.h"
-
-#include "main/renderer/Camera.h"
-
 namespace Papaya
 {
 

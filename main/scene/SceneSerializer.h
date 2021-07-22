@@ -1,11 +1,8 @@
 #pragma once
 
-#include "Scene.h"
 #include "Entity.h"
 #include "Components.h"
-
-#include "main/utils/Memory.h"
-#include "main/utils/String.h"
+#include "Scene.h"
 
 namespace Papaya {
 

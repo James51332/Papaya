@@ -1,12 +1,5 @@
 #pragma once
 
-#include "main/utils/String.h"
-#include "main/utils/Memory.h"
-
-#include <ostream>
-#include <sstream>
-#include <functional>
-
 // Based off of TheCherno/Hazel Event System
 // https://github.com/TheCherno/Hazel
 

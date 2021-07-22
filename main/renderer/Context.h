@@ -1,7 +1,5 @@
 #pragma once
 
-#include "main/utils/Memory.h"
-
 #include "main/renderer/RenderApi.h"
 
 namespace Papaya

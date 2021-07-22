@@ -1,3 +1,4 @@
+#include "papayapch.h"
 #include "Renderer2D.h"
 
 #include "Buffer.h"
@@ -5,15 +6,13 @@
 #include "PipelineState.h"
 #include "RenderCommand.h"
 
-#include "main/utils/Memory.h"
-#include "main/utils/String.h"
+
+
 
 #include <glm/matrix.hpp>
 #include <glm/vec4.hpp>
 #include <glm/vec3.hpp>
 #include <glm/vec2.hpp>
-
-#include <array>
 
 // Based of TheCherno/Hazel's Renderer2D
 

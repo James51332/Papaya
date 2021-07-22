@@ -1,10 +1,5 @@
 #pragma once
 
-#include "main/utils/Memory.h"
-
-#include <thread>
-#include <functional>
-
 namespace Papaya
 {
 

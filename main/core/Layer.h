@@ -1,9 +1,6 @@
 #pragma once
 
 #include "main/core/Timestep.h"
-
-#include "main/utils/String.h"
-
 #include "main/events/Event.h"
 
 namespace Papaya

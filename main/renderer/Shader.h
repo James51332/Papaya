@@ -1,8 +1,5 @@
 #pragma once
 
-#include "main/utils/Memory.h"
-#include "main/utils/String.h"
-
 #include <glm/matrix.hpp>
 
 namespace Papaya

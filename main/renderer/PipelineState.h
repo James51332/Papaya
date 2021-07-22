@@ -3,8 +3,6 @@
 #include "Shader.h"
 #include "BufferLayout.h"
 
-#include "main/utils/Memory.h"
-
 namespace Papaya
 {
 

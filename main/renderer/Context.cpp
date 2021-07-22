@@ -1,7 +1,8 @@
+#include "papayapch.h"
 #include "Context.h"
 
 #include "main/core/Window.h"
-#include "main/core/Log.h"
+
 
 #include "platform/macos/CocoaContext.h"
 #include "platform/windows/WindowsContext.h"

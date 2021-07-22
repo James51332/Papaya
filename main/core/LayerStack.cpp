@@ -1,3 +1,4 @@
+#include "papayapch.h"
 #include "LayerStack.h"
 
 namespace Papaya

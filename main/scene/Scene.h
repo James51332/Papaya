@@ -3,8 +3,6 @@
 #include "main/core/Timestep.h"
 #include "main/renderer/Camera.h"
 
-#include "main/utils/String.h"
-
 #include <entt/entt.hpp>
 
 namespace Papaya {

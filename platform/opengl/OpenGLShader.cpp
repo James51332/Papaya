@@ -1,10 +1,8 @@
+#include "papayapch.h"
 #include "OpenGLShader.h"
 #include "OpenGLLoader.h"
 
-#include "main/core/Log.h"
-
 #include <glm/gtc/type_ptr.hpp>
-#include <vector>
 
 namespace Papaya
 {

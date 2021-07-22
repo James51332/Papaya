@@ -1,7 +1,5 @@
 #pragma once
 
-#include "main/utils/Memory.h"
-
 #include "RenderApi.h"
 #include "Buffer.h"
 #include "BufferLayout.h"
@@ -9,7 +7,6 @@
 #include "PipelineState.h"
 #include "Camera.h"
 
-#include <vector>
 #include <glm/matrix.hpp>
 
 namespace Papaya

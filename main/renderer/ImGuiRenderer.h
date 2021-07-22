@@ -1,8 +1,7 @@
 #pragma once
 
-#include "main/events/Event.h"
-
 #include "main/core/Timestep.h"
+#include "main/events/Event.h"
 
 namespace Papaya
 {

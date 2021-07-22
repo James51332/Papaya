@@ -1,10 +1,6 @@
 #pragma once
 
-#include <list>
-
 #include "main/events/Event.h"
-
-#include "main/utils/Memory.h"
 
 namespace Papaya
 {

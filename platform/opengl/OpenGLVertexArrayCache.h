@@ -6,9 +6,6 @@
 #include "main/renderer/Buffer.h"
 #include "main/renderer/BufferLayout.h"
 
-#include <unordered_map>
-#include <vector>
-
 namespace Papaya
 {
 

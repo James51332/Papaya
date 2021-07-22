@@ -1,13 +1,8 @@
+#include "papayapch.h"
 #include "Platform.h"
 
 #include "platform/macos/CocoaPlatform.h"
 #include "platform/windows/WindowsPlatform.h"
-
-#include "main/core/Log.h"
-
-#include <iostream>
-#include <sstream>
-#include <fstream>
 
 namespace Papaya
 {

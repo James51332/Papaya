@@ -319,7 +319,7 @@ PAPAYA_GL_LIST;
 
 #include <stdlib.h>
 #include <dlfcn.h>
-#include "main/core/Log.h"
+
 
 static void *libgl;
 static void CloseOpenGL()
@@ -350,7 +350,7 @@ PAPAYA_GL_LIST;
 #undef GLE
 
 #include <windows.h>
-#include "main/core/Log.h"
+
 
 typedef PROC(__stdcall *glGetProcAddr)(LPCSTR);
 typedef void (*glProc)();

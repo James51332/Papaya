@@ -2,14 +2,11 @@
 
 #include "SceneCamera.h"
 
-#include "main/utils/String.h"
-
 #include "main/renderer/Texture.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/quaternion.hpp>
-
 
 namespace Papaya {
 

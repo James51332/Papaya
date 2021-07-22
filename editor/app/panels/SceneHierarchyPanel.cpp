@@ -1,3 +1,4 @@
+#include "papayapch.h"
 #include "SceneHierarchyPanel.h"
 
 #include <imgui/imgui.h>

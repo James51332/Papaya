@@ -1,3 +1,4 @@
+#include "papayapch.h"
 #include "Game.h"
 
 #define PAPAYA_MAIN
@@ -9,7 +10,7 @@
 #include "main/events/AppEvent.h"
 #include "main/events/EventQueue.h"
 
-#include "main/core/Log.h"
+
 #include "main/core/Platform.h"
 #include "main/core/Input.h"
 
@@ -20,7 +21,7 @@
 #include "main/renderer/RenderCommand.h"
 #include "main/renderer/ImGuiRenderer.h"
 
-#include "main/utils/String.h"
+
 
 #include "Thread.h"
 

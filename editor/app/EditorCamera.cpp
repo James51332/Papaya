@@ -1,3 +1,4 @@
+#include "papayapch.h"
 #include "EditorCamera.h"
 
 #include "main/core/Input.h"

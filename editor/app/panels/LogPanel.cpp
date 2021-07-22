@@ -1,6 +1,7 @@
+#include "papayapch.h"
 #include "LogPanel.h"
 
-#include "main/core/Log.h"
+
 
 #include <imgui/imgui.h>
 
