@@ -33,8 +33,10 @@ namespace Papaya {
 
   private:
     entt::registry m_Registry;
-    entt::entity m_CameraEntity{ entt::null };
     String m_Name;
+
+    entt::entity m_CameraEntity{ entt::null };
+    float m_CameraAspect = 1.0f;
   };
 
 } // namespace Papaya

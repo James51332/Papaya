@@ -1,10 +1,17 @@
-rm -rf Papaya
-rm -rf Papaya.sln
-rm -rf Sandbox
+DEL /F/Q Papaya.sln
+DEL /F/Q/S papaya
+DEL /F/Q/S sandbox
 
-rm -rf bin
-rm -rf bin-obj
+DEL /F/Q thirdparty\imgui\ImGui.vcxproj
+DEL /F/Q thirdparty\imgui\ImGui.vcxproj.user
+DEL /F/Q thirdparty\imgui\ImGui.vcxproj.filters
 
-rm -rf Makefile
+DEL /F/Q thirdparty\yaml-cpp\yaml-cpp.vcxproj
+DEL /F/Q thirdparty\yaml-cpp\yaml-cpp.vcxproj.user
+DEL /F/Q thirdparty\yaml-cpp\yaml-cpp.vcxproj.filters
+
+DEL /F/Q/S bin
+DEL /F/Q/S bin-obj
+DEL /F/Q Makefile
 
 PAUSE

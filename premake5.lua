@@ -1,16 +1,38 @@
 workspace "Papaya"
-  configurations { "Debug", "Release", "Dist" }
   architecture "x86_64"
   startproject "Editor"
+  
+  configurations 
+  { 
+    "Debug", 
+    "Release", 
+    "Dist"
+  }
 
-builddir = ("bin/Papaya-%{cfg.system}-%{cfg.longname}")
-objectdir = ("bin-obj/Papaya-%{cfg.system}-%{cfg.longname}")
+  flags
+	{
+		"MultiProcessorCompile"
+	}
 
-include "thirdparty/imgui"
-include "thirdparty/yaml-cpp"
+builddir = ("bin/Papaya-" .. string.capitalized("%{cfg.system}") .. "-%{cfg.longname}")
+objectdir = ("bin-obj/Papaya-" .. string.capitalized("%{cfg.system}") .. "-%{cfg.longname}")
+
+includes = {}
+includes["spdlog"] = "thirdparty/spdlog/include"
+includes["glm"] = "thirdparty/glm"
+includes["stb_image"] = "thirdparty/stb_image"
+includes["opengl"] = "thirdparty/opengl"
+includes["imgui"] = "thirdparty/imgui"
+includes["entt"] = "thirdparty/entt/single_include"
+includes["yaml-cpp"] = "thirdparty/yaml-cpp/yaml-cpp/include"
+
+group "Dependencies"
+  include "thirdparty/imgui"
+  include "thirdparty/yaml-cpp"
+group ""
 
 project "Papaya"
-  location "Papaya"
+  location "papaya"
   kind "StaticLib"
   language "C++"
   cppdialect "C++17"
@@ -23,7 +45,6 @@ project "Papaya"
   objdir (objectdir)
 
   files {
-    "papayapch.h",
     "papayapch.cpp",
     "main/**.cpp",
     "main/**.h",
@@ -32,23 +53,28 @@ project "Papaya"
     "thirdparty/stb_image/**.h",
     "thirdparty/stb_image/**.cpp",
     "thirdparty/glm/**.h",
-    "thirdparty/glm/**.inl",
+    "thirdparty/glm/**.inl"
   }
 
   includedirs {
-    "include",
-    "thirdparty/spdlog/include",
-    "thirdparty/glm",
-    "thirdparty/stb_image",
-    "thirdparty/opengl",
-    "thirdparty/imgui",
-    "thirdparty/entt/single_include",
-    "thirdparty/yaml-cpp/yaml-cpp/include",
-    ".",
+    "."
   }
 
-  links {
-    "ImGui"
+  sysincludedirs {
+    "include",
+    includes["spdlog"],
+    includes["glm"],
+    includes["stb_image"],
+    includes["opengl"],
+    includes["imgui"],
+    includes["entt"],
+    includes["yaml-cpp"]
+  }
+
+  links 
+  {
+    "ImGui",
+    "yaml-cpp"
   }
 
   filter "configurations:Debug"
@@ -67,33 +93,26 @@ project "Papaya"
     optimize "Full"
 
   filter "system:macosx"
-    defines { "PAPAYA_MACOS", "GL_SILENCE_DEPRECATION", }
-    xcodebuildsettings = { ["ALWAYS_SEARCH_USER_PATHS"] = "YES" }
     buildoptions "-Wno-deprecated-declarations"
-
-    sysincludedirs {
-      "include",
-      "thirdparty/spdlog/include",
-      "thirdparty/glm",
-      "thirdparty/stb_image",
-      "thirdparty/imgui",
-      "thirdparty/entt/single_include",
-      "thirdparty/yaml-cpp/yaml-cpp/include",
-      ".",
+    
+    defines 
+    { 
+      "PAPAYA_MACOS", 
+      "GL_SILENCE_DEPRECATION" 
     }
 
-    files {
+    files 
+    {
       "platform/macos/**.mm",
       "platform/macos/**.cpp",
       "platform/macos/**.h",
       "platform/opengl/**.cpp",
-      "platform/opengl/**.h",
+      "platform/opengl/**.h"
     }
 
   filter "action:vs*"
     characterset "ASCII"
     defines "_CRT_SECURE_NO_WARNINGS"
-    flags { "MultiProcessorCompile" }
 
   filter { "system:windows", "action:gmake" }
     buildoptions "-std=gnu++17"
@@ -102,18 +121,19 @@ project "Papaya"
     defines "PAPAYA_WINDOWS"
     systemversion "latest"
 
-    files {
+    files 
+    {
       "platform/windows/**.cpp",
       "platform/windows/**.h",
       "platform/opengl/**.cpp",
-      "platform/opengl/**.h",
+      "platform/opengl/**.h"
     }
 
   filter "system:linux"
     defines "PAPAYA_LINUX"
 
 project "Editor"
-  location "Papaya"
+  location "papaya"
   language "C++"
   cppdialect "C++17"
   staticruntime "On"
@@ -124,28 +144,33 @@ project "Editor"
   targetdir (builddir)
   objdir (objectdir)
   
-  files {
-    "papayapch.h",
+  files 
+  {
     "papayapch.cpp",
     "editor/**.cpp",
-    "editor/**.h",
+    "editor/**.h"
   }
   
-  includedirs {
+  includedirs 
+  {
+    "."
+  }
+
+  sysincludedirs 
+  {
     "include",
-    "thirdparty/spdlog/include",
-    "thirdparty/glm",
-    "thirdparty/opengl",
-    "thirdparty/imgui",
-    "thirdparty/entt/single_include",
-    "thirdparty/yaml-cpp/yaml-cpp/include",
-    ".",
+    includes["spdlog"],
+    includes["glm"],
+    includes["stb_image"],
+    includes["opengl"],
+    includes["imgui"],
+    includes["entt"],
+    includes["yaml-cpp"]
   }
-  
-  links {
-    "Papaya",
-    "ImGui",
-    "yaml-cpp",
+
+  links 
+  {
+    "Papaya"
   }
 
   filter "configurations:Debug"
@@ -165,21 +190,16 @@ project "Editor"
 
   filter "system:macosx"
     kind "ConsoleApp"
-    defines { "PAPAYA_MACOS", "GL_SILENCE_DEPRECATION", }
     buildoptions "-Wno-deprecated-declarations"
-    xcodebuildsettings = { ["ALWAYS_SEARCH_USER_PATHS"] = "YES" }
 
-    sysincludedirs {
-      "include",
-      "thirdparty/spdlog/include",
-      "thirdparty/glm",
-      "thirdparty/imgui",
-      "thirdparty/entt/single_include",
-      "thirdparty/yaml-cpp/yaml-cpp/include",
-      "."
+    defines 
+    { 
+      "PAPAYA_MACOS", 
+      "GL_SILENCE_DEPRECATION" 
     }
 
-    links {
+    links 
+    {
       "Cocoa.framework"
     }
 
@@ -187,7 +207,6 @@ project "Editor"
     characterset "ASCII"
     defines "_CRT_SECURE_NO_WARNINGS"
     debugdir "$(SolutionDir)"
-    flags { "MultiProcessorCompile" }
 
   filter "action:xcode4"
     debugdir "$(SRCROOT)/../"
@@ -198,7 +217,7 @@ project "Editor"
   filter { "system:windows", "Debug" }
     kind "ConsoleApp"
 
-  filter { "system:windows", "Release or Dist"}
+  filter { "system:windows", "Release or Dist" }
     kind "WindowedApp"
     entrypoint "mainCRTStartup"
 
@@ -216,11 +235,11 @@ project "Editor"
   filter "system:linux"
     defines "PAPAYA_LINUX"
 
-
 project "Sandbox"
-  location "Sandbox"
+  location "sandbox"
   language "C++"
   cppdialect "C++17"
+  staticruntime "On"
   
   pchheader "papayapch.h"
   pchsource "papayapch.cpp"
@@ -228,59 +247,62 @@ project "Sandbox"
   targetdir (builddir)
   objdir (objectdir)
   
-  files {
+  files 
+  {
+    "papayapch.cpp",
     "tests/**.cpp",
-    "tests/**.h",
-    "tests/**.png",
+    "tests/**.h"
   }
   
-  includedirs {
+  includedirs 
+  {
+    "."
+  }
+
+  sysincludedirs 
+  {
     "include",
-    "thirdparty/spdlog/include",
-    "thirdparty/glm",
-    "thirdparty/opengl",
-    "thirdparty/imgui",
-    "thirdparty/entt/single_include",
-    "thirdparty/yaml-cpp/yaml-cpp/include",
-    ".",
+    includes["spdlog"],
+    includes["glm"],
+    includes["stb_image"],
+    includes["opengl"],
+    includes["imgui"],
+    includes["entt"],
+    includes["yaml-cpp"]
   }
-  
-  links {
-    "Papaya",
-    "ImGui",
-    "yaml-cpp",
+
+  links 
+  {
+    "Papaya"
   }
 
   filter "configurations:Debug"
+    runtime "Debug"
     defines "PAPAYA_DEBUG"
     symbols "On"
-    staticruntime "On"
 
   filter "configurations:Release"
+    runtime "Release"
     defines "PAPAYA_RELEASE"
     optimize "On"
 
   filter "configurations:Dist"
+    runtime "Release"
     defines "PAPAYA_DIST"
     optimize "Full"
 
   filter "system:macosx"
     kind "ConsoleApp"
-    defines { "PAPAYA_MACOS", "GL_SILENCE_DEPRECATION", }
     buildoptions "-Wno-deprecated-declarations"
-    xcodebuildsettings = { ["ALWAYS_SEARCH_USER_PATHS"] = "YES" }
-
-    sysincludedirs {
-      "include",
-      "thirdparty/spdlog/include",
-      "thirdparty/glm",
-      "thirdparty/imgui",
-      "thirdparty/entt/single_include",
-      "thirdparty/yaml-cpp/yaml-cpp/include",
-      "."
+    
+    defines 
+    { 
+      "PAPAYA_MACOS", 
+      "GL_SILENCE_DEPRECATION" 
     }
 
-    links {
+    links 
+    {
       "Cocoa.framework"
     }
 
@@ -288,7 +310,6 @@ project "Sandbox"
     characterset "ASCII"
     defines "_CRT_SECURE_NO_WARNINGS"
     debugdir "$(SolutionDir)"
-    flags { "MultiProcessorCompile" }
   
   filter "action:xcode4"
     debugdir "$(SRCROOT)/../"
@@ -307,11 +328,12 @@ project "Sandbox"
     defines "PAPAYA_WINDOWS"
     systemversion "latest"
 
-    links {
+    links 
+    {
       "kernel32",
       "gdi32",
       "OpenGL32",
-      "user32",
+      "user32"
     }
 
   filter "system:linux"

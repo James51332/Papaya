@@ -1,8 +1,8 @@
 # Build Folders
 bin
 bin-obj
-Papaya
-Sandbox
+papaya
+sandbox
 Makefile
 
 # MacOS
@@ -16,6 +16,8 @@ Makefile
 .vscode
 *.sln
 *.vcxproj
+*.user
+*.filters
 
 # ImGui
 *.ini

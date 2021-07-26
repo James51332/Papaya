@@ -89,12 +89,18 @@ namespace Papaya
     }
 
     m_CameraEntity = static_cast<entt::entity>(e);
+    
+    auto& cam = m_Registry.get<CameraComponent>(m_CameraEntity);
+    cam.Aspect = m_CameraAspect;
+    cam.RecalculateProjectionMatrix();
   }
 
   void Scene::SetViewportSize(uint32_t width, uint32_t height)
   {
+    m_CameraAspect = static_cast<float>(width) / static_cast<float>(height);
+
     auto& cam = m_Registry.get<CameraComponent>(m_CameraEntity);
-    cam.Aspect = static_cast<float>(width) / static_cast<float>(height);
+    cam.Aspect = m_CameraAspect;
     cam.RecalculateProjectionMatrix();
   }
 
